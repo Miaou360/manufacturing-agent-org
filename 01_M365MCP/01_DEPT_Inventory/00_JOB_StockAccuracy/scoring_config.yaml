@@ -1,0 +1,202 @@
+# ==============================================================================
+# ACME Manufacturing Plant P001 - Cycle Count Risk Scoring Configuration
+# Department: 01_DEPT_Inventory / 00_JOB_StockAccuracy
+# ==============================================================================
+# All weights, thresholds, and operational slot allocations are defined here.
+# Any modification to this file automatically updates the config_hash in AUDIT_RUN.
+# ==============================================================================
+
+scoring_version: "v1.0_rules"
+description: "ACME Manufacturing Inventory Accuracy Multi-Factor Rule Scoring & Shadow EV Model"
+
+# ------------------------------------------------------------------------------
+# 1. Operational Target Slot Allocations
+# ------------------------------------------------------------------------------
+target_counts:
+  daily:
+    top_slots: 15          # Rapid 15-minute floor walk (Hand-picking Tier 1-2, SMT, Repack)
+    extended_slots: 25     # Secondary extended investigation slots
+    total_slots: 40        # Total rule-selected bins (Top 15 + Extended 25)
+    max_bins_per_material: 2 # Maximum bins per material in daily rapid floor audit
+  weekly:
+    top_slots: 50          # Saturday deep audit slots (Plant 3 High-Racks, Fast Movers, Turnover)
+    extended_slots: 0
+    total_slots: 50
+
+# ------------------------------------------------------------------------------
+# 2. Random Validation Sampling (Selection Bias Correction & Model Validation)
+# ------------------------------------------------------------------------------
+random_sampling:
+  daily_slots: 3           # Floor-walkable stratified random validation bins
+  weekly_slots: 5          # Full warehouse stratified random validation bins
+  seed_strategy: "run_date" # Reproducible deterministic seed based on run_date (YYYYMMDD)
+
+# ------------------------------------------------------------------------------
+# 3. Chronic System Mismatch Feed (04_JOB_SystemReconciliation Integration)
+# ------------------------------------------------------------------------------
+chronic_mismatch:
+  mode: "feature_only"     # Options: "feature_only" (Mode A) or "reserved_slots" (Mode B)
+  score_points: 30         # Risk score added when material has active chronic discrepancy
+  reserved_slots_daily: 3  # K: Reserved slots for floor-walkable chronic items in Mode B
+  reserved_slots_weekly: 5 # M: Reserved slots for highest exposure chronic items in Mode B
+
+# ------------------------------------------------------------------------------
+# 4. Multi-Factor Risk Scoring Weights (README Section 8-G Matrix)
+# ------------------------------------------------------------------------------
+weights:
+  # Common Missing GI & Ghost Stock Rules
+  critical_ghost_base: 65           # Base points for acute deficit / phantom box
+  critical_ghost_max_add: 25        # Maximum scalable addition for massive deficits (total up to +90)
+  critical_ghost_scale_factor: 0.5  # Scaling multiplier per box of deficit: floor(diff_box * 0.5)
+  unit_pack_offset_normal: 10       # Regular packaging unit offset baseline item
+
+  # FIFO Bypass & Physical Obstruction
+  fifo_bypass_plant1_floor: 40      # Plant 1 floor issue bypass (confirmed by GI history)
+  fifo_bypass_plant3_replenish: 40  # Plant 3 high-rack replenishment delay bypass
+  proven_fifo_bypass_gi_verified: 40 # Generic GI-verified FIFO bypass fallback
+  same_bin_fifo_obstruction: 35     # Newer lot coexists in same bin while older lot lingers
+  fifo_physical_trap: 30            # Missing GI is OVER but older lot remains buried in rear
+
+  # Weekly Specific Deep Audit Weights
+  fast_mover_residual: 55           # High velocity item with lingering residual boxes
+  high_rack_aging: 50               # Plant 3 High-Rack / Tier 3+ aging stock
+  BINSYNTH9953_bin: 20                # Inventory lacking physical bin assignment
+
+  # Daily Specific: SMT & OEM Floor & Repack Carts
+  # Per D84: OEM* bins follow SMT supermarket dynamic turnover thresholds & weights
+  smt_stagnant_daily: 45            # SMT/OEM buffer exceeding turnover threshold (Daily)
+  smt_stagnant_weekly: 35           # SMT buffer exceeding turnover threshold (Weekly)
+  smt_supermarket_buffer: 10        # Normal buffer holding within standard turnover
+  repack_stagnant_daily: 40         # Repack cart exceeding turnover threshold (Daily)
+  repack_stagnant_weekly: 35        # Repack cart exceeding turnover threshold (Weekly)
+  repack_cart_dolly: 10             # Normal repack cart holding within turnover
+
+  # Daily Specific: Plant 1 Hand-picking & Small Hardware
+  plant1_hand_pick_tier_1_2: 15     # Accessible 1st/2nd floor rack
+  small_part_dwell_fresh: 15        # Fresh arrival buffer (< 0.3 * turnover)
+  small_part_dwell_aging: 30        # Normal holding cycle
+  small_part_dwell_stagnant: 50     # Aging beyond turnover cycle (>= 1.0 * turnover)
+  small_part_pack_qty_5000: 30      # Massive package quantity (>= 5,000 pcs/box)
+  small_part_pack_qty_1000: 20      # High package quantity (>= 1,000 pcs/box)
+  small_part_pack_qty_200: 10       # Medium package quantity (>= 200 pcs/box)
+  small_part_keyword_bonus: 15      # Explicit hardware keyword match (Screw, Aiming, Pad, Nut, etc.)
+
+  # FIFO Inversion (Stock Lot Date only, when not GI-verified)
+  fifo_inversion_plant1: 30         # Plant 1 stock FIFO inversion
+  fifo_inversion_plant3: 15         # Plant 3 stock FIFO inversion
+  fifo_inversion_weekly: 30         # Weekly general stock FIFO inversion
+
+  # Scaled Turnover Anomalies (Ratio = Warehouse Dwell / Standard Turnover)
+  turnover_anomaly_extreme: 45      # Ratio >= 10.0
+  turnover_anomaly_high: 30         # Ratio >= 5.0
+  turnover_anomaly_moderate: 15     # Ratio >= 3.0 (Daily only, dwell > 14 days)
+
+  # Missing GI Machine Learning Feedback
+  missing_gi_spike: 20              # Sporadic volatile deficit or anomaly >= 2 boxes
+  missing_gi_target_bin_match: 10   # Stored in designated primary deficit bin
+
+  # Caps and Discounts
+  obsolete_dead_stock_cap_daily: 20 # Score ceiling for obsolete/dead items in Daily
+  obsolete_dead_stock_cap_weekly: 35 # Score ceiling for obsolete/dead items in Weekly
+  slow_stock_demote: 30             # Priority penalty discount for slow movers / stagnant items
+  slow_stock_min_score: 10          # Floor score after slow stock discount
+
+# ------------------------------------------------------------------------------
+# 5. Domain Rules Thresholds & Criteria
+# ------------------------------------------------------------------------------
+thresholds:
+  # Missing GI & Unit Pack Offset
+  unit_offset_min_anomaly_diff: 2.0 # Net deficit boxes beyond baseline for unit offset items
+  general_missing_gi_diff_box: 1.0  # General item deficit threshold
+
+  # FIFO Gaps and Spread Days
+  fifo_inversion_gap_days: 30       # Minimum lot date gap for stock FIFO inversion
+  fifo_bypass_gap_days: 14          # Minimum dwell gap between older box and issued box
+  same_bin_spread_days: 20          # Lot spread days between newest and oldest in same bin
+
+  # Turnover Multipliers & Dwell Days
+  turnover_extreme_multiplier: 10.0 # Extreme turnover outlier threshold
+  turnover_high_multiplier: 5.0     # High turnover outlier threshold
+  turnover_moderate_multiplier: 3.0 # Moderate turnover outlier threshold
+  turnover_moderate_min_dwell_days: 14 # Minimum dwell days for moderate anomaly
+  turnover_weekly_extreme_min_dwell: 45 # Weekly extreme dwell days requirement
+  turnover_weekly_high_min_dwell: 25    # Weekly high dwell days requirement
+
+  # High Rack Aging Criteria
+  high_rack_turnover_multiplier: 3.0 # Dwell / Turnover ratio for high-rack aging
+  high_rack_min_dwell_days: 30      # Minimum dwell days for high-rack aging
+
+  # Fast Mover Lingering Residual
+  fast_mover_latest_lot_gap_days: 14 # Days since newer lot arrived for fast mover
+  fast_mover_turnover_multiplier: 5.0 # Dwell / Turnover ratio for fast mover
+  fast_mover_min_dwell_days: 14     # Minimum dwell days for fast mover residual
+
+  # SMT Floor Dynamic Thresholds
+  smt_turnover_wh_multiplier: 1.5   # wh_dwell >= 1.5 * std_turnover
+  smt_turnover_bin_multiplier: 0.5  # bin_dwell >= 0.5 * std_turnover
+  smt_min_wh_dwell_days: 7.0        # Minimum floor dwell threshold
+  smt_min_bin_dwell_days: 3         # Minimum bin dwell threshold
+  smt_fallback_wh_dwell_days: 14    # Fallback when ontology turnover missing
+  smt_fallback_bin_dwell_days: 5    # Fallback bin dwell when turnover missing
+
+  # Repack Cart Dynamic Thresholds
+  repack_turnover_wh_multiplier: 1.2 # wh_dwell >= 1.2 * std_turnover
+  repack_turnover_bin_multiplier: 0.4 # bin_dwell >= 0.4 * std_turnover
+  repack_min_wh_dwell_days: 5.0     # Minimum floor dwell threshold
+  repack_min_bin_dwell_days: 2      # Minimum bin dwell threshold
+  repack_fallback_wh_dwell_days: 10 # Fallback when ontology turnover missing
+  repack_fallback_bin_dwell_days: 4 # Fallback bin dwell when turnover missing
+
+  # Plant 1 Small Hardware Box Pack Quantities (박스 당량)
+  small_part_qty_threshold_large: 5000  # >= 5,000 pcs (e.g. Bulk tapping screws)
+  small_part_qty_threshold_medium: 1000 # >= 1,000 pcs (e.g. Aiming gears)
+  small_part_qty_threshold_small: 200   # >= 200 pcs (e.g. Retainers / clips)
+
+  # Small Hardware Dwell Ratios
+  small_part_dwell_fresh_ratio: 0.3     # < 0.3 * turnover
+  small_part_dwell_stagnant_ratio: 1.0  # >= 1.0 * turnover
+  small_part_dwell_fresh_min: 3.0       # Minimum fresh days floor
+  small_part_dwell_stagnant_min: 7.0    # Minimum stagnant days floor
+
+  # Dead Stock & Slow Stock Inactivity Days
+  dead_stock_inactive_days: 45      # No GR or GI activity for >= 45 days
+  slow_stock_turnover_days: 25.0    # Standard turnover >= 25 days considered slow mover
+  slow_stock_inactive_days: 30      # Inactivity for >= 30 days considered slow mover
+
+# ------------------------------------------------------------------------------
+# 6. Shadow Expected Value (EV) Model Configuration
+# ------------------------------------------------------------------------------
+# Framework: Priority_EV = Expected_Loss / Est_Minutes
+#            Expected_Loss = P(Error) * (Qty * Net_Price)
+# ------------------------------------------------------------------------------
+shadow_ev:
+  enabled: true
+  include_in_admin_excel: true      # Adds 'Shadow_EV_Ranking' sheet to master Excel
+
+  # Logistic proxy function parameters for P_Error_Proxy:
+  # P = 1 / (1 + exp(-k * (Score - x0)))
+  # PLACEHOLDER: Temporary proxy mapping rule risk score to probability [0, 1].
+  # Will be replaced by calibrated ML classification model P(discrepancy | x).
+  logistic_k: 0.05                  # Logistic slope factor
+  logistic_x0: 50.0                 # Midpoint (Score=50 -> P=0.50)
+  min_p: 0.01                       # Probability floor
+  max_p: 0.99                       # Probability ceiling
+
+  # Standard estimated cycle count duration in minutes by bin characteristic
+  # PLACEHOLDER: Fixed domain estimates. Will be replaced by empirical stopwatch measurements.
+  est_minutes:
+    tier_1_2: 2.0                   # Ground hand-picking rack (walking height)
+    smt: 1.5                        # SMT supermarket buffer floor (clear sightline)
+    repack: 1.0                     # Repack cart / dolly (mobile unit, fast scan)
+    high_rack: 5.0                  # Tier 3+ (requires reach truck / forklift safety check)
+    default_floor: 2.0              # General floor bins
+
+# ------------------------------------------------------------------------------
+# 7. ZTCODE_STOCK_REC Stock Accuracy & Protection Window Configuration
+# ------------------------------------------------------------------------------
+accuracy_guard:
+  # Formal ZTCODE_STOCK_REC daily aggregation guard window (EST)
+  # During this window, temporary mismatches are strictly forbidden (monotonic increase only)
+  snapshot_guard_window: ["05:30", "06:15"]
+  snapshot_freshness_threshold_seconds: 300.0
+

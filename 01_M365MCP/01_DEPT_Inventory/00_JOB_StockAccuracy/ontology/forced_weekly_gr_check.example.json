@@ -1,0 +1,15 @@
+{
+  "active_from": "2026-10-30",
+  "active_until": "2026-11-01",
+  "materials": [
+    "SAMPLE_PART_001",
+    "SAMPLE_PART_002"
+  ],
+  "slocs": [
+    "SL00",
+    "SL01"
+  ],
+  "action_required": "GR Missing Check (F)",
+  "reason": "입고 누락 의심(F) — SAP GR 확인용"
+}
+

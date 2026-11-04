@@ -1,0 +1,48 @@
+{
+  "SAMPLE_PART_001": {
+    "mat_no": "SAMPLE_PART_001",
+    "mat_desc": "Sample Electronic Resistor 100K",
+    "total_boxes_tracked": 120,
+    "produced_boxes": 110,
+    "orphan_boxes": 1,
+    "orphan_rate": 0.0083,
+    "turnover_profile": {
+      "mean_days": 12.5,
+      "trimmed_mean_days": 12.0,
+      "median_days": 11.5,
+      "min_days": 2.0,
+      "max_days": 25.0,
+      "std_days": 3.8,
+      "mover_class": "MEDIUM_MOVER"
+    },
+    "shop_floor_rules": {
+      "is_small_part": false,
+      "hand_pick_risk": false,
+      "supermarket_rapid_turnover": false
+    },
+    "last_updated": "2026-10-23 00:00:00"
+  },
+  "SAMPLE_PART_002": {
+    "mat_no": "SAMPLE_PART_002",
+    "mat_desc": "Sample Mounting Bracket Screw M4",
+    "total_boxes_tracked": 450,
+    "produced_boxes": 440,
+    "orphan_boxes": 0,
+    "orphan_rate": 0.0,
+    "turnover_profile": {
+      "mean_days": 4.2,
+      "trimmed_mean_days": 4.0,
+      "median_days": 3.8,
+      "min_days": 1.0,
+      "max_days": 9.0,
+      "std_days": 1.2,
+      "mover_class": "FAST_MOVER"
+    },
+    "shop_floor_rules": {
+      "is_small_part": true,
+      "hand_pick_risk": true,
+      "supermarket_rapid_turnover": true
+    },
+    "last_updated": "2026-10-23 00:00:00"
+  }
+}
