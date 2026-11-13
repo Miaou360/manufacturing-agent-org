@@ -1,0 +1,11 @@
+# 06_JOB_Data_Collector operational data & samples exclusion
+db/*.db
+db/*.db-wal
+db/*.db-shm
+db/*.sqlite*
+raw_exports/
+logs/
+scratch/
+_samples/*
+!_samples/.gitkeep
+

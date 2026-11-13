@@ -1,0 +1,119 @@
+# ==============================================================================
+# ACME Manufacturing Platform - Git Ignore Configuration (241-D Reinforced)
+# Protects credentials, operational databases, dumps, browser profiles & handoff
+# ==============================================================================
+
+# --- Secrets & Credentials (CRITICAL) ---
+.env
+.env.*
+*.env
+*.env.*
+!.env.example
+!*.env.example
+CURRENT_AUTH.json
+token_cache.json
+credentials.json
+client_secrets*.json
+*.pem
+*.key
+*.pfx
+*.p12
+
+# --- Databases & Large Binary Files (GitHub >100MB limit & Data Security) ---
+*.db
+*.db.*
+*.db-*
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite.*
+*.sqlite3
+*.sqlite3-*
+**/db/*.db
+
+# --- Raw Operational Data, SAP & WMS Excel/CSV/PDF/Archive Dumps ---
+*.xlsx
+*.xls
+*.XLS
+*.XLSX
+*.xlsb
+*.xlsm
+*.csv
+*.CSV
+*.tsv
+*.parquet
+*.pdf
+*.PDF
+*.zip
+*.7z
+*.bundle
+
+# Data Stack, Preview & Dry-Run Directories / Files
+**/gi_daily_stack/
+**/gr_daily_stack/
+**/missing_gi_daily_stack/
+**/wms_daily_stack/
+**/wms_parts_stack/
+**/gi_errors/
+**/gr_errors/
+**/mb52/
+**/cogi_errors/
+**/audit_reports/
+**/resolution_logs/
+**/backlog_daily_stack/
+**/reports/
+**/raw_exports/
+**/preview_*.html
+**/DRYRUN_*
+**/ontology/*.json
+!**/ontology/*.example.json
+
+# --- Jupyter Notebooks (May contain sensitive outputs or credentials) ---
+*.ipynb
+
+# --- Logs, Locks & Execution Traces ---
+*.log
+*.lock
+**/logs/
+**/log/
+
+# --- Temporary & Scratch Files ---
+**/scratch/
+**/tmp/
+**/temp/
+.tempmediaStorage/
+.user_uploaded/
+
+# --- Python Environment & Bytecode ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+ENV/
+.pytest_cache/
+.mypy_cache/
+
+# --- OS Generated Files ---
+.DS_Store
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# --- AI Handoff Mailbox (Option A: only README.md is tracked) ---
+.agents/handoff/*
+!.agents/handoff/README.md
+
+# --- Legacy Untracked Directories ---
+01_M365MCP/01_Inventory_Team/
+00_stockAccuracy/00_P*/
+
+# --- Local IDE, Agent & Browser Session Profiles (NEVER commit) ---
+.vscode/
+.agents/mcp_config.json
+.agents/plugins/
+**/.pw_*/
+**/.pw_*
+**/d107_screenshots/

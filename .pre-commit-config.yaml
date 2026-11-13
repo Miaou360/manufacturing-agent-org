@@ -1,0 +1,8 @@
+repos:
+  - repo: local
+    hooks:
+      - id: gitguard-pre-commit
+        name: GitGuard Security & Sanitization Scanner
+        entry: python 01_M365MCP/00_HQ_TaskManager/git_auto_sync.py pre-commit
+        language: system
+        pass_filenames: false

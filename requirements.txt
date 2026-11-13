@@ -1,0 +1,17 @@
+# Core (tests run on synthetic fixtures; no ERP / WMS connection needed)
+pandas
+numpy
+openpyxl
+pyyaml
+python-dotenv
+pytest
+psutil
+requests
+selenium
+Pillow
+# Model experiments (optional)
+lightgbm
+scikit-learn
+# Windows-only automation (SAP GUI scripting, Outlook)
+pywin32; sys_platform == "win32"
+pywinauto; sys_platform == "win32"

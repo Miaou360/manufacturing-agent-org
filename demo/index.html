@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manufacturing Agent Organization — Live Map</title>
+<meta name="description" content="Interactive map of a multi-agent operations organization for manufacturing supply chain: departments, jobs, the daily schedule, the data flow and the human approval loop.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="mark" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div>
+      <h1>Manufacturing Agent Organization</h1>
+      <p>An operations team made of scheduled agents — ERP, WMS, supplier portal and Microsoft 365 kept in step, with a person approving what matters.</p>
+    </div>
+  </div>
+  <a class="repo" href="https://github.com/Miaou360/manufacturing-agent-org">Repository ↗</a>
+</header>
+
+<section class="stats" id="stats" aria-label="Key figures"></section>
+
+<main>
+  <section class="panel" aria-labelledby="h-org">
+    <div class="panel-head">
+      <h2 id="h-org">Organization</h2>
+      <p>HQ sets the rules every job runs under. Select a unit to see what it does.</p>
+    </div>
+    <div class="org" id="org"></div>
+    <aside class="detail" id="detail" aria-live="polite"></aside>
+  </section>
+
+  <section class="panel" aria-labelledby="h-day">
+    <div class="panel-head">
+      <h2 id="h-day">A day in the organization</h2>
+      <p>The 21 scheduled tasks on a 24-hour clock. Most of the work is done before the day shift starts.</p>
+      <div class="day-ctrl">
+        <button id="play" class="btn" type="button">▶ Play the day</button>
+        <input id="clock" type="range" min="0" max="1439" value="405" step="5" aria-label="Time of day">
+        <output id="clock-out" for="clock">06:45</output>
+      </div>
+    </div>
+    <div class="timeline-wrap"><svg id="timeline" role="img" aria-label="Daily schedule of all tasks"></svg></div>
+    <div class="now" id="now"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-flow">
+    <div class="panel-head">
+      <h2 id="h-flow">From source systems to action</h2>
+      <p>Every job follows the same path. Nothing is posted before the guard stage agrees.</p>
+    </div>
+    <div class="flow" id="flow"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-loop">
+    <div class="panel-head">
+      <h2 id="h-loop">How a change gets made</h2>
+      <p>Two AI agents and one person. Agents talk through written handoff notes; the person decides.</p>
+    </div>
+    <ol class="loop" id="loop"></ol>
+  </section>
+</main>
+
+<footer>
+  <span id="asof"></span>
+  <span>Structure and schedules mirror the running system; system codes, addresses, part numbers and partner names are generalized or left out.</span>
+</footer>
+<div class="tip" id="tip" hidden></div>
+<script src="org.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
