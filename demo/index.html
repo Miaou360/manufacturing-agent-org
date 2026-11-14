@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Manufacturing Agent Organization — Live Map</title>
+<title>Manufacturing Agent Organization — Operations Floor</title>
 <meta name="description" content="Interactive map of a multi-agent operations organization for manufacturing supply chain: departments, jobs, the daily schedule, the data flow and the human approval loop.">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -16,20 +16,26 @@
       <p>An operations team made of scheduled agents — ERP, WMS, supplier portal and Microsoft 365 kept in step, with a person approving what matters.</p>
     </div>
   </div>
-  <a class="repo" href="https://github.com/Miaou360/manufacturing-agent-org">Repository ↗</a>
+  <nav class="navlinks"><a class="repo primary" href="outputs.html">What it produces →</a><a class="repo" href="https://github.com/Miaou360/manufacturing-agent-org">Repository ↗</a></nav>
 </header>
-
-<section class="stats" id="stats" aria-label="Key figures"></section>
 
 <main>
   <section class="panel" aria-labelledby="h-org">
-    <div class="panel-head">
-      <h2 id="h-org">Organization</h2>
-      <p>HQ sets the rules every job runs under. Select a unit to see what it does.</p>
+    <div class="panel-head office-head">
+      <div>
+        <h2 id="h-org">The operations floor</h2>
+        <p>Nine agents, each with one job. They read the plant's systems, do the routine work, and put a document on someone's desk when a person has to decide. Press play to watch a day.</p>
+      </div>
+      <div class="day-ctrl">
+        <button id="play2" class="btn" type="button">▶ Play the day</button>
+        <output id="clock-out2" class="bigclock">06:45</output>
+      </div>
     </div>
-    <div class="org" id="org"></div>
+    <div class="office" id="org"></div>
     <aside class="detail" id="detail" aria-live="polite"></aside>
   </section>
+
+  <section class="stats" id="stats" aria-label="Key figures"></section>
 
   <section class="panel" aria-labelledby="h-day">
     <div class="panel-head">
@@ -37,7 +43,7 @@
       <p>The 21 scheduled tasks on a 24-hour clock. Most of the work is done before the day shift starts.</p>
       <div class="day-ctrl">
         <button id="play" class="btn" type="button">▶ Play the day</button>
-        <input id="clock" type="range" min="0" max="1439" value="405" step="5" aria-label="Time of day">
+        <input id="clock" type="range" min="0" max="1439" value="520" step="5" aria-label="Time of day">
         <output id="clock-out" for="clock">06:45</output>
       </div>
     </div>
@@ -68,6 +74,7 @@
 </footer>
 <div class="tip" id="tip" hidden></div>
 <script src="org.js"></script>
+<script src="office.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

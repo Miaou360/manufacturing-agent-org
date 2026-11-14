@@ -1,4 +1,4 @@
-/* Live map of the organization: org chart, 24-hour schedule, data flow, change loop. No dependencies. */
+/* Live page of the organization: operations floor (office.js), 24-hour schedule, data flow, change loop. No dependencies. */
 (function () {
   "use strict";
   const O = window.ORG;
@@ -9,7 +9,7 @@
   const hhmm = (m) => `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
   const unitById = Object.fromEntries(O.units.map((u) => [u.id, u]));
   const color = (u) => O.depts[u.dept].color;
-  let selected = "gi";
+  let selected = "acc";
 
   // every task as concrete start minutes of the day
   function starts(task) {
@@ -35,26 +35,15 @@
     b.addEventListener("click", () => select(u.id));
     return b;
   }
-  function renderOrg() {
-    const org = $("org"); org.textContent = "";
-    const hq = el("div", "org-hq"); hq.appendChild(unitButton(unitById.hq, "hq")); org.appendChild(hq);
-    const row = el("div", "org-depts");
-    ["inv", "log"].forEach((d) => {
-      const box = el("div", "dept");
-      box.appendChild(el("div", "dept-name", `<i style="background:${O.depts[d].color}"></i>${esc(O.depts[d].name)} <small>${esc(O.depts[d].long)}</small>`));
-      const grid = el("div", "units");
-      O.units.filter((u) => u.dept === d).forEach((u) => grid.appendChild(unitButton(u)));
-      box.appendChild(grid); row.appendChild(box);
-    });
-    org.appendChild(row);
-  }
+  function renderOrg() { window.renderOffice($("org"), O, select); }
+  const SAMPLE = { hq: "morning", acc: "count", gi: "interface", bkl: "backlog", ana: "weekly", rec: "recon", srm: "srm" };
   function renderDetail() {
     const u = unitById[selected];
     const tasks = O.tasks.filter((t) => t.unit === u.id).sort((a, b) => mins(a.t) - mins(b.t));
     const list = (a) => a.map((x) => `<span class="chip">${esc(x)}</span>`).join("");
     $("detail").innerHTML =
       `<div><h3>${esc(u.name)}</h3><p class="lead">${esc(u.one)}</p><ul>${u.does.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>` +
-      `<div><h4>Reads</h4><div class="chips">${list(u.inputs)}</div><h4>Produces</h4><div class="chips">${list(u.outputs)}</div></div>` +
+      `<div><h4>Reads</h4><div class="chips">${list(u.inputs)}</div><h4>Produces</h4><div class="chips">${list(u.outputs)}</div>${SAMPLE[u.id] ? `<a class="sample" href="outputs.html#${SAMPLE[u.id]}">See a sample output →</a>` : ""}</div>` +
       `<div><h4>Guards</h4><div class="chips">${u.guards.map((x) => `<span class="chip guard">${esc(x)}</span>`).join("")}</div>` +
       `<h4>Schedule</h4><div class="sched">${tasks.map((t) => `<b>${t.daemon ? "24 h" : t.every ? "2 h" : esc(t.t)}</b><span>${esc(t.name)}</span><em>${esc(t.days)}</em>`).join("") || "<span>Runs inside other jobs</span>"}</div></div>`;
   }
@@ -109,7 +98,9 @@
     O.tasks.forEach((t) => starts(t).forEach((m) => { if (now >= m && now < m + RUN) running.push([t, m]); }));
     const next = O.tasks.filter((t) => !t.daemon && !t.every).map((t) => [t, mins(t.t)]).filter(([, m]) => m > now).sort((a, b) => a[1] - b[1])[0];
     const ids = new Set(running.map(([t]) => t.unit));
-    document.querySelectorAll(".unit").forEach((b) => b.classList.toggle("running", ids.has(b.dataset.unit)));
+    const nextOf = (id) => { const c = []; O.tasks.filter((t) => t.unit === id).forEach((t) => starts(t).forEach((m) => { if (m > now) c.push(m); })); return c.length ? hhmm(Math.min(...c)) : null; };
+    window.updateOffice(now, running.map(([t]) => ({ unit: t.unit, name: t.name })), nextOf);
+    $("clock-out2").textContent = hhmm(now);
     $("now").innerHTML = (running.length
       ? "Running: " + running.map(([t, m]) => `<span class="chip"><i style="background:${color(unitById[t.unit])}"></i><b>${esc(t.name)}</b> · ${esc(unitById[t.unit].name)} · ${hhmm(m)}</span>`).join("")
       : "Nothing running.") + (next ? ` <span>Next: ${hhmm(next[1])} ${esc(next[0].name)}</span>` : "");
@@ -118,13 +109,18 @@
   function setNow(m) { now = ((m % 1440) + 1440) % 1440; $("clock").value = now; drawTimeline(); renderNow(); }
   $("clock").addEventListener("input", (e) => { stop(); setNow(Number(e.target.value)); });
   let timer = null;
-  function stop() { if (timer) { clearInterval(timer); timer = null; $("play").textContent = "▶ Play the day"; } }
-  $("play").addEventListener("click", () => {
+  const playLabel = (txt) => { $("play").textContent = txt; $("play2").textContent = txt; };
+  function stop() { if (timer) { clearInterval(timer); timer = null; playLabel("▶ Play the day"); } }
+  let played = false;
+  function togglePlay() {
     if (timer) return stop();
-    $("play").textContent = "❚❚ Pause";
-    if (now > 1380) setNow(0);
-    timer = setInterval(() => { if (now >= 1435) { stop(); return; } setNow(now + 5); }, 90);
-  });
+    playLabel("❚❚ Pause");
+    if (!played || now > 1380) setNow(120);          // first press: start before the night collection
+    played = true;
+    timer = setInterval(() => { if (now >= 1435) { stop(); return; } setNow(now + 5); }, 110);
+  }
+  $("play").addEventListener("click", togglePlay);
+  $("play2").addEventListener("click", togglePlay);
 
   // tooltips (hover + keyboard focus)
   const tip = $("tip");
@@ -145,6 +141,6 @@
   O.flow.stages.forEach((s) => flow.appendChild(el("div", "flow-col" + (s.name === "Guard" ? " guard" : ""), `<h3>${esc(s.name)}</h3>${s.items.map((i) => `<div>${esc(i)}</div>`).join("")}`)));
   O.loop.forEach((s) => $("loop").appendChild(el("li", s.who === "Owner" ? "owner" : "", `<b>${esc(s.who)}</b><span>${esc(s.what)}</span><small>${esc(s.note)}</small>`)));
 
-  renderOrg(); renderDetail(); drawTimeline(); renderNow();
+  renderOrg(); select(selected); renderNow();
   let rz; window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(drawTimeline, 120); });
 })();
