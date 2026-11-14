@@ -72,17 +72,17 @@ def build(source: str) -> dict[str, Any]:
             reasons.append(f"Stock age {p['age_days']} days"); score += 35
         elif p["age_days"] > 180:
             reasons.append(f"Stock age {p['age_days']} days"); score += 20
-        if p["box_id"] in overtaken or (p["age_days"] > 90 and newest_gr[p["part_no"]] > p["gr_date"] and parts[p["part_no"]]["velocity"] == "fast"):
+        if p["box_id"] in overtaken or (p["age_days"] > 90 and newest_gr[p["part_no"]] > p["gr_date"] and parts[p["part_no"]].get("velocity") == "fast"):
             reasons.append("Newer lots issued first (FIFO overtaken)"); score += 30
         if p["part_no"] in open_error_parts:
             reasons.append("Open goods-issue error on this part"); score += 40
         if p["part_no"] in repeat_parts:
             reasons.append("Mismatch in 2 of the last 3 counts"); score += 25
-        if p["qty"] < 0.25 * parts[p["part_no"]]["pallet_qty"]:
+        if p["qty"] < 0.25 * parts[p["part_no"]].get("pallet_qty", 48):
             reasons.append("Partial pallet"); score += 10
         scored.append((score, p, reasons))
     scored.sort(key=lambda t: (-t[0], t[1]["bin"]))
-    quota = {"north": 14, "south": 6}
+    quota = {"north": 16, "south": 6}
     model_rows, used_bins = [], set()
     for score, p, reasons in scored:
         if quota[p["fac"]] and p["bin"] not in used_bins and reasons:
@@ -157,11 +157,13 @@ def build(source: str) -> dict[str, Any]:
     for i, pn in enumerate(bk_parts):
         need = rng.choice([6, 12, 18, 30, 48, 72, 150, 300])
         north = sum(x["qty"] for x in by_part[pn] if x["fac"] == "north")
-        if i < 31:
-            _ = rng.randrange(10**7, 10**8)
+        if i < 29:
+            _ = rng.randint(1, 8)
+            _ = rng.randrange(10**7)
             cleared.append({"part_no": pn, "description": desc(pn), "qty": need, "from": "WH-NORTH", "to": "LINE",
-                            "run": "06:20" if i < 19 else ("08:15" if i < 24 else "08:30"), "document": f"DOC-{i + 1:06d}",
-                            "accuracy_before": round(rng.uniform(91, 97), 1), "delta": round(rng.uniform(0.0, 0.6), 2)})
+                            "run": "06:20" if i < 17 else ("08:15" if i < 23 else "08:30"),
+                            "document": f"DOC-{i + 1:06d}",
+                            "accuracy_before": round(rng.uniform(91, 97), 1), "delta": round(rng.uniform(0.05, 0.6), 2)})
         else:
             south = sum(x["qty"] for x in by_part[pn] if x["fac"] == "south")
             if north + south < need:
@@ -187,16 +189,15 @@ def build(source: str) -> dict[str, Any]:
         wms = sum(x["qty"] for x in by_part[pn])
         erp = wms
         if pn in diff_parts:
-            erp = max(0, wms + rng.choice([-1, 1]) * rng.choice([1, 2, 6, 12, 24, 48, 120]))
+            erp = max(0, wms + rng.choice([-1, 1]) * rng.choice([12, 24, 48, 96, 120]))
         recon_rows.append({"part_no": pn, "description": desc(pn), "erp": erp, "wms": wms, "diff": erp - wms,
                            "snapshots": rng.choice([1, 1, 2, 3, 5]) if erp != wms else 0})
-    # stock accuracy: average over parts of 1 - |ERP - WMS| / max(ERP, WMS)
-    acc_today = round(100.0 * sum(1.0 - abs(r["diff"]) / max(r["erp"], r["wms"], 1) for r in recon_rows) / len(recon_rows), 2)
+    acc_today = 96.42
     var = sorted([r for r in recon_rows if r["diff"]], key=lambda r: -abs(r["diff"]))
     for r in var:
         r["verdict"] = ("Persistent: goes to the count list" if r["snapshots"] >= 3 else
                         "Seen twice: watched" if r["snapshots"] == 2 else "Timing: posting in progress")
-    acc_trend = [{"date": (today - timedelta(days=b)).isoformat(), "accuracy": round(acc_today - b * 0.12 + rng.uniform(-0.2, 0.2), 2)}
+    acc_trend = [{"date": (today - timedelta(days=b)).isoformat(), "accuracy": round(acc_today - b * 0.11 + rng.uniform(-0.18, 0.18), 2)}
                  for b in range(13, 0, -1)]
     acc_trend.append({"date": today.isoformat(), "accuracy": acc_today})
     recon = {"parts": len(recon_rows), "matched": len(recon_rows) - len(var), "accuracy": acc_today, "variances": var[:14],
@@ -206,48 +207,87 @@ def build(source: str) -> dict[str, Any]:
     weeks = []
     for w in range(8, 0, -1):
         start = today - timedelta(days=today.weekday() + 7 * w)
-        opened = int(210 - (8 - w) * 9 + rng.uniform(-14, 14))
+        opened = int(208 - (8 - w) * 9 + rng.uniform(-11, 11))
         auto = int(opened * (0.58 + (8 - w) * 0.025 + rng.uniform(-0.03, 0.03)))
         weeks.append({"week": start.isoformat(), "opened": opened, "auto_cleared": auto, "by_person": int((opened - auto) * 0.7),
                       "carried": opened - auto - int((opened - auto) * 0.7)})
-    root = [("Stock in the other storage location", 41), ("Receipt posted late", 22), ("ERP and WMS disagree", 14),
-            ("Shortage (no stock)", 11), ("Bill of material / unit error", 7), ("Other", 5)]
+    root = [("Unscanned picks & late transfers", 56), ("4-week supply vs usage gap (BOM / box check)", 33),
+            ("Warehouse shortage & unposted GR", 11)]
     repeat = [{"part_no": pn, "description": desc(pn), "days": d, "cause": c}
               for pn, d, c in zip(sorted(rng.sample(part_ids, 6)), [5, 5, 4, 4, 3, 3],
-                                  ["Receipt posted late", "Stock in the other storage location", "Bill of material / unit error",
-                                   "Stock in the other storage location", "ERP and WMS disagree", "Receipt posted late"])]
+                                  ["Unscanned picks & late transfers", "Unscanned picks & late transfers", "4-week supply vs usage gap",
+                                   "Warehouse shortage & unposted GR", "Unscanned picks & late transfers", "4-week supply vs usage gap"])]
     weekly = {"weeks": weeks, "root_causes": [{"cause": c, "share": s} for c, s in root], "repeat_parts": repeat}
 
     # ---- 6. short-term supply monitoring ----
     sup_rows = []
-    fast = [pn for pn in part_ids if parts[pn]["velocity"] == "fast"] or part_ids
+    fast = [pn for pn in part_ids if parts[pn].get("velocity") == "fast"] or part_ids
     for pn in sorted(rng.sample(fast, min(12, len(fast)))):
         need = rng.choice([120, 240, 360, 480, 720])
         on_hand = rng.choice([0, 40, 90, 150, 260, 400])
         truck = rng.choice([0, 0, 120, 240, 480])
         short = max(0, need - on_hand - truck)
         sup_rows.append({"part_no": pn, "description": desc(pn), "supplier": parts[pn]["supplier_name"], "need_2h": need, "on_hand": on_hand,
-                         "on_truck": truck, "short": short, "window": rng.choice(["07:00-09:00", "09:00-11:00", "11:00-13:00"]),
+                         "on_truck": truck, "short": short, "window": rng.choice(["10:00-12:00", "12:00-14:00", "16:00-18:00"]),
                          "action": ("Add %d to the next truck" % short) if short else "Covered"})
     sup_rows.sort(key=lambda r: (-r["short"], r["window"]))
-    srm = {"rows": sup_rows, "monitored": 41, "short": sum(r["short"] > 0 for r in sup_rows),
-           "suppliers": sorted({r["supplier"] for r in sup_rows if r["short"]})}
+    srm = {"rows": sup_rows, "monitored": 29, "daily_monitored": 94, "short": sum(r["short"] > 0 for r in sup_rows),
+           "suppliers": ["Supplier 004", "Supplier 002"]}
 
     # ---- 7. morning summary ----
-    slots = [("03:10", "Ledger backup", "hq", "OK", "9 ledgers copied and verified"),
-             ("02:15", "Movement ledger collection", "col", "OK", "Yesterday's material documents loaded"),
-             ("05:45", "Stock snapshots (ERP and WMS)", "rec", "OK", "Both snapshots taken within 3 minutes"),
-             ("06:00", "Interface errors, first run", "gi", "OK", f"{interface['summary']['Auto-cleared']} cleared, {interface['summary']['Needs a person']} for a person"),
+    slots = [("02:15", "Movement ledger collection", "col", "OK", "Yesterday's material documents loaded"),
+             ("03:10", "Ledger backup", "hq", "OK", "9 ledgers copied and verified"),
+             ("05:45", "Stock snapshots (ERP and WMS)", "rec", "OK", "Both snapshots taken within 2 minutes"),
+             ("06:00", "Interface errors, continuous daemon", "gi", "OK", "23 transfers posted across 29 runs"),
              ("06:20", "Backlog clearing, run 1", "bkl", "OK", f"{backlog['by_run']['06:20']} transfers posted"),
-             ("06:40", "Supplier monitoring", "srm", "OK", f"{srm['short']} parts short in the next windows"),
+             ("06:40", "Supplier monitoring & truck plan", "srm", "OK", "29 2h / 94 daily parts · Supplier 004 plan drafted"),
              ("06:50", "Daily count list", "acc", "OK", f"{len(count_rows)} bins sent to the count team"),
-             ("07:20", "Portal draft collection", "acc", "LATE", "Finished 6 minutes after the slot (portal slow)"),
-             ("07:30", "Reconciliation report", "rec", "OK", f"Accuracy {acc_today}%")]
+             ("07:20", "Portal draft collection", "gi", "LATE", "Finished 6 minutes after the slot (portal slow)"),
+             ("07:30", "Reconciliation report", "rec", "OK", f"Official accuracy {acc_today}%")]
     morning = {"slots": [{"time": t, "task": n, "unit": u, "status": s, "note": x} for t, n, u, s, x in sorted(slots)],
-               "ok": sum(s[3] == "OK" for s in slots), "late": sum(s[3] == "LATE" for s in slots), "failed": 0}
+               "ok": 20, "late": 1, "failed": 0}
+
+    # ---- 8. manifest of real-format rendered report artifacts under demo/reports/ ----
+    reports = {
+        "count": [
+            {"id": "daily-mail", "label": "Daily Dispatch Mail (06:50)", "kind": "HTML mail", "src": "reports/count_daily_mail.html"},
+            {"id": "daily-xlsx", "label": "Daily Count Sheet (.xlsx)", "kind": "2-tab workbook", "src": "reports/count_daily_sheet.html"},
+            {"id": "weekly-mail", "label": "Saturday Weekly Mail (07:00)", "kind": "HTML mail", "src": "reports/count_weekly_mail.html"},
+            {"id": "weekly-xlsx", "label": "Saturday Weekly Sheet (.xlsx)", "kind": "2-tab workbook", "src": "reports/count_weekly_sheet.html"},
+        ],
+        "hitrate": [
+            {"id": "brief", "label": "Weekly Floor Brief & Hit-Rate Mail", "kind": "6-chart HTML mail", "src": "reports/weekly_hit_rate.html"},
+            {"id": "xlsx", "label": "4-Sheet Evidence Workbook (.xlsx)", "kind": "4-tab workbook", "src": "reports/weekly_hit_rate_workbook.html"},
+        ],
+        "backlog": [
+            {"id": "mail", "label": "Daily Resolution & Status Mail (08:42)", "kind": "HTML mail", "src": "reports/backlog_mail.html"},
+            {"id": "xlsx", "label": "Unresolved Backlog Workbook (.xlsx)", "kind": "2-tab workbook", "src": "reports/backlog_workbook.html"},
+        ],
+        "interface": [
+            {"id": "mail", "label": "Daily GI Cumulative Report (07:30)", "kind": "HTML mail + D107/D109/D110", "src": "reports/gi_daily_mail.html"},
+        ],
+        "weekly": [
+            {"id": "slides", "label": "5-Page Visual Report (PDF Layout)", "kind": "5 landscape pages", "src": "reports/backlog_3q_slides.html"},
+            {"id": "mail", "label": "Friday 08:30 Cover Mail", "kind": "HTML mail", "src": "reports/backlog_3q_mail.html"},
+            {"id": "xlsx", "label": "3-Sheet Filterable Workbook (.xlsx)", "kind": "3-tab workbook", "src": "reports/backlog_3q_workbook.html"},
+        ],
+        "srm": [
+            {"id": "truck-plan", "label": "Supplier 004 Truck Plan (.xlsx)", "kind": "Truck plan + 2-hour detail", "src": "reports/srm_truck_plan.html"},
+            {"id": "mails", "label": "Internal & Supplier Draft Mails", "kind": "HTML mails", "src": "reports/srm_mail.html"},
+            {"id": "mon-xlsx", "label": "Internal Monitoring Workbook (.xlsx)", "kind": "3-tab workbook", "src": "reports/srm_monitoring_workbook.html"},
+        ],
+        "recon": [
+            {"id": "mail", "label": "Executive Reconciliation Mail (07:30)", "kind": "HTML mail", "src": "reports/recon_mail.html"},
+            {"id": "xlsx", "label": "4-Sheet Reconciliation Workbook (.xlsx)", "kind": "4-tab workbook", "src": "reports/recon_workbook.html"},
+        ],
+        "morning": [
+            {"id": "mail", "label": "HQ Morning Operations Brief (07:35)", "kind": "HTML mail", "src": "reports/morning_ops.html"},
+        ],
+    }
 
     return {"meta": {"date": today.isoformat(), "seed": SEED, "source": "https://github.com/Miaou360/3d-warehouse-visualizer",
                      "notice": "Sample outputs for a synthetic plant. No real part, supplier, quantity or result."},
+            "reports": reports,
             "count": count, "interface": interface, "backlog": backlog, "recon": recon, "weekly": weekly, "srm": srm, "morning": morning}
 
 

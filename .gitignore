@@ -62,6 +62,8 @@ client_secrets*.json
 **/resolution_logs/
 **/backlog_daily_stack/
 **/reports/
+!demo/reports/
+!demo/reports/**
 **/raw_exports/
 **/preview_*.html
 **/DRYRUN_*

@@ -45,7 +45,7 @@
     ["rbin", "04:15", "Return-bin report", "inv"], ["srm", "06:40", "Supplier truck plan", "logi", "srm"], ["rec", "06:45", "Reconciliation", "inv", "recon"],
     ["acc", "06:50", "Daily count list", "count", "count"], ["gi", "07:23", "Deletion candidates", "inv"], ["gi", "07:30", "Error report", "inv", "interface"],
     ["hq", "07:35", "Morning summary", "owner", "morning"], ["bkl", "08:30", "Backlog report", "prod", "backlog"],
-    ["ana", "08:30", "Weekly analysis", "prod", "weekly", "Fri"], ["acc", "09:40", "Weekly hit-rate report", "inv", null, "Sat"],
+    ["ana", "08:30", "Weekly analysis", "prod", "weekly", "Fri"], ["acc", "09:40", "Weekly hit-rate report", "inv", "hitrate", "Sat"],
     ["srm", "13:40", "Truck plan for tomorrow", "logi", "srm"],
   ].map(([unit, t, doc, to, out, tag]) => ({ unit, t, m: mins(t), doc, to, out, tag }));
 
