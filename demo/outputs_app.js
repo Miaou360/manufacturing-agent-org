@@ -123,7 +123,7 @@
           table(["Part No", "Description", "#Missing qty", "#Stock in North", "Why it was not cleared", "Next step"], b.remaining.map((r) =>
             `<tr>${part(r)}<td class="n">${fmt(r.qty)}</td><td class="n">${fmt(r.north_stock)}</td><td>${esc(r.cause)}</td><td>${esc(r.next_step)}</td></tr>`)) +
           `<h3 class="sub">Transfers posted by the agent <small>${Object.entries(b.by_run).map(([k, v]) => `${k}: ${v}`).join(" · ")}</small></h3>` +
-          table(["Run", "Part No", "Description", "#Qty", "From → To", "ERP document", "#Accuracy change"], b.cleared.map((r) =>
+          table(["Run", "Part No", "Description", "#Qty", "From → To", "Document (sample no.)", "#Accuracy change"], b.cleared.map((r) =>
             `<tr><td class="m">${r.run}</td>${part(r)}<td class="n">${fmt(r.qty)}</td><td class="m">${r.from} → ${r.to}</td><td class="m">${r.document}</td><td class="n">+${r.delta.toFixed(2)} pt</td></tr>`)) +
           next(`Every transfer passes three guards first: the difference must persist across snapshots, no receipt or issue for the part may be in flight, and plant accuracy must not drop. ` +
             `Lines held by a guard go to ${go("count", "the count list")}; the week's pattern is in ${go("weekly", "the weekly analysis")}.`);

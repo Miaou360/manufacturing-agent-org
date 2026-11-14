@@ -158,8 +158,9 @@ def build(source: str) -> dict[str, Any]:
         need = rng.choice([6, 12, 18, 30, 48, 72, 150, 300])
         north = sum(x["qty"] for x in by_part[pn] if x["fac"] == "north")
         if i < 31:
+            _ = rng.randrange(10**7, 10**8)
             cleared.append({"part_no": pn, "description": desc(pn), "qty": need, "from": "WH-NORTH", "to": "LINE",
-                            "run": "06:20" if i < 19 else ("08:15" if i < 24 else "08:30"), "document": f"49{rng.randrange(10**7, 10**8)}",
+                            "run": "06:20" if i < 19 else ("08:15" if i < 24 else "08:30"), "document": f"DOC-{i + 1:06d}",
                             "accuracy_before": round(rng.uniform(91, 97), 1), "delta": round(rng.uniform(0.0, 0.6), 2)})
         else:
             south = sum(x["qty"] for x in by_part[pn] if x["fac"] == "south")
