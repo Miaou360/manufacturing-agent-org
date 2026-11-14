@@ -4,8 +4,10 @@ A plant's stock lives in two systems, the ERP and the warehouse system, and they
 
 [![Live Map](https://img.shields.io/badge/Live_Map-GitHub_Pages-0ea5e9?style=for-the-badge&logo=github)](https://miaou360.github.io/manufacturing-agent-org/)
 [![Sample Outputs](https://img.shields.io/badge/Sample_Outputs-one_working_day-f4c152?style=for-the-badge)](https://miaou360.github.io/manufacturing-agent-org/demo/outputs.html)
+[![How It Is Built](https://img.shields.io/badge/How_It_Is_Built-data_%26_flow-199e70?style=for-the-badge)](https://miaou360.github.io/manufacturing-agent-org/demo/architecture.html)
 
 - **[What it produces](https://miaou360.github.io/manufacturing-agent-org/demo/outputs.html)** — one working day of outputs: who receives each one, what they decide with it, what the agents did on their own.
+- **[How it is built](https://miaou360.github.io/manufacturing-agent-org/demo/architecture.html)** — data model (one SQLite ledger per job, read-only cross-ledger links), end-to-end swim-lane flow, cycle-count decision pipeline, and runtime safety guards.
 - **[How it is organized](https://miaou360.github.io/manufacturing-agent-org/)** — departments and jobs, the 21 scheduled tasks on a 24-hour clock (press *Play the day*), the path from source systems to action, and the human approval loop.
 
 [![Sample outputs: the daily cycle count list](docs/screenshots/sample_outputs.png)](https://miaou360.github.io/manufacturing-agent-org/demo/outputs.html)
