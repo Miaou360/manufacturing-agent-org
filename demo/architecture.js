@@ -19,6 +19,7 @@
     rbin: svgIcon('<path d="M4 8h16v11a1 1 0 01-1 1H5a1 1 0 01-1-1z"/><path d="M3 5h18v3H3zM9.5 13.5h5M12 11.5l-2.5 2 2.5 2"/>'),
     col: svgIcon('<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/>'),
     srm: svgIcon('<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>'),
+    dlv: svgIcon('<path d="M4 5h16v14H4z"/><path d="M8 9v6M11 9v6M14 9v3M17 9v3"/><path d="M13.5 15.5l1.5 1.5 3-3"/>'),
   };
 
   const LEDGERS = [
@@ -34,7 +35,7 @@
         ["provenance_cache", "db_path, mtime_ns, byte_size, sha256_prefix"],
         ["backup_manifest", "run_date, ledger_name, wal_checkpoint_ok"],
       ],
-      reads: ["acc", "gi", "bkl", "rec", "rbin", "col", "srm"],
+      reads: ["acc", "gi", "bkl", "rec", "rbin", "col", "srm", "dlv"],
     },
     {
       unit: "acc",
@@ -135,17 +136,32 @@
     },
     {
       unit: "srm",
-      db: "srm_monitoring.db",
+      db: "inbox/ + sent_snapshots/",
       snapshot: true,
       outId: "srm",
-      outLabel: "Supplier truck plan & shortage check (06:40 / 13:40)",
+      outLabel: "Supplier truck plan (06:40 / 13:40 / UPDATED)",
       tables: [
         ["srm_require_2h", "run_slot, part_no, supplier_id, slot_start, req_qty"],
         ["srm_order_plan", "run_slot, part_no, truck_window, srm_order_qty"],
-        ["truck_plan_output", "run_slot, supplier_id, part_no, truck_window, load_qty"],
-        ["shortage_alerts", "run_slot, part_no, first_short_window, add_qty"],
+        ["truck_plan_leveled", "supplier_id, part_no, truck_slot, load_qty, carts"],
+        ["pm_last_sent_json", "run_date, supplier_id, sent_at, workbook_sha256"],
       ],
       reads: ["rec"],
+    },
+    {
+      unit: "dlv",
+      db: "delivery_check.db",
+      snapshot: true,
+      outId: "delivery",
+      outLabel: "Supplier delivery-status file (every 10 min)",
+      tables: [
+        ["plan_horizon_parts", "work_date, part_key, box_qty, start_sap, load_json"],
+        ["truck_runs", "truck_id, supplier_key, slot_idx, status, quiet_polls"],
+        ["truck_plan_lines", "truck_id, part_key, planned_pcs, planned_boxes"],
+        ["wms_gr_barcodes", "barcode, mat_no, gr_time, gr_qty, assigned_truck_id"],
+        ["delivery_verdicts", "truck_id, part_key, verdict, line_shortage_alarm"],
+      ],
+      reads: ["srm", "rec"],
     },
   ];
 
@@ -183,12 +199,22 @@
     {
       unit: "srm",
       source: "Supplier portal + morning ERP stock",
-      collect: "06:40 (today) & 13:40 (next day) portal download",
-      ledger: "<code>srm_monitoring.db</code>",
-      decide: "2-hour stock projection + full-box truck load plan",
-      guard: "Single login attempt, file-date check, day-total invariance",
-      act: "Generates 2-sheet Truck Plan workbook per supplier",
-      report: "<a href='outputs.html#srm'>Truck plan</a> → Logistics & suppliers",
+      collect: "06:40 (today), 13:40 (tomorrow) & manual PM refresh",
+      ledger: "<code>inbox/</code> &amp; <code>pm_last_sent</code>",
+      decide: "Zero-shortage pull + 1.7x / 33-cart minimal-change leveling",
+      guard: "Never push later, day-total invariance, changed-only resend",
+      act: "Writes 2-sheet Truck Plan (and diff-only UPDATED plan)",
+      report: "<a href='outputs.html#srm'>Truck plan</a> &amp; <a href='outputs.html#srm-updated'>UPDATED</a>",
+    },
+    {
+      unit: "dlv",
+      source: "Frozen truck plan + WMS 101 GR scans",
+      collect: "Every 10 min around active truck windows",
+      ledger: "<code>delivery_check.db</code>",
+      decide: "Attribute GR barcodes to trucks; project hybrid 2h stock",
+      guard: "?mode=ro boundary, missing-start-stock suppression, dual mail lock",
+      act: "Closes settled trucks &amp; builds Plan vs Delivered workbook",
+      report: "<a href='outputs.html#delivery'>Delivery-status</a> → Suppliers &amp; planner",
     },
     {
       unit: "acc",
@@ -244,15 +270,16 @@
 
   // Coordinates for the inline SVG read-only dependency diagram (viewBox 880 x 230)
   const NODE_POS = {
-    col: { x: 82, y: 62, label: "06 Collector", sub: "ops_raw.db" },
-    rec: { x: 82, y: 166, label: "04 Reconcile", sub: "morning stock" },
-    gi: { x: 278, y: 62, label: "01 GR/GI", sub: "gi_error.db" },
-    bkl: { x: 278, y: 166, label: "02 Backlog", sub: "backlog.db" },
-    acc: { x: 482, y: 62, label: "00 Accuracy", sub: "inventory.db" },
-    ana: { x: 482, y: 166, label: "03 Analysis", sub: "analytics.db" },
-    srm: { x: 684, y: 62, label: "00 SRM", sub: "srm_mon.db" },
-    rbin: { x: 684, y: 166, label: "05 Return-Bin", sub: "r_bins.db" },
-    hq: { x: 824, y: 114, label: "00 HQ", sub: "07:35 probe" },
+    col: { x: 74, y: 58, label: "06 Collector", sub: "ops_raw.db" },
+    rec: { x: 74, y: 170, label: "04 Reconcile", sub: "morning stock" },
+    gi: { x: 236, y: 58, label: "01 GR/GI", sub: "gi_error.db" },
+    bkl: { x: 236, y: 170, label: "02 Backlog", sub: "backlog.db" },
+    acc: { x: 398, y: 58, label: "00 Accuracy", sub: "inventory.db" },
+    ana: { x: 398, y: 170, label: "03 Analysis", sub: "analytics.db" },
+    srm: { x: 560, y: 58, label: "00 Dispatch", sub: "truck plans" },
+    dlv: { x: 710, y: 58, label: "02 Delivery", sub: "delivery.db" },
+    rbin: { x: 560, y: 170, label: "05 Return-Bin", sub: "r_bins.db" },
+    hq: { x: 830, y: 124, label: "00 HQ", sub: "07:35 probe" },
   };
 
   function unitMap() {
@@ -270,6 +297,7 @@
   function renderPills(unitsById, selectFn) {
     const host = document.getElementById("arch-pills");
     host.innerHTML = window.ORG.units
+      .filter((u) => !u.planned)
       .map((u) => {
         const c = deptColor(u);
         return (
@@ -361,7 +389,7 @@
         }
       });
       if (l.unit === "hq") {
-        roBadges.push(`<span class="ro-tag">probes & backs up all 8 DBs</span>`);
+        roBadges.push(`<span class="ro-tag">probes & backs up all 9 DBs</span>`);
       }
       if (!roBadges.length) {
         roBadges.push(`<span class="ro-tag">primary source ledger</span>`);
@@ -472,6 +500,77 @@
     svg.querySelector("g").addEventListener("click", () => selectFn("acc"));
   }
 
+  function renderLogisticsSvg(selectFn) {
+    const svg = document.getElementById("logistics-svg");
+    if (!svg) return;
+    svg.innerHTML = `
+      <defs>
+        <marker id="arr-log" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 9 5 L 0 9 z" fill="#d95926"/>
+        </marker>
+        <marker id="arr-warn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 9 5 L 0 9 z" fill="#f4c152"/>
+        </marker>
+      </defs>
+      <g data-unit="srm" style="cursor:pointer">
+        <rect x="10" y="16" width="124" height="92" rx="9" fill="#141f35" stroke="#d95926" stroke-width="1.8"/>
+        <text x="20" y="37" fill="#eef3fb" font-size="11.8" font-weight="600">1. SRM Order</text>
+        <text x="20" y="55" fill="#9fb0cc" font-size="10.4">• 2h &amp; daily portal</text>
+        <text x="20" y="71" fill="#9fb0cc" font-size="10.4">• 06:00 ERP stock</text>
+        <text x="20" y="87" fill="#9fb0cc" font-size="10.4">• Late PM changes</text>
+
+        <path d="M 134 62 L 154 62" stroke="#d95926" stroke-width="2" marker-end="url(#arr-log)"/>
+
+        <rect x="156" y="16" width="154" height="92" rx="9" fill="#141f35" stroke="#f4c152" stroke-width="1.8"/>
+        <text x="166" y="37" fill="#f8dfa1" font-size="11.8" font-weight="600">2. Leveling (00_JOB)</text>
+        <text x="166" y="55" fill="#d9e2f2" font-size="10.4">• Rule 1: 0 shortages</text>
+        <text x="166" y="71" fill="#d9e2f2" font-size="10.4">• Rule 2: &gt;1.7× or &gt;33 cap</text>
+        <text x="166" y="87" fill="#9fb0cc" font-size="10.4">• Fewest parts pulled</text>
+
+        <path d="M 310 62 L 330 62" stroke="#d95926" stroke-width="2" marker-end="url(#arr-log)"/>
+
+        <rect x="332" y="16" width="136" height="92" rx="9" fill="#141f35" stroke="#d95926" stroke-width="1.8"/>
+        <text x="342" y="37" fill="#eef3fb" font-size="11.8" font-weight="600">3. Supplier Plan</text>
+        <text x="342" y="55" fill="#9fb0cc" font-size="10.4">• 06:40 / 13:40 xlsx</text>
+        <text x="342" y="71" fill="#9fb0cc" font-size="10.4">• Total carts (boxes)</text>
+        <text x="342" y="87" fill="#f8dfa1" font-size="10.4">• UPDATED diff-only</text>
+      </g>
+
+      <path d="M 468 62 L 488 62" stroke="#d95926" stroke-width="2" marker-end="url(#arr-log)"/>
+
+      <g data-unit="dlv" style="cursor:pointer">
+        <rect x="490" y="16" width="118" height="92" rx="9" fill="#141f35" stroke="#d95926" stroke-width="1.8"/>
+        <text x="500" y="37" fill="#eef3fb" font-size="11.8" font-weight="600">4. WMS GR</text>
+        <text x="500" y="55" fill="#9fb0cc" font-size="10.4">• 10-min poll</text>
+        <text x="500" y="71" fill="#9fb0cc" font-size="10.4">• Mvt 101 scans</text>
+        <text x="500" y="87" fill="#9fb0cc" font-size="10.4">• Quiet-poll close</text>
+
+        <path d="M 608 62 L 628 62" stroke="#d95926" stroke-width="2" marker-end="url(#arr-log)"/>
+
+        <rect x="630" y="16" width="122" height="92" rx="9" fill="#141f35" stroke="#d95926" stroke-width="1.8"/>
+        <text x="640" y="37" fill="#eef3fb" font-size="11.8" font-weight="600">5. Delivery Check</text>
+        <text x="640" y="55" fill="#9fb0cc" font-size="10.4">• Plan vs Delivered</text>
+        <text x="640" y="71" fill="#9fb0cc" font-size="10.4">• Hybrid 2h stock</text>
+        <text x="640" y="87" fill="#9fb0cc" font-size="10.4">• Next-truck gap</text>
+
+        <path d="M 752 62 L 772 62" stroke="#d95926" stroke-width="2" marker-end="url(#arr-log)"/>
+
+        <rect x="774" y="16" width="96" height="92" rx="9" fill="#141f35" stroke="#f4c152" stroke-width="1.8"/>
+        <text x="784" y="37" fill="#f8dfa1" font-size="11.8" font-weight="600">6. Warning</text>
+        <text x="784" y="55" fill="#d9e2f2" font-size="10.4">• Red shortfall</text>
+        <text x="784" y="71" fill="#d9e2f2" font-size="10.4">• Full boxes</text>
+        <text x="784" y="87" fill="#9fb0cc" font-size="10.4">• Pre-cutoff</text>
+      </g>
+
+      <path d="M 822 108 L 822 156 L 400 156 L 400 110" fill="none" stroke="#f4c152" stroke-width="1.7" stroke-dasharray="5 4" marker-end="url(#arr-warn)"/>
+      <text x="610" y="148" text-anchor="middle" fill="#f4c152" font-family="Consolas, monospace" font-size="10.5">Recovery loop: supplier adds missing boxes onto the next scheduled truck before line stock reaches zero</text>
+      <text x="235" y="174" text-anchor="middle" fill="#9fb0cc" font-family="Segoe UI, sans-serif" font-size="10.6">Leveling rule: pull forward whole boxes only (never push later) · keep ≥50% stock margin · largest box count first</text>
+    `;
+    svg.querySelectorAll("g[data-unit]").forEach((g) => {
+      g.addEventListener("click", () => selectFn(g.dataset.unit));
+    });
+  }
+
   function renderApprovalLoop() {
     const ol = document.getElementById("arch-loop");
     ol.innerHTML = window.ORG.loop
@@ -541,6 +640,7 @@
     renderLedgerCards(unitsById, selectUnit);
     renderSwimlanes(unitsById, selectUnit);
     renderDecisionSvg(selectUnit);
+    renderLogisticsSvg(selectUnit);
     renderApprovalLoop();
 
     document.getElementById("clear-focus").addEventListener("click", () => selectUnit(null));

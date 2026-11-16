@@ -15,6 +15,9 @@
     rbin: svg('<path d="M4 8h16v11a1 1 0 01-1 1H5a1 1 0 01-1-1z"/><path d="M3 5h18v3H3zM9.5 13.500h5M12 11.500l-2.5 2 2.5 2"/>'),
     col: svg('<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/>'),
     srm: svg('<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>'),
+    dlv: svg('<path d="M4 5h16v14H4z"/><path d="M8 9v6M11 9v6M14 9v3M17 9v3"/><path d="M13.5 15.5l1.5 1.5 3-3"/>'),
+    grr: svg('<path d="M7 4h10l3 4v12H4V8z"/><path d="M9 13l2 2 4-4M4 8h16"/>'),
+    dlr: svg('<path d="M4 19h16M6 16l4-4 3 2 5-6"/><circle cx="18" cy="8" r="1.5"/>'),
     erp: svg('<rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/><path d="M7.5 7h.01M7.5 17h.01M11 7h5M11 17h5"/>'),
     wms: svg('<path d="M3 10l9-6 9 6v10H3z"/><path d="M8 20v-6h8v6M8 17h8"/>'),
     portal: svg('<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.500c2.5 2.5 3.5 5.5 3.5 8.500s-1 6-3.5 8.500c-2.5-2.5-3.5-5.5-3.5-8.500s1-6 3.5-8.500z"/>'),
@@ -24,40 +27,66 @@
     doc: svg('<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/>'),
   };
   const ROLE = { // one plain line per desk: what this agent is for
-    hq: "Keeps everyone from colliding; reports every morning", acc: "Picks the bins worth counting today",
-    gi: "Fixes receipts and issues that failed to post", bkl: "Unblocks yesterday's production bookings",
-    ana: "Finds why the backlog keeps coming back", rec: "Checks that ERP and WMS agree",
-    rbin: "Finds material left in receiving bins", col: "Brings in the night's raw data",
-    srm: "Warns before the line runs short",
+    hq: "Keeps everyone from colliding; reports every morning",
+    acc: "Picks the bins worth counting today",
+    gi: "Fixes receipts and issues that failed to post",
+    bkl: "Unblocks yesterday's production bookings",
+    ana: "Finds why the backlog keeps coming back",
+    rec: "Checks that ERP and WMS agree",
+    rbin: "Finds material left in receiving bins",
+    col: "Brings in the night's raw data",
+    srm: "Levels SRM orders onto supplier trucks without shortages",
+    dlv: "Tracks receipts every 10 min per truck; warns on shortfalls",
+    grr: "Planned: reconciles WMS receipts with ERP inbound bookings",
+    dlr: "Planned: scores weekly supplier delivery performance",
   };
   const SYSTEMS = [
-    { icon: "erp", name: "ERP", sub: "stock, postings, production" }, { icon: "wms", name: "Warehouse system", sub: "every box and bin" },
-    { icon: "portal", name: "Supplier portal", sub: "delivery plans" }, { icon: "floor", name: "Shop floor", sub: "count sheets come back" },
+    { icon: "erp", name: "ERP", sub: "stock, postings, production" },
+    { icon: "wms", name: "Warehouse system", sub: "every box, bin & GR scan" },
+    { icon: "portal", name: "Supplier portal", sub: "SRM delivery schedules" },
+    { icon: "floor", name: "Shop floor", sub: "count sheets come back" },
   ];
   const PEOPLE = [
     { id: "count", icon: "team", name: "Count team", sub: "counts the bins on the list" },
     { id: "inv", icon: "person", name: "Inventory lead", sub: "decides adjustments and deletions" },
     { id: "prod", icon: "team", name: "Production control & management", sub: "acts on what is still blocked" },
-    { id: "logi", icon: "person", name: "Logistics planner", sub: "calls suppliers, changes trucks" },
+    { id: "logi", icon: "person", name: "Logistics planner", sub: "monitors internal summary & PM refresh" },
+    { id: "sup", icon: "srm", name: "Suppliers (Supplier A / B)", sub: "load trucks, act on delivery-status warnings" },
     { id: "owner", icon: "person", name: "Operations owner", sub: "approves changes, reads the summary" },
   ];
   const DELIVER = [ // unit, time, document, recipient, sample output id, weekly tag
-    ["rbin", "04:15", "Return-bin report", "inv"], ["srm", "06:40", "Supplier truck plan", "logi", "srm"], ["rec", "06:45", "Reconciliation", "inv", "recon"],
-    ["acc", "06:50", "Daily count list", "count", "count"], ["gi", "07:23", "Deletion candidates", "inv"], ["gi", "07:30", "Error report", "inv", "interface"],
-    ["hq", "07:35", "Morning summary", "owner", "morning"], ["bkl", "08:30", "Backlog report", "prod", "backlog"],
-    ["ana", "08:30", "Weekly analysis", "prod", "weekly", "Fri"], ["acc", "09:40", "Weekly hit-rate report", "inv", "hitrate", "Sat"],
-    ["srm", "13:40", "Truck plan for tomorrow", "logi", "srm"],
+    ["rbin", "04:15", "Return-bin report", "inv"],
+    ["srm", "06:40", "Supplier truck plan (06:40)", "sup", "srm"],
+    ["srm", "06:45", "Internal dispatch summary", "logi", "srm"],
+    ["rec", "06:45", "Reconciliation", "inv", "recon"],
+    ["acc", "06:50", "Daily count list", "count", "count"],
+    ["gi", "07:23", "Deletion candidates", "inv"],
+    ["gi", "07:30", "Error report", "inv", "interface"],
+    ["hq", "07:35", "Morning summary", "owner", "morning"],
+    ["bkl", "08:30", "Backlog report", "prod", "backlog"],
+    ["ana", "08:30", "Weekly analysis", "prod", "weekly", "Fri"],
+    ["acc", "09:40", "Weekly hit-rate report", "inv", "hitrate", "Sat"],
+    ["dlv", "11:00", "Supplier delivery-status file", "sup", "delivery"],
+    ["dlv", "11:02", "Internal truck-close summary", "logi", "delivery"],
+    ["srm", "13:40", "Supplier truck plan (13:40)", "sup", "srm"],
+    ["srm", "15:40", "UPDATED truck plan", "sup", "srm-updated"],
   ].map(([unit, t, doc, to, out, tag]) => ({ unit, t, m: mins(t), doc, to, out, tag }));
 
   let O, onSelect;
   window.renderOffice = function (root, org, select) {
     O = org; onSelect = select;
     const color = (u) => O.depts[u.dept].color;
-    const desk = (u) => `<button type="button" class="unit desk${u.id === "hq" ? " desk-hq" : ""}" data-unit="${u.id}" style="--c:${color(u)}" aria-pressed="false">` +
-      `<span class="avatar">${ICON[u.id]}</span><span class="who"><small>${esc(u.code)}</small><b>${esc(u.name)}</b><em>${esc(ROLE[u.id])}</em></span>` +
+    const desk = (u) => `<button type="button" class="unit desk${u.id === "hq" ? " desk-hq" : ""}${u.planned ? " desk-planned" : ""}" data-unit="${u.id}" style="--c:${color(u)}" aria-pressed="false">` +
+      `<span class="avatar">${ICON[u.id] || ICON.doc}</span><span class="who"><small>${esc(u.code)}${u.planned ? " · PLANNED" : ""}</small><b>${esc(u.name)}</b><em>${esc(ROLE[u.id] || u.one)}</em></span>` +
       `<span class="state" data-state="${u.id}"><i></i><span></span></span></button>`;
-    const room = (d) => `<div class="room" style="--c:${O.depts[d].color}"><div class="room-name"><i></i>${esc(O.depts[d].name)} <small>${((n) => n + (n === 1 ? " agent" : " agents"))(O.units.filter((u) => u.dept === d).length)}</small></div>` +
-      `<div class="desks">${O.units.filter((u) => u.dept === d).map(desk).join("")}</div></div>`;
+    const room = (d) => {
+      const units = O.units.filter((u) => u.dept === d);
+      const liveN = units.filter((u) => !u.planned).length;
+      const planN = units.length - liveN;
+      const countLbl = planN > 0 ? `${liveN} live · ${planN} planned` : `${liveN} ${liveN === 1 ? "agent" : "agents"}`;
+      return `<div class="room" style="--c:${O.depts[d].color}"><div class="room-name"><i></i>${esc(O.depts[d].name)} <small>${esc(countLbl)}</small></div>` +
+        `<div class="desks">${units.map(desk).join("")}</div></div>`;
+    };
     root.innerHTML =
       `<div class="col-side"><h3>They read</h3>${SYSTEMS.map((s) => `<div class="sys"><span class="avatar">${ICON[s.icon]}</span><span><b>${esc(s.name)}</b><small>${esc(s.sub)}</small></span></div>`).join("")}</div>` +
       `<div class="arrow" aria-hidden="true"><span>read</span></div>` +
@@ -76,6 +105,10 @@
       const s = document.querySelector(`[data-state="${u.id}"]`); if (!s) return;
       const b = s.closest(".desk");
       b.classList.toggle("running", !!busy[u.id]);
+      if (u.planned) {
+        s.lastElementChild.textContent = "Planned";
+        return;
+      }
       const nx = nextOf(u.id);
       s.lastElementChild.textContent = busy[u.id] ? `Working: ${busy[u.id]}` : nx ? `Next run ${nx}` : "Done for today";
     });

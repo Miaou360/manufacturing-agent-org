@@ -18,7 +18,7 @@
       for (let m = 0; m < 1440; m += 30) if ((m >= 480 && m <= 1020) || m % 60 === 0) out.push(m);
       return out;
     }
-    if (task.every) { const out = []; for (let m = mins(task.t); m < 1440; m += task.every) out.push(m); return out; }
+    if (task.every) { const out = [], lim = task.until || 1439; for (let m = mins(task.t); m <= lim; m += task.every) out.push(m); return out; }
     return [mins(task.t)];
   }
   const RUN = 12; // minutes a task is shown as running
@@ -36,7 +36,7 @@
     return b;
   }
   function renderOrg() { window.renderOffice($("org"), O, select); }
-  const SAMPLE = { hq: "morning", acc: "count", gi: "interface", bkl: "backlog", ana: "weekly", rec: "recon", srm: "srm" };
+  const SAMPLE = { hq: "morning", acc: "count", gi: "interface", bkl: "backlog", ana: "weekly", rec: "recon", srm: "srm", dlv: "delivery" };
   function renderDetail() {
     const u = unitById[selected];
     const tasks = O.tasks.filter((t) => t.unit === u.id).sort((a, b) => mins(a.t) - mins(b.t));
@@ -45,7 +45,7 @@
       `<div><h3>${esc(u.name)}</h3><p class="lead">${esc(u.one)}</p><ul>${u.does.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>` +
       `<div><h4>Reads</h4><div class="chips">${list(u.inputs)}</div><h4>Produces</h4><div class="chips">${list(u.outputs)}</div>${SAMPLE[u.id] ? `<a class="sample" href="outputs.html#${SAMPLE[u.id]}">See a sample output →</a>` : ""}</div>` +
       `<div><h4>Guards</h4><div class="chips">${u.guards.map((x) => `<span class="chip guard">${esc(x)}</span>`).join("")}</div>` +
-      `<h4>Schedule</h4><div class="sched">${tasks.map((t) => `<b>${t.daemon ? "24 h" : t.every ? "2 h" : esc(t.t)}</b><span>${esc(t.name)}</span><em>${esc(t.days)}</em>`).join("") || "<span>Runs inside other jobs</span>"}</div></div>`;
+      `<h4>Schedule</h4><div class="sched">${tasks.map((t) => `<b>${t.daemon ? "24 h" : t.every ? (t.every < 60 ? t.every + " min" : (t.every / 60) + " h") : esc(t.t)}</b><span>${esc(t.name)}</span><em>${esc(t.days)}</em>`).join("") || (u.planned ? "<span>Planned — next phase after 00_JOB & 02_JOB</span>" : "<span>Runs inside other jobs</span>")}</div></div>`;
   }
   function select(id) {
     selected = id;

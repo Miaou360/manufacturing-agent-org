@@ -232,7 +232,7 @@ def build(source: str) -> dict[str, Any]:
                          "action": ("Add %d to the next truck" % short) if short else "Covered"})
     sup_rows.sort(key=lambda r: (-r["short"], r["window"]))
     srm = {"rows": sup_rows, "monitored": 29, "daily_monitored": 94, "short": sum(r["short"] > 0 for r in sup_rows),
-           "suppliers": ["Supplier 004", "Supplier 002"]}
+           "suppliers": ["Supplier A", "Supplier B"]}
 
     # ---- 7. morning summary ----
     slots = [("02:15", "Movement ledger collection", "col", "OK", "Yesterday's material documents loaded"),
@@ -240,7 +240,7 @@ def build(source: str) -> dict[str, Any]:
              ("05:45", "Stock snapshots (ERP and WMS)", "rec", "OK", "Both snapshots taken within 2 minutes"),
              ("06:00", "Interface errors, continuous daemon", "gi", "OK", "23 transfers posted across 29 runs"),
              ("06:20", "Backlog clearing, run 1", "bkl", "OK", f"{backlog['by_run']['06:20']} transfers posted"),
-             ("06:40", "Supplier monitoring & truck plan", "srm", "OK", "29 2h / 94 daily parts · Supplier 004 plan drafted"),
+             ("06:40", "Supplier monitoring & truck plan", "srm", "OK", "29 2h / 94 daily parts · Supplier A & B leveled truck plans sent"),
              ("06:50", "Daily count list", "acc", "OK", f"{len(count_rows)} bins sent to the count team"),
              ("07:20", "Portal draft collection", "gi", "LATE", "Finished 6 minutes after the slot (portal slow)"),
              ("07:30", "Reconciliation report", "rec", "OK", f"Official accuracy {acc_today}%")]
@@ -272,9 +272,18 @@ def build(source: str) -> dict[str, Any]:
             {"id": "xlsx", "label": "3-Sheet Filterable Workbook (.xlsx)", "kind": "3-tab workbook", "src": "reports/backlog_3q_workbook.html"},
         ],
         "srm": [
-            {"id": "truck-plan", "label": "Supplier 004 Truck Plan (.xlsx)", "kind": "Truck plan + 2-hour detail", "src": "reports/srm_truck_plan.html"},
-            {"id": "mails", "label": "Internal & Supplier Draft Mails", "kind": "HTML mails", "src": "reports/srm_mail.html"},
+            {"id": "truck-plan", "label": "Supplier A Truck Plan (.xlsx)", "kind": "Truck plan + 2-hour detail · 33-cart cap", "src": "reports/srm_truck_plan.html"},
+            {"id": "mails", "label": "Supplier & Internal Dispatch Mails", "kind": "HTML mails + Leveling Summary", "src": "reports/srm_mail.html"},
             {"id": "mon-xlsx", "label": "Internal Monitoring Workbook (.xlsx)", "kind": "3-tab workbook", "src": "reports/srm_monitoring_workbook.html"},
+        ],
+        "srm-updated": [
+            {"id": "updated-xlsx", "label": "UPDATED Supplier A Truck Plan (.xlsx)", "kind": "Yellow = changed since 13:40 plan", "src": "reports/srm_truck_plan_updated.html"},
+            {"id": "updated-mail", "label": "UPDATED Mail & Diff Summary (15:40)", "kind": "Replacement top line + cell diff", "src": "reports/srm_updated_mail.html"},
+        ],
+        "delivery": [
+            {"id": "status-xlsx", "label": "Supplier A Delivery Status (.xlsx)", "kind": "Plan / Delivered + red shortfall + Warning", "src": "reports/delivery_status_workbook.html"},
+            {"id": "status-mail", "label": "Shortfall Warning & Truck-Close Mails", "kind": "HTML mails", "src": "reports/delivery_status_mail.html"},
+            {"id": "dlv-int-xlsx", "label": "Internal Delivery Check Workbook (.xlsx)", "kind": "3-tab workbook", "src": "reports/delivery_internal_workbook.html"},
         ],
         "recon": [
             {"id": "mail", "label": "Executive Reconciliation Mail (07:30)", "kind": "HTML mail", "src": "reports/recon_mail.html"},

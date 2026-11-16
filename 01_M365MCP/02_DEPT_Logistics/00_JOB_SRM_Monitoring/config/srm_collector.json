@@ -1,0 +1,28 @@
+{
+  "_comment": "#330 SRM download (srm_collector.py). Screen texts / selectors only - addresses stay in .env (SRM_PORTAL_URL; SRM_BASE_URL = SRM host root, recommended (user 11/12 20:38): SRM is then opened directly at <SRM_BASE_URL>/<srm_home_path> without the portal, and screens as <SRM_BASE_URL>/<id>; if that shows no Delivery Date the menu path is used). menu_texts = menu path (without SRM_BASE_URL, or as fallback). After a --probe run, fix the texts / selectors here (no code change). Probe 11/13 06:42: the SRM screens are DevExtreme - the date box shows MM/DD/YYYY and has no label link (label 'delivery date' in lower case, matched in any case; value_fallback = the visible text input holding a date), the search button reads 'inquiry'. Probe 06:48: a date typed while the screen still shows 'Loading...' is wiped - the collector now waits until no busy_selectors element is visible (and the network is idle) before it touches the date, and leaves the date alone when the box already shows it. srm_login = SRM's own login form (user 11/12 20:27: same account as WMS; .env SRM_USERNAME/SRM_PASSWORD, else WMS_USERNAME/WMS_PASSWORD; one try per run, a failure blocks later runs until logs/srm_login_blocked.json is deleted).",
+  "portal_app_texts": ["SRM"],
+  "portal_app_store_texts": ["APP STORE"],
+  "notice_close_selectors": ["button.popup-close-btn"],
+  "notice_close_all_selector": "#main-popup-close-all",
+  "notice_close_texts": ["Close"],
+  "srm_notice_close_texts": [],
+  "srm_home_path": "Home",
+  "srm_login": {"user_selector": "#Input_UserName", "password_selector": "#Input_Password", "submit_texts": ["Login", "Log in"]},
+  "screens": [
+    {"id": "TSTA005", "menu_texts": ["Material", "Material Plan", "Sequence Order Plan"], "exports": [
+      {"kind": "planreq", "tab_text": "Plan & Require"},
+      {"kind": "order", "tab_text": "Order Detail"}
+    ]},
+    {"id": "TSTA006", "menu_texts": ["Material", "Material Plan", "Sequence Order Require"], "exports": [
+      {"kind": "require", "tab_text": "Require Detail"}
+    ]}
+  ],
+  "date_input": {"selector": ".dx-datebox input.dx-texteditor-input:not([aria-label='Filter cell'])", "label_texts": ["Delivery Date"], "value_fallback": true, "format": "%m/%d/%Y"},
+  "busy_selectors": [".dx-loadpanel-content", ".dx-loadindicator"],
+  "settle_ms": 800,
+  "search_texts": ["Search", "Inquiry", "inquiry", "Retrieve"],
+  "search_after_tab": false,
+  "export_texts": ["Export to Excel file", "Export to Excel"],
+  "confirm_texts": ["OK", "Yes", "Confirm"],
+  "timeouts_s": {"portal": 60, "popup": 30, "screen": 60, "grid": 90, "download": 120}
+}

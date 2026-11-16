@@ -198,3 +198,5 @@ footer { margin-top: 22px; color: var(--ink-3); font-size: 13px; display: flex; 
 }
 main > .panel:first-child { margin-top: 22px; }
 .desk .who em { text-wrap: pretty; }
+.desk.desk-planned { opacity: 0.78; border-style: dashed; }
+.desk.desk-planned:hover, .desk.desk-planned[aria-pressed="true"] { opacity: 1; }

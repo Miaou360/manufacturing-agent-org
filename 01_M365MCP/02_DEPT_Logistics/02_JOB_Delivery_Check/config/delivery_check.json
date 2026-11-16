@@ -1,0 +1,21 @@
+{
+  "_comment": "#351/#377/#378/#387 02_JOB_Delivery_Check configuration. enabled=false exits immediately (DISABLED, exit 0). mode='test' sends internal mails ONLY to TEST_EMAIL_RECIPIENT with [TEST] prefix. supplier_mail_mode='test' sends SRM_DeliveryStatus supplier files ONLY to TEST_EMAIL_RECIPIENT; 'live' is refused unless supplier_mail_live_approved_by_user=true.",
+  "enabled": true,
+  "mode": "test",
+  "supplier_mail_mode": "test",
+  "supplier_mail_live_approved_by_user": false,
+  "allow_wms_env_login": true,
+  "user_env": "TEST_EMAIL_RECIPIENT",
+  "signature": "Logistics Team",
+  "first_poll_after_departure_min": 30,
+  "poll_before_first_receipt_min": 30,
+  "poll_after_first_receipt_min": 10,
+  "quiet_polls_to_close": 2,
+  "early_warning_after_departure_min": 90,
+  "no_arrival_cap_min": 180,
+  "next_truck_grace_min": 30,
+  "early_arrival_grace_min": 20,
+  "buffer_margin": 0.15,
+  "pallet_departure": "12:00",
+  "browser_lock_timeout_s": 15.0
+}

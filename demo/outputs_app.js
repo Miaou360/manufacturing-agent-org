@@ -89,17 +89,45 @@
     },
     {
       id: "srm",
-      time: "06:40",
+      time: "06:40 / 13:40",
       dept: "log",
-      unit: "00_JOB · Supplier Monitoring",
-      title: "Short-term supply monitoring & truck plan",
-      tab: "Will the line run short before the next truck?",
+      unit: "00_JOB · Order Dispatch",
+      title: "Supplier truck loading plan (leveled & capped)",
+      tab: "What goes on each truck today & tomorrow?",
       when: "06:40 (today + 2 days) and 13:40 (tomorrow + 2 days), Monday to Saturday",
-      who: "Logistics planner; one truck-loading workbook drafted per supplier",
-      decision: "Which supplier trucks need earlier loading or additional boxes today before a 2-hour production window runs negative?",
-      lead: "Compares 2-hour production requirements and 06:00 stock against SRM delivery windows, moves orders onto fixed supplier truck slots (10-12 / 12-14 / 16-18 / 22-24 + Pallet Truck), and highlights changed or additional quantities.",
+      who: "Suppliers (Supplier A / B) + internal summary to logistics planner",
+      decision: "Which boxes must move to an earlier truck so the line never runs short and no trailer exceeds its cart cap (33 carts on Supplier A) or 1.7x daily truck average?",
+      lead: "Projects 2-hour stock from 06:00, pulls boxes forward only when stock would drop below zero or a truck exceeds its cart/overload limit, and writes a 2-sheet workbook (Truck plan + 2-hour detail) with Total carts (boxes) and yellow change notes.",
       nextHtml:
-        `Supplier workbooks and mails are saved as drafts for planner review before sending. Tomorrow-onward shortages show 'Recheck 13:40' until afternoon orders post. Rack stock ties directly to the <a href="https://miaou360.github.io/sequencing-pulling-list/">sequencing pulling list</a>.`,
+        `If a late portal order change arrives after 13:40, ${go("srm-updated", "the manual PM refresh")} sends an UPDATED diff-highlighted plan only to changed suppliers. As trucks arrive, ${go("delivery", "02_JOB receipt tracking")} checks every unloaded box against this plan.`,
+    },
+    {
+      id: "srm-updated",
+      time: "15:40 PM",
+      dept: "log",
+      unit: "00_JOB · Order Dispatch",
+      title: "UPDATED supplier truck plan (late SRM change)",
+      tab: "What changed since the 13:40 plan?",
+      when: "On-demand afternoon refresh after a late SRM order update",
+      who: "Only suppliers whose truck loading plan actually changed (unchanged suppliers receive nothing)",
+      decision: "Which exact part/truck cells changed relative to the 13:40 plan already sent, so the supplier dock can adjust loading without re-checking every line?",
+      lead: "Re-downloads tomorrow's SRM exports, diffs each supplier's Truck plan semantically against the workbook sent at 13:40, highlights only the changed cells in yellow (previous qty in cell note), and prepends the replacement notice at the top of the mail.",
+      nextHtml:
+        `Unchanged suppliers (Supplier B in this sample: 0 cell diffs) are automatically skipped. Updated tomorrow files atomically replace the inbox baseline used by ${go("delivery", "02_JOB receipt tracking")}.`,
+    },
+    {
+      id: "delivery",
+      time: "Every 10m",
+      dept: "log",
+      unit: "02_JOB · Receipt Tracking",
+      title: "Supplier delivery-status file (per-truck check)",
+      tab: "Did each truck bring what was planned?",
+      when: "Polled every 10 minutes around truck arrival windows; dispatched when a closed truck leaves a pre-cutoff shortage",
+      who: "Logistics planner & supplier dispatch team",
+      decision: "After the 12-14 truck finishes unloading, will any under-delivered part run short before the 2pm truck arrives — and how many full boxes must be added?",
+      lead: "Pairs every part into Plan vs Delivered rows across fixed truck slots, shades under-deliveries in red (– on trucks not closed yet), and writes a plain-English Warning only when hybrid 2-hour stock drops below zero before the next carrying truck.",
+      nextHtml:
+        `Parts whose partial delivery is still covered by starting stock show red on Delivered without triggering a false Warning. Parts missing from the morning ERP stock snapshot are suppressed from supplier warnings and flagged internally.`,
     },
     {
       id: "recon",
@@ -228,7 +256,7 @@
     document.title = `${o.title} — Manufacturing Agent Organization`;
   }
 
-  const ORDER = ["count", "hitrate", "backlog", "interface", "weekly", "srm", "recon", "morning"];
+  const ORDER = ["count", "hitrate", "backlog", "interface", "weekly", "srm", "srm-updated", "delivery", "recon", "morning"];
   $("out-nav").innerHTML = ORDER.map((id) => byId[id])
     .filter(Boolean)
     .map(

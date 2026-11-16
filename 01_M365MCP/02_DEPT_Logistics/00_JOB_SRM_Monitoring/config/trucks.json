@@ -1,0 +1,14 @@
+{
+  "_comment": "#330/#367/#384/#367b truck & minimal-change leveling rules. Truck times per supplier: data/suppliers.csv (match, trucks = SRM slot names, mail, to_env, cc_env[, max_carts]) - not in git because of the supplier names. pm_additional_days: 'next_run_day', 'tomorrow' or 'all'. run_days: 'MonSat' or 'Daily'. leveling: enabled (bool), safety_margin (float >= 0.10, default 0.15 -> 115%), freeze_lead_min (default 30), overload_factor (float > 1.0, default 1.7 for suppliers without a cap), max_carts_per_truck (supplier key or space-separated SRM truck slot schedule -> int cap; suppliers with a cap unload > cap to <= cap using 115% pass 1 then 100% pass 2 fallback, warning only if still > cap).",
+  "pm_additional_days": "next_run_day",
+  "run_days": "MonSat",
+  "leveling": {
+    "enabled": true,
+    "safety_margin": 0.15,
+    "freeze_lead_min": 30,
+    "overload_factor": 1.7,
+    "max_carts_per_truck": {
+      "8-10 12-14 16-18 20-22 02-04": 33
+    }
+  }
+}

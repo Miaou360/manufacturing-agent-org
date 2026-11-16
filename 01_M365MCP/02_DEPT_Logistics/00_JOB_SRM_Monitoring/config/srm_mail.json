@@ -1,0 +1,16 @@
+{
+  "mode": "test",
+  "user_env": "TEST_EMAIL_RECIPIENT",
+  "send_when_no_change": true,
+  "signature": "Logistics Team",
+  "suppliers": {
+    "Supplier A": {
+      "to_env": "SRM_SUPPLIER_A_TO",
+      "cc_env": "SRM_SUPPLIER_A_CC"
+    },
+    "Supplier B": {
+      "to_env": "SRM_SUPPLIER_B_TO",
+      "cc_env": "SRM_SUPPLIER_B_CC"
+    }
+  }
+}

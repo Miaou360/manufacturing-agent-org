@@ -28,7 +28,7 @@
 <section class="arch-toolbar" aria-label="Highlight an agent across all diagrams">
   <div class="arch-toolbar-top">
     <span>Select any agent (here or inside any diagram) to highlight its ledger tables, read-only links, swim lane, and outputs.</span>
-    <button id="clear-focus" class="btn" type="button">Show all 9 agents</button>
+    <button id="clear-focus" class="btn" type="button">Show all 10 live agents</button>
   </div>
   <div class="arch-pills" id="arch-pills"></div>
   <div class="arch-focus-bar" id="arch-focus-bar" hidden>
@@ -68,7 +68,7 @@
           <span><i style="border-top-style:dotted;border-top-color:#6382b8"></i>HQ 07:35 slot &amp; backup probe</span>
         </span>
       </div>
-      <svg id="ro-svg" viewBox="0 0 890 228" role="img" aria-label="Read-only links between the nine agent ledgers"></svg>
+      <svg id="ro-svg" viewBox="0 0 890 228" role="img" aria-label="Read-only links between the ten live agent ledgers"></svg>
     </div>
 
     <div class="ledger-grid" id="ledger-grid"></div>
@@ -82,7 +82,7 @@
       <p class="caption-2s">Every scheduled job moves left to right through the same seven stages: source systems, collectors, local ledger, decision, safety guards, action, and report to a person. Follow any horizontal swim lane to trace how one operational problem — such as a failed goods issue or an upcoming part shortage — is either fixed safely or escalated with an explanation.</p>
     </div>
     <div class="swim-scroll">
-      <div class="swim-table" id="swim-table" role="region" aria-label="Seven-stage swim-lane matrix across all nine jobs"></div>
+      <div class="swim-table" id="swim-table" role="region" aria-label="Seven-stage swim-lane matrix across all ten live jobs"></div>
     </div>
   </section>
 
@@ -143,10 +143,63 @@
     </div>
   </section>
 
-  <!-- 4. RUNTIME AND SAFETY -->
+  <!-- 4. LOGISTICS FLOW & TRUCK LEVELING -->
+  <section class="panel" id="d-logistics" aria-labelledby="h-logistics">
+    <div class="panel-head">
+      <span class="section-tag">4 · Logistics data flow &amp; leveling rule</span>
+      <h2 id="h-logistics">From SRM order to the truck dock — and checking every unloaded box</h2>
+      <p class="caption-2s">Supplier portal schedules often bunch too many boxes onto one afternoon truck while leaving earlier trucks half empty, and short deliveries used to be noticed only when the assembly line ran out. Two Logistics agents close that loop: <code>00_JOB</code> levels portal orders onto fixed trucks without creating a shortage, and <code>02_JOB</code> checks barcode receipts every 10 minutes so shortfalls trigger a warning before the next truck leaves.</p>
+    </div>
+
+    <div class="decision-wrap">
+      <div class="decision-svg-box">
+        <svg id="logistics-svg" viewBox="0 0 880 186" role="img" aria-label="Logistics data flow from SRM order through truck leveling, supplier dispatch, WMS goods receipt, delivery check, and shortfall warning"></svg>
+      </div>
+
+      <div class="decision-stages">
+        <div class="decision-stage" data-unit="srm">
+          <h3>Rule 1 · No shortage ever <small>hard floor</small></h3>
+          <ul>
+            <li>Projects stock every 2 hours from the 06:00 ERP + WMS baseline across a 3-day horizon</li>
+            <li>Pulls boxes forward onto an earlier truck whenever stock would drop below zero (or below the 15% arrival buffer) before the next truck</li>
+            <li><b>Never pushes an order to a later truck</b> — day totals stay equal to the SRM order unless urgent additional boxes are required</li>
+          </ul>
+        </div>
+
+        <div class="decision-stage" data-unit="srm">
+          <h3>Rule 2 · Change SRM as little as possible <small>minimal touch</small></h3>
+          <ul>
+            <li>Leaves a supplier's schedule untouched unless a truck exceeds <b>1.7× the daily truck average</b> (by ≥ 6 boxes) or a physical trailer cap (<b>33 carts</b> on Supplier A)</li>
+            <li>Moves whole boxes forward only for parts keeping ≥ 50% stock margin (relaxing to 100% only when needed to obey a physical trailer cap)</li>
+            <li>Picks the part with the largest movable box count first so the fewest part lines turn yellow</li>
+          </ul>
+        </div>
+
+        <div class="decision-stage" data-unit="srm">
+          <h3>Late SRM order changes <small>PM refresh</small></h3>
+          <ul>
+            <li>Re-downloads tomorrow's portal files on demand after an afternoon schedule change</li>
+            <li>Compares each supplier's <code>Truck plan</code> cell by cell against the workbook already sent at 13:40</li>
+            <li>Sends an <a href="outputs.html#srm-updated">UPDATED plan</a> (yellow = changed since 13:40) <b>only</b> to suppliers whose plan changed</li>
+          </ul>
+        </div>
+
+        <div class="decision-stage" data-unit="dlv">
+          <h3>10-min receipt check <small>per truck</small></h3>
+          <ul>
+            <li>Freezes each truck's planned boxes at departure and matches WMS <code>101</code> goods-receipt barcodes every 10 minutes</li>
+            <li>Closes a truck after unloading settles and pairs <b>Plan</b> vs <b>Delivered</b> rows (<a href="outputs.html#delivery">sample file</a>)</li>
+            <li>Writes a plain-English <code>Warning</code> (rounded up to full boxes) only if hybrid stock goes negative before the next carrying truck</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. RUNTIME AND SAFETY -->
   <section class="panel" id="d-safety" aria-labelledby="h-safety">
     <div class="panel-head">
-      <span class="section-tag">4 · Runtime and safety</span>
+      <span class="section-tag">5 · Runtime and safety</span>
       <h2 id="h-safety">How autonomous jobs share one workstation without breaking production</h2>
       <p class="caption-2s">Because the agents run on a live workstation alongside ERP and browser sessions, four runtime locks and switches keep background tasks from colliding or posting untested changes. Every code or rule change goes through the same six-step human approval loop before the scheduler is allowed to run it.</p>
     </div>
