@@ -12,5 +12,12 @@
     "mail": "yes",
     "to_env": "SRM_SUPPLIER_B_TO",
     "cc_env": "SRM_SUPPLIER_B_CC"
+  },
+  {
+    "match": "Supplier C",
+    "trucks": "8-10 10-12 22-24",
+    "mail": "no",
+    "to_env": "",
+    "cc_env": ""
   }
 ]

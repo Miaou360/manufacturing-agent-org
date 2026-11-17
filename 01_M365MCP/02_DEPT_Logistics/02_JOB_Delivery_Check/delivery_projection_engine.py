@@ -260,7 +260,7 @@ def ingest_and_attribute_barcodes(
     open_trucks_by_sup: Dict[str, List[Dict[str, Any]]] = {}
     earliest_c_truck_by_sup: Dict[str, dt.datetime] = {}
     has_c_trucks_by_sup: Dict[str, bool] = {}
-    tracked_truck_suppliers = {t["supplier_key"] for t in trucks}
+    tracked_truck_suppliers = {t["supplier_key"] for t in trucks} | {h["supplier_key"] for h in horizon.values()}
     for t in trucks:
         sup = t["supplier_key"]
         dep_dt = _parse_ts(t["departure_ts"])
@@ -333,11 +333,11 @@ def ingest_and_attribute_barcodes(
             assigned_truck_id = chosen["truck_id"]
         elif sup_key in tracked_truck_suppliers:
             # Arrived outside open C-truck windows (or supplier only has a Pallet Truck):
-            # isolate into supplier's OFF_WINDOW bucket (or PALLET if supplier has zero C-trucks)
-            # so neither PALLET nor already-closed C-trucks are polluted and zero day receipts vanish.
+            # For Pallet-only suppliers (#403-B2), ignore non-SRM sea-freight parts (`pk not in horizon`).
             is_unplanned = 1
-            if not has_c_trucks_by_sup.get(sup_key) and eligible:
-                assigned_truck_id = eligible[-1]["truck_id"]
+            if not has_c_trucks_by_sup.get(sup_key):
+                if pk in horizon:
+                    assigned_truck_id = eligible[-1]["truck_id"] if eligible else f"{work_date:%Y%m%d}_{sup_key}_OFF_WINDOW"
             else:
                 assigned_truck_id = f"{work_date:%Y%m%d}_{sup_key}_OFF_WINDOW"
         else:
@@ -613,10 +613,14 @@ def evaluate_truck_part_gap(
     min_plan_full = min((plan_36[idx] for idx in full_gap_indices), default=0.0)
     degraded_at_s = (received_pcs < planned_pcs - 1e-9) or (min_hybrid_full < min_plan_full - 1e-9)
     if truck_is_closed and (not line_shortage) and next_slot_s < 3 * N_SLOTS and degraded_at_s:
-        req_ref = req_36[next_slot_s]
-        if req_ref <= 1e-9:
-            req_ref = next((req_36[idx] for idx in range(next_slot_s, 3 * N_SLOTS) if req_36[idx] > 1e-9), 0.0)
-        if req_ref > 1e-9 and hybrid_36[next_slot_s - 1] < (1.0 + margin) * req_ref - 1e-9:
+        req_ref_idx = next((idx for idx in range(next_slot_s, 3 * N_SLOTS) if req_36[idx] > 1e-9), None)
+        req_ref = req_36[req_ref_idx] if req_ref_idx is not None else 0.0
+        if is_pallet_truck and req_ref > 1e-9 and hybrid_36[next_slot_s - 1] < req_ref - 1e-9:
+            # #403-B2: Day-level pallet shortage warning when end-of-day stock cannot cover the next requirement
+            line_shortage = True
+            first_short_lbl = labels_36[req_ref_idx] if req_ref_idx is not None else labels_36[next_slot_s]
+            deficit_pcs = round(req_ref - hybrid_36[next_slot_s - 1], 2)
+        elif req_ref > 1e-9 and hybrid_36[next_slot_s - 1] < (1.0 + margin) * req_ref - 1e-9:
             buffer_low = True
 
     return {
@@ -666,7 +670,9 @@ def build_day_part_summary(
     per supplier and part — planned day total, received day total, day GR-PO, day verdict,
     number of trucks planned / with receipts, first and last receipt time, and hybrid shortage.
     """
-    tracked_suppliers: Dict[str, str] = {}
+    tracked_suppliers: Dict[str, str] = {
+        h["supplier_key"]: h["vendor_display"] for h in horizon_parts.values()
+    }
     truck_by_id = {t["truck_id"]: t for t in trucks}
     for t in trucks:
         tracked_suppliers.setdefault(t["supplier_key"], t["vendor_display"])
@@ -679,7 +685,7 @@ def build_day_part_summary(
     bcs_by_sp: Dict[Tuple[str, str], List[Dict[str, Any]]] = {}
     for b in barcodes:
         sk = b.get("supplier_key") or ""
-        if sk in tracked_suppliers:
+        if b.get("assigned_truck_id") and sk in tracked_suppliers:
             bcs_by_sp.setdefault((sk, b["part_key"]), []).append(b)
 
     all_sp = sorted(set(plan_by_sp.keys()) | set(bcs_by_sp.keys()))
@@ -815,6 +821,11 @@ def evaluate_poll_cycle(
         if b.get("assigned_truck_id"):
             bcs_by_truck.setdefault(b["assigned_truck_id"], []).append(b)
 
+    planned_day_by_sup_part: Dict[Tuple[str, str], float] = {}
+    for ln in plan_lines:
+        k_sp = (ln["supplier_key"], ln["part_key"])
+        planned_day_by_sup_part[k_sp] = planned_day_by_sup_part.get(k_sp, 0.0) + float(ln["planned_pcs"])
+
     newly_closed_trucks: List[str] = []
     early_warning_candidates: List[Dict[str, Any]] = []
 
@@ -825,11 +836,20 @@ def evaluate_poll_cycle(
             if st in CLOSED_TRUCK_STATES or st == "NO_PLANNED_LOAD":
                 continue
 
-            t_bcs = [b for b in bcs_by_truck.get(tid, []) if not b.get("is_unplanned")]
+            t_all_bcs = bcs_by_truck.get(tid, [])
+            t_bcs = [b for b in t_all_bcs if not b.get("is_unplanned")]
             matched_cnt = len(t_bcs)
             rec_pcs_tot = sum(float(b["gr_qty"]) for b in t_bcs)
             first_gr = min((b["gr_time"] for b in t_bcs), default=None)
             last_gr = max((b["gr_time"] for b in t_bcs), default=None)
+            dep_str = str(t.get("departure_ts") or "")
+            t_off_sched_post_dep = [
+                b
+                for b in t_all_bcs
+                if b.get("is_unplanned")
+                and planned_day_by_sup_part.get((t["supplier_key"], b["part_key"]), 0.0) > 1e-9
+                and str(b.get("gr_time") or "") >= dep_str
+            ]
             new_cnt = int(new_by_truck.get(tid, 0))
 
             first_due_dt = _parse_ts(t["first_poll_due_ts"])
@@ -879,7 +899,13 @@ def evaluate_poll_cycle(
                                 next_due_str = _fmt_ts(as_of_ts + dt.timedelta(minutes=poll_10m))
             else:
                 if as_of_ts >= deadline_dt:
-                    st = "TRUCK_NOT_RECEIVED"
+                    if t_off_sched_post_dep:
+                        # Physical truck arrived after departure carrying other today-planned parts of this supplier
+                        st = "CLOSED_RECEIVED"
+                        first_gr = min(b["gr_time"] for b in t_off_sched_post_dep)
+                        last_gr = max(b["gr_time"] for b in t_off_sched_post_dep)
+                    else:
+                        st = "TRUCK_NOT_RECEIVED"
                     closed_ts_str = now_str
                     next_due_str = None
                     newly_closed_trucks.append(tid)
@@ -978,7 +1004,8 @@ def evaluate_poll_cycle(
 
     # Build truck lookup (including synthetic OFF_WINDOW bucket per tracked supplier)
     truck_map: Dict[str, Dict[str, Any]] = {t["truck_id"]: t for t in trucks}
-    vendor_by_sup = {t["supplier_key"]: t["vendor_display"] for t in trucks}
+    vendor_by_sup = {h["supplier_key"]: h["vendor_display"] for h in horizon.values()}
+    vendor_by_sup.update({t["supplier_key"]: t["vendor_display"] for t in trucks})
     for sup_key, ven_disp in vendor_by_sup.items():
         off_tid = f"{run_date:%Y%m%d}_{sup_key}_OFF_WINDOW"
         if off_tid not in truck_map:
@@ -996,10 +1023,6 @@ def evaluate_poll_cycle(
             }
 
     lines_by_tp = {(ln["truck_id"], ln["part_key"]): ln for ln in plan_lines}
-    planned_day_by_sup_part: Dict[Tuple[str, str], float] = {}
-    for ln in plan_lines:
-        k_sp = (ln["supplier_key"], ln["part_key"])
-        planned_day_by_sup_part[k_sp] = planned_day_by_sup_part.get(k_sp, 0.0) + float(ln["planned_pcs"])
 
     prev_initial_alarms = {
         r["verdict_id"]: int(r["initial_alarm_at_close"] or 0)

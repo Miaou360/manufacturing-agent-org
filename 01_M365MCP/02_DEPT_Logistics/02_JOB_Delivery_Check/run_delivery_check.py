@@ -70,6 +70,91 @@ def has_due_open_trucks(trucks: List[Dict[str, Any]], as_of_ts: dt.datetime) -> 
     return False
 
 
+def _resolve_operational_gr_daily_file(
+    work_date: dt.date, explicit_gr_stack_dir: Optional[Path] = None
+) -> Path:
+    fname = f"GR_List_{work_date:%Y%m%d}_{work_date:%Y%m%d}.xlsx"
+    if explicit_gr_stack_dir is not None:
+        return Path(explicit_gr_stack_dir) / fname
+    cand = STOCK_ACC_DIR / "gr_daily_stack" / fname
+    if cand.exists():
+        return cand
+    for cand_parent in BASE_DIR.parents:
+        main_gr = (
+            cand_parent.parent
+            / "CODES"
+            / "01_M365MCP"
+            / "01_DEPT_Inventory"
+            / "00_JOB_StockAccuracy"
+            / "gr_daily_stack"
+            / fname
+        )
+        if main_gr.exists():
+            return main_gr
+    return cand
+
+
+def _catch_up_unclosed_prior_workday(
+    conn,
+    prev_date: dt.date,
+    cfg: Dict[str, Any],
+    report_dir: Path,
+    *,
+    gr_stack_dir: Optional[Path] = None,
+) -> Optional[Dict[str, Any]]:
+    """
+    If `prev_date`'s final `05:59` poll failed (e.g. `WMS_DOWNLOAD_TIMEOUT` across the `06:00`
+    WMS shift rollover), finalize `prev_date` at `05:59:00` from `00_JOB`'s complete
+    `GR_List_YYYYMMDD_YYYYMMDD.xlsx` with ZERO emails sent.
+    """
+    prev_trucks = fetch_truck_runs(conn, prev_date.isoformat())
+    if not prev_trucks or not any(t["status"] in OPEN_TRUCK_STATES for t in prev_trucks):
+        return None
+    prev_gr = _resolve_operational_gr_daily_file(prev_date, gr_stack_dir)
+    if not prev_gr.exists() or prev_gr.stat().st_size < 5000:
+        return {
+            "work_date": prev_date.isoformat(),
+            "status": "WAITING_DAILY_GR_FILE",
+            "gr_file": str(prev_gr),
+        }
+    prev_eod = slot_start(prev_date, 1, 0) - dt.timedelta(minutes=1)
+    parsed_prev = parse_gr_excel_barcodes(prev_gr, prev_date, as_of_ts=prev_eod)
+    attr_prev = ingest_and_attribute_barcodes(conn, prev_date, parsed_prev, cfg, prev_eod)
+    eval_prev = evaluate_poll_cycle(
+        conn,
+        prev_date,
+        cfg,
+        prev_eod,
+        gr_available=True,
+        new_planned_by_truck=attr_prev["new_planned_by_truck"],
+    )
+    closed_prev_trucks = fetch_truck_runs(conn, prev_date.isoformat())
+    closed_prev_verdicts = fetch_verdicts(conn, prev_date.isoformat())
+    prev_summary = eval_prev.get("day_part_summary", [])
+    wb_stamped, wb_latest = write_delivery_check_workbook(
+        report_dir,
+        prev_date,
+        prev_eod,
+        eval_prev["projections"],
+        closed_prev_trucks,
+        closed_prev_verdicts,
+        gr_available=True,
+        day_part_summary=prev_summary,
+    )
+    return {
+        "work_date": prev_date.isoformat(),
+        "status": "CAUGHT_UP_SILENTLY",
+        "gr_file": str(prev_gr),
+        "new_barcodes_inserted": attr_prev["new_barcodes_inserted"],
+        "newly_closed_trucks": eval_prev["newly_closed_trucks"],
+        "verdict_counts": _count_by_key(closed_prev_verdicts, "verdict"),
+        "day_verdict_counts": _count_by_key(prev_summary, "day_verdict"),
+        "workbook": str(wb_stamped),
+        "workbook_latest": str(wb_latest),
+        "mails_sent": 0,
+    }
+
+
 def build_worked_examples(
     run_date: dt.date,
     trucks: List[Dict[str, Any]],
@@ -174,9 +259,12 @@ def run_delivery_check(
     out_dir: Optional[Path] = None,
     inbox_dir: Optional[Path] = None,
     zm212_path: Optional[Path] = None,
+    suppliers_csv: Optional[Path] = None,
+    trucks_json: Optional[Path] = None,
     config_path: Optional[Path] = None,
     allow_worktree_live: bool = False,
     headless_browser: bool = True,
+    gr_stack_dir: Optional[Path] = None,
 ) -> Dict[str, Any]:
     cfg = load_delivery_config(config_path)
     now_ts = as_of_ts or dt.datetime.now().replace(microsecond=0)
@@ -211,6 +299,8 @@ def run_delivery_check(
             run_date,
             inbox_dir=inbox_dir,
             zm212_path=zm212_path,
+            suppliers_csv=suppliers_csv,
+            trucks_json=trucks_json,
             include_d1=(not replay_day),
         )
         if plan_bundle["status"] != "OK":
@@ -265,7 +355,12 @@ def run_delivery_check(
 
             # Finalize PM D+1 merge if present so 3-day horizon reflects afternoon update
             pm_bundle = compute_srm_plan_readonly(
-                run_date, inbox_dir=inbox_dir, zm212_path=zm212_path, include_d1=True
+                run_date,
+                inbox_dir=inbox_dir,
+                zm212_path=zm212_path,
+                suppliers_csv=suppliers_csv,
+                trucks_json=trucks_json,
+                include_d1=True,
             )
             if pm_bundle["status"] == "OK":
                 sync_plan_to_ledger(conn, run_date, pm_bundle, cfg, t_end)
@@ -318,6 +413,16 @@ def run_delivery_check(
             }
 
         # Single-poll mode (offline `--gr-file` OR live intraday browser snapshot)
+        prior_catchup: Optional[Dict[str, Any]] = None
+        if gr_file is None:
+            prior_catchup = _catch_up_unclosed_prior_workday(
+                conn,
+                run_date - dt.timedelta(days=1),
+                cfg,
+                report_dir,
+                gr_stack_dir=gr_stack_dir,
+            )
+
         gr_available = False
         sso_expired_detail: Optional[str] = None
         crawl_status = "OFFLINE_FILE"
@@ -333,12 +438,15 @@ def run_delivery_check(
                 attr = {"new_barcodes_inserted": 0, "new_planned_by_truck": {}}
         else:
             if not has_due_open_trucks(trucks, now_ts):
-                return {
+                idle_res: Dict[str, Any] = {
                     "status": "IDLE_NO_DUE_TRUCKS",
                     "work_date": run_date.isoformat(),
                     "as_of_ts": now_ts.strftime("%Y-%m-%d %H:%M:%S"),
                     "trucks_total": len(trucks),
                 }
+                if prior_catchup is not None:
+                    idle_res["prior_workday_catchup"] = prior_catchup
+                return idle_res
             if _is_git_worktree(BASE_DIR) and not allow_worktree_live:
                 return {
                     "status": "BLOCKED_WORKTREE_LIVE_BROWSER",
@@ -440,6 +548,7 @@ def run_delivery_check(
             "workbook": str(wb_stamped),
             "workbook_latest": str(wb_latest),
             "notices": notices,
+            **({"prior_workday_catchup": prior_catchup} if prior_catchup is not None else {}),
             "verdict_counts": _count_by_key(final_verdicts, "verdict"),
             "day_verdict_counts": _count_by_key(day_summary, "day_verdict"),
             "day_part_summary_count": len(day_summary),

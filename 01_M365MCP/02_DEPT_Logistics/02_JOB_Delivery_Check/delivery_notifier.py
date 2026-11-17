@@ -616,7 +616,14 @@ def dispatch_poll_notifications(
     ):
         run_dt = dt.date.fromisoformat(work_date)
         sup_dir = Path(supplier_status_out_dir) if supplier_status_out_dir else (BASE_DIR / "out" / f"suppliers_{run_dt:%Y%m%d}")
+        mail_enabled_keys = (
+            {str(r.get("match") or "").strip().lower() for r in suppliers_rows if r.get("mail")}
+            if suppliers_rows is not None
+            else None
+        )
         for sup_key, closed_t_list in sorted(closed_c_by_supplier.items()):
+            if mail_enabled_keys is not None and sup_key.strip().lower() not in mail_enabled_keys:
+                continue
             model = build_supplier_delivery_status(
                 run_dt,
                 as_of_ts,

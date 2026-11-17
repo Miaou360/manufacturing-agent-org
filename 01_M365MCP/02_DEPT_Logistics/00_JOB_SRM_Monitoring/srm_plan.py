@@ -82,7 +82,8 @@ def plan_parts(
     lvl_cfg = level_cfg if level_cfg is not None else leveling_config()
     delay_buf = 1.0 + float(lvl_cfg.get("safety_margin", 0.15))
     freeze_lead = float(lvl_cfg.get("freeze_lead_min", 30.0))
-    frozen_slots = compute_frozen_slots(run_date, n_days, run_ts, freeze_lead)
+    freeze_dep = bool(lvl_cfg.get("freeze_departed", True))
+    frozen_slots = compute_frozen_slots(run_date, n_days, run_ts, freeze_lead) if freeze_dep else set()
 
     for r in res6:
         k = r["key"]
@@ -171,4 +172,10 @@ def window(r: Dict[str, Any], first_day: int, n: int = 3) -> Dict[str, Any]:
         "unfixed": (unfixed - a) if unfixed is not None and a <= unfixed < b else None,
         "short_before": unfixed is not None and unfixed < a,
         "reason": p["reason"],
+        "max_carts_cap": p.get("max_carts_cap"),
+        "extra_truck_warnings": [
+            msg
+            for dt_i in p["dates"][first_day:first_day + n]
+            for msg in (p.get("day_extra_truck_warnings") or {}).get(dt_i.isoformat(), [])
+        ],
     }

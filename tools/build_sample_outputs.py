@@ -232,7 +232,7 @@ def build(source: str) -> dict[str, Any]:
                          "action": ("Add %d to the next truck" % short) if short else "Covered"})
     sup_rows.sort(key=lambda r: (-r["short"], r["window"]))
     srm = {"rows": sup_rows, "monitored": 29, "daily_monitored": 94, "short": sum(r["short"] > 0 for r in sup_rows),
-           "suppliers": ["Supplier A", "Supplier B"]}
+           "suppliers": ["Supplier A", "Supplier B", "Supplier C"]}
 
     # ---- 7. morning summary ----
     slots = [("02:15", "Movement ledger collection", "col", "OK", "Yesterday's material documents loaded"),
@@ -272,7 +272,7 @@ def build(source: str) -> dict[str, Any]:
             {"id": "xlsx", "label": "3-Sheet Filterable Workbook (.xlsx)", "kind": "3-tab workbook", "src": "reports/backlog_3q_workbook.html"},
         ],
         "srm": [
-            {"id": "truck-plan", "label": "Supplier A Truck Plan (.xlsx)", "kind": "Truck plan + 2-hour detail · 33-cart cap", "src": "reports/srm_truck_plan.html"},
+            {"id": "truck-plan", "label": "Supplier A Truck Plan (.xlsx)", "kind": "Truck plan + 2-hour detail · 33-cart cap + Extra truck banner", "src": "reports/srm_truck_plan.html"},
             {"id": "mails", "label": "Supplier & Internal Dispatch Mails", "kind": "HTML mails + Leveling Summary", "src": "reports/srm_mail.html"},
             {"id": "mon-xlsx", "label": "Internal Monitoring Workbook (.xlsx)", "kind": "3-tab workbook", "src": "reports/srm_monitoring_workbook.html"},
         ],

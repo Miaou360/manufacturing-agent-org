@@ -190,6 +190,14 @@ def _write_one(path: Path, vendor: str, items: List[tuple], run_label: str, box_
             if is_refresh_mode
             else "Loading changed from the SRM order (SRM qty in the cell note)"
         )
+        extra_warns = next(
+            (list(w.get("extra_truck_warnings") or []) for _, w in items if w.get("extra_truck_warnings")),
+            [],
+        )
+        sup_cap_val = next(
+            (w.get("max_carts_cap") for _, w in items if w.get("max_carts_cap") is not None),
+            None,
+        )
         apply_title_and_legend_band(
             ws,
             "Truck loading plan",
@@ -203,6 +211,15 @@ def _write_one(path: Path, vendor: str, items: List[tuple], run_label: str, box_
             [1, 4, 9, 14],
             status_col,
         )
+        if extra_warns:
+            ws.row_dimensions[4].height = 20
+            for c_w in range(1, status_col + 1):
+                cw_cell = ws.cell(row=4, column=c_w)
+                cw_cell.fill = fill(PINK)
+                cw_cell.border = Border(top=thin, bottom=thin)
+            w_top = ws.cell(row=4, column=1, value="  |  ".join(extra_warns))
+            w_top.font = font(size=9.5, bold=True, color=RED)
+            w_top.alignment = st["align_left"]
         for c, h in enumerate(lead + [None] * (status_col - len(lead) - 1) + ["Stock check"], 1):
             if h:
                 ws.merge_cells(start_row=h1, start_column=c, end_row=h2, end_column=c)
@@ -359,14 +376,38 @@ def _write_one(path: Path, vendor: str, items: List[tuple], run_label: str, box_
                 cell.font = font(size=9.5, bold=True, color=HDR_PRIMARY)
                 cell.alignment = right
             top_b = mid if label == "Total EA" else thin
+            fixed_truck_cols = {col_i for sp_d in cols for col_i in sp_d["truck"].values()}
             for c in range(1, status_col + 1):
                 cell = ws.cell(row=row, column=c)
-                cell.fill = fill(HDR_SUBTLE)
-                if c > 1 and cell.value is None:
-                    cell.font = font(size=9.5, bold=True, color=HDR_PRIMARY)
+                is_over_cap_cell = (
+                    label == "Total carts (boxes)"
+                    and sup_cap_val is not None
+                    and c in fixed_truck_cols
+                    and isinstance(cell.value, (int, float))
+                    and float(cell.value) > float(sup_cap_val) + 1e-6
+                )
+                if is_over_cap_cell:
+                    cell.fill = fill(PINK)
+                    cell.font = font(size=9.5, bold=True, color=RED)
+                else:
+                    cell.fill = fill(HDR_SUBTLE)
+                    if c > 1 and cell.value is None:
+                        cell.font = font(size=9.5, bold=True, color=HDR_PRIMARY)
                 cell.border = Border(left=thin, right=thin, top=top_b, bottom=thin)
             row += 1
-        for rr in range(h2 + 1, row):
+        tot_end_row = row
+        if extra_warns:
+            for w_line in extra_warns:
+                ws.row_dimensions[row].height = 20
+                for c_w in range(1, status_col + 1):
+                    cw_cell = ws.cell(row=row, column=c_w)
+                    cw_cell.fill = fill(PINK)
+                    cw_cell.border = Border(left=thin if c_w == 1 else None, right=thin if c_w == status_col else None, top=thin, bottom=thin)
+                wc = ws.cell(row=row, column=1, value=w_line)
+                wc.font = font(size=9.5, bold=True, color=RED)
+                wc.alignment = st["align_left"]
+                row += 1
+        for rr in range(h2 + 1, tot_end_row):
             for spec in cols:
                 sc_first = ws.cell(row=rr, column=spec["start"])
                 sc_first.border = Border(left=mid, right=sc_first.border.right, top=sc_first.border.top, bottom=sc_first.border.bottom)

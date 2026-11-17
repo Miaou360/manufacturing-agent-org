@@ -13,9 +13,13 @@
   "quiet_polls_to_close": 2,
   "early_warning_after_departure_min": 90,
   "no_arrival_cap_min": 180,
+  "night_no_arrival_cap_min": 240,
+  "night_cap_start_hour": 20,
+  "night_cap_end_hour": 6,
   "next_truck_grace_min": 30,
   "early_arrival_grace_min": 20,
   "buffer_margin": 0.15,
   "pallet_departure": "12:00",
+  "day_close_hhmm": "05:55",
   "browser_lock_timeout_s": 15.0
 }

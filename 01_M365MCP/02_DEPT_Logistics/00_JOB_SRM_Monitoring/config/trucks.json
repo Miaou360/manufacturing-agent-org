@@ -1,14 +1,17 @@
 {
-  "_comment": "#330/#367/#384/#367b truck & minimal-change leveling rules. Truck times per supplier: data/suppliers.csv (match, trucks = SRM slot names, mail, to_env, cc_env[, max_carts]) - not in git because of the supplier names. pm_additional_days: 'next_run_day', 'tomorrow' or 'all'. run_days: 'MonSat' or 'Daily'. leveling: enabled (bool), safety_margin (float >= 0.10, default 0.15 -> 115%), freeze_lead_min (default 30), overload_factor (float > 1.0, default 1.7 for suppliers without a cap), max_carts_per_truck (supplier key or space-separated SRM truck slot schedule -> int cap; suppliers with a cap unload > cap to <= cap using 115% pass 1 then 100% pass 2 fallback, warning only if still > cap).",
+  "_comment": "#330/#367/#384/#367b/#399/#401/#401a/#401b truck & minimal-change leveling rules. Truck times per supplier: data/suppliers.csv (match, trucks = SRM slot names, mail, to_env, cc_env[, max_carts]) - not in git because of the supplier names. pm_additional_days: 'next_run_day', 'tomorrow' or 'all'. run_days: 'MonSat' or 'Daily'. leveling: enabled (bool), freeze_departed (bool, code default true; false levels every truck of the day in all runs), safety_margin (float >= 0.10, default 0.15 -> 115%), freeze_lead_min (default 30, used when freeze_departed=true), overload_factor (float > 1.0, default 1.7 for suppliers without a cap), max_carts_per_truck (schedule/supplier key -> int cap; capped suppliers fill trucks <= cap at 115% then 100% fallback and push remaining > cap overflow to the last truck while keeping >= 100% coverage, emitting 'Extra truck needed' warnings).",
   "pm_additional_days": "next_run_day",
   "run_days": "MonSat",
   "leveling": {
     "enabled": true,
+    "freeze_departed": false,
     "safety_margin": 0.15,
     "freeze_lead_min": 30,
     "overload_factor": 1.7,
     "max_carts_per_truck": {
-      "8-10 12-14 16-18 20-22 02-04": 33
+      "8-10 12-14 16-18 20-22 02-04": 33,
+      "10-12 12-14 16-18 22-24": 33,
+      "8-10 10-12 22-24": 60
     }
   }
 }

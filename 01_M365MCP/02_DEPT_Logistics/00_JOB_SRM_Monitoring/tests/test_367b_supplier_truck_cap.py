@@ -22,20 +22,26 @@ D = dt.date(2026, 11, 16)
 
 def test_367b_config_schedule_key_resolves_via_suppliers_csv_without_vendor_name_in_git(tmp_path):
     raw_txt = CONFIG.read_text(encoding="utf-8")
-    # Git-tracked config/trucks.json carries only slot schedule key, zero supplier names
+    # Git-tracked config/trucks.json carries only slot schedule keys, zero supplier names (#367b & #399)
     assert "8-10 12-14 16-18 20-22 02-04" in raw_txt
+    assert "10-12 12-14 16-18 22-24" in raw_txt
     raw_obj = json.loads(raw_txt)
-    assert raw_obj["leveling"]["max_carts_per_truck"] == {"8-10 12-14 16-18 20-22 02-04": 33}
+    assert raw_obj["leveling"]["max_carts_per_truck"] == {
+        "8-10 12-14 16-18 20-22 02-04": 33,
+        "10-12 12-14 16-18 22-24": 33,
+        "8-10 10-12 22-24": 60,
+    }
 
     sup_csv = tmp_path / "suppliers.csv"
     sup_csv.write_text(
         "match,trucks,mail,to_env,cc_env\n"
         "SupplierFour,10-12 12-14 16-18 22-24,yes,TO_A,CC_A\n"
-        "SupplierFive,8-10 12-14 16-18 20-22 02-04,yes,TO_B,CC_B\n",
+        "SupplierFive,8-10 12-14 16-18 20-22 02-04,yes,TO_B,CC_B\n"
+        "SupplierThree,8-10 14-16 20-22,no,TO_C,CC_C\n",
         encoding="utf-8",
     )
     cfg = leveling_config(CONFIG, suppliers_path=sup_csv)
-    assert cfg["max_carts_per_truck"] == {"SupplierFive": 33}
+    assert cfg["max_carts_per_truck"] == {"SupplierFour": 33, "SupplierFive": 33}
 
     bad_cap = tmp_path / "bad_cap.json"
     bad_cap.write_text(json.dumps({"leveling": {"max_carts_per_truck": {"Vendor C": 0}}}), encoding="utf-8")
@@ -192,12 +198,11 @@ def test_367b_frozen_over_cap_is_info_only_while_true_shortage_or_excess_total_w
         {"99003002": 20.0}, {"99003002": "C"}, level_cfg=lvl_cap,
     )
     d0_2 = s2["suppliers"]["Vendor C"]["days"][D.isoformat()]
-    assert sorted(d0_2["trucks_after"]) == [33.0, 33.0, 33.0, 33.0, 34.0]
+    assert d0_2["trucks_after"] == [33.0, 33.0, 33.0, 33.0, 34.0]
     assert len(s2["warnings"]) == 1
-    assert "Truck over 33 carts:" in s2["warnings"][0]
-    assert "needed to prevent a shortage, extra truck may be required" in s2["warnings"][0]
+    assert "Extra truck needed: Mon 11/16 total 166 carts > 5 trucks × 33 = 165. Please arrange an additional truck for 1 carts." in s2["warnings"][0]
 
-    # Case 3: Genuine slot-0 consumption forces > 33 (36 carts consumed immediately in slot 0, start_sap = 0)
+    # Case 3 (#401c): Genuine slot-0 consumption forces > 33 while day total (36) <= 165 -> info line only, no extra-truck warning
     srm3 = [0.0] * 36
     srm3[0] = 720.0   # 36 carts
     req3 = [0.0] * 36
@@ -208,8 +213,8 @@ def test_367b_frozen_over_cap_is_info_only_while_true_shortage_or_excess_total_w
         {"99003003": 20.0}, {"99003003": "C"}, level_cfg=lvl_cap,
     )
     assert s3["suppliers"]["Vendor C"]["days"][D.isoformat()]["trucks_after"] == [36.0, 0.0, 0.0, 0.0, 0.0]
-    assert len(s3["warnings"]) == 1
-    assert "36 carts" in s3["warnings"][0]
+    assert s3["warnings"] == []
+    assert any("Truck 8-10 36 carts (> 33) kept for coverage" in x for x in s3["info_notes"])
 
 
 def test_367b_targeted_updated_resend_filters_supplier_and_marks_subject(tmp_path, monkeypatch):
@@ -254,3 +259,82 @@ def test_367b_targeted_updated_resend_filters_supplier_and_marks_subject(tmp_pat
     assert sup_sent[0]["subj"].startswith("UPDATED - TestPlant Corp truck loading plan - Vendor B - ")
     assert "UPDATED" in sup_sent[0]["body"]
     assert res[0]["mail"] == "Vendor B" and res[0]["sent"] is True
+
+
+def test_399_four_truck_supplier_with_33_cap_moves_over_33_and_warns_above_33_at_100pct():
+    """#399: 4-truck supplier (TR_ALPHA = [1, 2, 4, 7] -> 10-12, 12-14, 16-18, 22-24) with cap=33:
+    1) Trucks over 33 unload to <= 33 (Pass 1 at 115%, Pass 2 fallback at 100% when needed) where 1.7x would not touch.
+    2) When a truck is still > 33 even at 100% (either immediate consumption shortage barrier or day total > 4*33),
+       emits the 'Truck over 33 carts' warning while keeping 0 shortages and day totals unchanged."""
+    lvl_cap4 = {
+        "enabled": True,
+        "safety_margin": 0.15,
+        "freeze_lead_min": 30.0,
+        "overload_factor": 1.7,
+        "max_carts_per_truck": {"Vendor H": 33},
+    }
+
+    # (1a) [39, 35, 18, 20] carts (sum=112, avg=28 -> 1.7x=47.6 would move 0): cap=33 unloads both >33 trucks to <=33
+    srm_a = [0.0] * 36
+    srm_a[1], srm_a[2], srm_a[4], srm_a[7] = 780.0, 700.0, 360.0, 400.0
+    ra, oa, qa = _make_part("99005001", "Vendor H", 2000.0, srm_a, [10.0] * 36)
+    sa = plan_parts(
+        D, [ra], {"99005001": oa}, {"99005001": qa}, None, None, False, TR_ALPHA,
+        {"99005001": 20.0}, {"99005001": "C"}, level_cfg=lvl_cap4,
+    )
+    da = sa["suppliers"]["Vendor H"]["days"][D.isoformat()]
+    assert da["trucks_before"] == [39.0, 35.0, 18.0, 20.0]
+    assert all(x <= 33.0 for x in da["trucks_after"])
+    assert sum(da["trucks_after"]) == 112.0
+    assert sum(ra["plan"]["load"][:12]) == sum(srm_a[:12])
+    assert all(v >= -1e-9 for v in ra["plan"]["stock"])
+    assert sa["warnings"] == []
+
+    # (1b) Pass 2 100% fallback on 4-truck supplier: [35, 10, 10, 10] where 115% stops at 34, 100% reaches 33
+    srm_p = [0.0] * 36
+    srm_p[1], srm_p[2] = 700.0, 20.0
+    req_p = [0.0] * 36
+    req_p[1], req_p[2] = 560.0, 100.0
+    srm_bg = [0.0] * 36
+    srm_bg[2], srm_bg[4], srm_bg[7] = 180.0, 200.0, 200.0
+    rp, op, qp = _make_part("99005002", "Vendor H", 0.0, srm_p, req_p)
+    rb, ob, qb = _make_part("99005003", "Vendor H", 1000.0, srm_bg, [0.0] * 36)
+    sp = plan_parts(
+        D, [rp, rb], {"99005002": op, "99005003": ob}, {"99005002": qp, "99005003": qb},
+        None, None, False, TR_ALPHA, {"99005002": 20.0, "99005003": 20.0}, {"99005002": "C", "99005003": "C"},
+        level_cfg=lvl_cap4,
+    )
+    dp = sp["suppliers"]["Vendor H"]["days"][D.isoformat()]
+    assert dp["trucks_before"] == [35.0, 10.0, 10.0, 10.0]
+    assert all(x <= 33.0 for x in dp["trucks_after"])
+    assert sp["warnings"] == []
+    assert len(sp["moves_100pct"]) == 1 and sp["moves_100pct"][0]["margin_used"] == 1.00
+
+    # (2a) Still above 33 at 100% due to immediate slot-1 consumption (36 carts needed before 12-14 truck arrives)
+    srm_w1 = [0.0] * 36
+    srm_w1[1], srm_w1[2], srm_w1[4], srm_w1[7] = 720.0, 200.0, 200.0, 200.0
+    req_w1 = [0.0] * 36
+    req_w1[1] = 720.0
+    rw1, ow1, qw1 = _make_part("99005004", "Vendor H", 0.0, srm_w1, req_w1)
+    sw1 = plan_parts(
+        D, [rw1], {"99005004": ow1}, {"99005004": qw1}, None, None, False, TR_ALPHA,
+        {"99005004": 20.0}, {"99005004": "C"}, level_cfg=lvl_cap4,
+    )
+    dw1 = sw1["suppliers"]["Vendor H"]["days"][D.isoformat()]
+    assert dw1["trucks_after"] == [36.0, 10.0, 10.0, 10.0]
+    assert all(v >= -1e-9 for v in rw1["plan"]["stock"])
+    assert sw1["warnings"] == []
+    assert any("Truck 10-12 36 carts (> 33) kept for coverage" in x for x in sw1["info_notes"])
+
+    # (2b) Day total = 135 carts across 4 editable trucks (> 4 * 33 = 132) -> [33, 33, 33, 36] on LAST truck + warning
+    srm_w2 = [0.0] * 36
+    srm_w2[1], srm_w2[2], srm_w2[4], srm_w2[7] = 900.0, 720.0, 540.0, 540.0
+    rw2, ow2, qw2 = _make_part("99005005", "Vendor H", 2000.0, srm_w2, [0.0] * 36)
+    sw2 = plan_parts(
+        D, [rw2], {"99005005": ow2}, {"99005005": qw2}, None, None, False, TR_ALPHA,
+        {"99005005": 20.0}, {"99005005": "C"}, level_cfg=lvl_cap4,
+    )
+    dw2 = sw2["suppliers"]["Vendor H"]["days"][D.isoformat()]
+    assert dw2["trucks_after"] == [33.0, 33.0, 33.0, 36.0]
+    assert len(sw2["warnings"]) == 1
+    assert "Extra truck needed: Mon 11/16 total 135 carts > 4 trucks × 33 = 132. Please arrange an additional truck for 3 carts." in sw2["warnings"][0]

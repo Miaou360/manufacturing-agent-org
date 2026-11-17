@@ -154,6 +154,7 @@ def leveling_config(path: Optional[Path] = None, suppliers_path: Optional[Path] 
         merged_caps = {**csv_caps, **top_caps}
         return {
             "enabled": True,
+            "freeze_departed": True,
             "safety_margin": DEFAULT_SAFETY_MARGIN,
             "freeze_lead_min": DEFAULT_FREEZE_LEAD_MIN,
             "overload_factor": DEFAULT_OVERLOAD_FACTOR,
@@ -164,6 +165,9 @@ def leveling_config(path: Optional[Path] = None, suppliers_path: Optional[Path] 
     enabled = raw.get("enabled", True)
     if not isinstance(enabled, bool):
         raise ValueError(f"config/trucks.json leveling.enabled = {enabled!r}; expected boolean")
+    freeze_departed = raw.get("freeze_departed", True)
+    if not isinstance(freeze_departed, bool):
+        raise ValueError(f"config/trucks.json leveling.freeze_departed = {freeze_departed!r}; expected boolean")
     margin = float(raw.get("safety_margin", DEFAULT_SAFETY_MARGIN))
     if margin < MIN_SAFETY_MARGIN - 1e-9:
         raise ValueError(
@@ -182,6 +186,7 @@ def leveling_config(path: Optional[Path] = None, suppliers_path: Optional[Path] 
     merged_caps = {**csv_caps, **top_caps, **lvl_caps}
     return {
         "enabled": enabled,
+        "freeze_departed": freeze_departed,
         "safety_margin": margin,
         "freeze_lead_min": lead,
         "overload_factor": overload,

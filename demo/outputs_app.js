@@ -95,8 +95,8 @@
       title: "Supplier truck loading plan (leveled & capped)",
       tab: "What goes on each truck today & tomorrow?",
       when: "06:40 (today + 2 days) and 13:40 (tomorrow + 2 days), Monday to Saturday",
-      who: "Suppliers (Supplier A / B) + internal summary to logistics planner",
-      decision: "Which boxes must move to an earlier truck so the line never runs short and no trailer exceeds its cart cap (33 carts on Supplier A) or 1.7x daily truck average?",
+      who: "Suppliers (Supplier A / B; Supplier C internal-only) + logistics planner",
+      decision: "Which boxes must move to an earlier truck so the line never runs short, trailers stay within 33 / 60-cart caps, and day-total overflow triggers an Extra truck needed alert?",
       lead: "Projects 2-hour stock from 06:00, pulls boxes forward only when stock would drop below zero or a truck exceeds its cart/overload limit, and writes a 2-sheet workbook (Truck plan + 2-hour detail) with Total carts (boxes) and yellow change notes.",
       nextHtml:
         `If a late portal order change arrives after 13:40, ${go("srm-updated", "the manual PM refresh")} sends an UPDATED diff-highlighted plan only to changed suppliers. As trucks arrive, ${go("delivery", "02_JOB receipt tracking")} checks every unloaded box against this plan.`,

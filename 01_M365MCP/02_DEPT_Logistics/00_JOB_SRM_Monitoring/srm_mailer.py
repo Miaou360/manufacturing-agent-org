@@ -54,14 +54,37 @@ def supplier_key(vendor: str, cfg: Dict[str, Any]) -> Optional[str]:
     return next((k for k in cfg.get("suppliers", {}) if k.lower() in v), None)
 
 
-def recipients(vendor: str, cfg: Dict[str, Any]) -> Tuple[List[str], List[str], str]:
-    """(to, cc, banner). test: the user only + a banner naming the live .env keys. live: supplier, user in CC."""
+EXTRA_TRUCK_TO_ENV = "SRM_EXTRA_TRUCK_TO"
+
+
+def supplier_extra_warnings(items: List[Tuple[Dict[str, Any], Dict[str, Any]]]) -> List[str]:
+    """Returns #401c day-total 'Extra truck needed' warning lines within this supplier's mail window."""
+    return next(
+        (list(w.get("extra_truck_warnings") or []) for _, w in items if w.get("extra_truck_warnings")),
+        [],
+    )
+
+
+def recipients(
+    vendor: str,
+    cfg: Dict[str, Any],
+    *,
+    extra_truck_warning: bool = False,
+) -> Tuple[List[str], List[str], str]:
+    """(to, cc, banner). test: the user only + a banner naming the live .env keys. live: supplier (+ SRM_EXTRA_TRUCK_TO
+    when extra_truck_warning is True), user in CC."""
     user = addresses(cfg["user_env"])
     keys = cfg["suppliers"].get(supplier_key(vendor, cfg) or "", {})
+    extra_env = str(cfg.get("extra_truck_to_env") or EXTRA_TRUCK_TO_ENV)
     if cfg["mode"] != "live":
-        return user, [], (f"TEST MODE - in live mode this mail goes to .env {keys.get('to_env', '?')} "
+        extra_preview = f" + To .env {extra_env} (extra truck warning)" if extra_truck_warning else ""
+        return user, [], (f"TEST MODE - in live mode this mail goes to .env {keys.get('to_env', '?')}{extra_preview} "
                           f"(CC {keys.get('cc_env', '?')} and you). Nothing was sent to the supplier.")
     to = addresses(keys["to_env"]) if keys.get("to_env") else []
+    if extra_truck_warning:
+        extra_addrs = addresses(extra_env)
+        if extra_addrs:
+            to = list(dict.fromkeys(to + extra_addrs))
     cc = (addresses(keys["cc_env"]) if keys.get("cc_env") else []) + user
     return to, [c for c in dict.fromkeys(cc) if c not in to], ""
 
@@ -134,6 +157,11 @@ def supplier_body(vendor: str, run_label: str, items: List[Tuple[Dict[str, Any],
     parts += [f"<p>Hello {html.escape(vendor)} team,</p>",
               f"<p>Attached is the {html.escape(company)} truck loading plan ({html.escape(what)}), issued "
               f"{issued:%a %m/%d %H:%M} EST.{upd_note} Please load each truck as shown on the <b>Truck plan</b> sheet.</p>"]
+    for w_line in supplier_extra_warnings(items):
+        parts.append(
+            f"<p style='background:#FCE4D6;padding:8px 12px;border-left:4px solid #C00000;color:#900000'><b>"
+            f"{html.escape(w_line)}</b></p>"
+        )
     if refresh_meta and refresh_meta.get("diffs"):
         prev_at = str(refresh_meta.get("prev_sent") or "13:40")
         parts.append(
@@ -342,13 +370,28 @@ def send_run_mails(status: Dict[str, Any], res6: List[Dict[str, Any]], issued: d
                 "prev_sent": prev_at,
                 "diffs": v_diffs,
             }
-        elif not cfg["send_when_no_change"] and not supplier_summary(items)["rows"]:
+        extra_warns = supplier_extra_warnings(items)
+        has_extra_warn = bool(extra_warns)
+        if refresh_info is None and not cfg["send_when_no_change"] and not supplier_summary(items)["rows"] and not has_extra_warn:
             results.append({"mail": vendor, "sent": False, "reason": "no change (send_when_no_change=false)"})
             continue
-        to, cc, banner = recipients(vendor, cfg)
+        to, cc, banner = recipients(vendor, cfg, extra_truck_warning=has_extra_warn)
         if not to:
             results.append({"mail": vendor, "sent": False, "reason": "no address in .env"})
             continue
+        extra_env = str(cfg.get("extra_truck_to_env") or EXTRA_TRUCK_TO_ENV)
+        extra_meta: Dict[str, Any] = {}
+        if has_extra_warn:
+            if addresses(extra_env):
+                extra_meta["extra_truck_to"] = "added"
+            else:
+                log_msg = (
+                    f"Extra truck warning active for {vendor}, but .env {extra_env} is missing or empty "
+                    "— sent without extra recipient."
+                )
+                status.setdefault("notes", []).append(log_msg)
+                extra_meta["extra_truck_to"] = "missing_or_empty"
+                extra_meta["log"] = log_msg
         upd_prefix = "UPDATED - " if is_upd else ""
         subject = (f"{tag}{upd_prefix}{company_name()} truck loading plan - {vendor} - {_day(items[0][1]['dates'][0])} "
                    f"({update})")
@@ -362,7 +405,7 @@ def send_run_mails(status: Dict[str, Any], res6: List[Dict[str, Any]], issued: d
                 continue
         ok, err = _safe_send(sender, to, cc, subject, body, att)
         results.append({"mail": vendor, "sent": ok, "mode": cfg["mode"], "attachments": [a.name for a in att],
-                        **({"error": err} if err else {})})
+                        **extra_meta, **({"error": err} if err else {})})
         if ok:
             mailed.append(vendor)
         if err.startswith("TIMEOUT"):

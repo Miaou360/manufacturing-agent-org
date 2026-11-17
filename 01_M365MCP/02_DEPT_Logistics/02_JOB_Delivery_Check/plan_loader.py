@@ -270,16 +270,45 @@ def sync_plan_to_ledger(
     first_poll_min = int(cfg.get("first_poll_after_departure_min", 30))
     early_warn_min = int(cfg.get("early_warning_after_departure_min", 90))
     no_arrival_cap_min = int(cfg.get("no_arrival_cap_min", 180))
+    night_no_arrival_cap_min = int(cfg.get("night_no_arrival_cap_min", no_arrival_cap_min))
+    night_start_hour = int(cfg.get("night_cap_start_hour", 20))
+    night_end_hour = int(cfg.get("night_cap_end_hour", 6))
     next_truck_grace_min = int(cfg.get("next_truck_grace_min", 30))
     pallet_dep_hhmm = str(cfg.get("pallet_departure", "12:00"))
     pallet_dep_dt = _parse_pallet_departure(run_date, pallet_dep_hhmm)
     pallet_slot_idx = 0  # Day-level bucket (`8-10` / Day Total, matching `Delivery_TOP_6D`; 12:00 is display-only per 374 §0)
-    pallet_end_of_day_dt = slot_start(run_date, 1, 0) - dt.timedelta(minutes=1)
+    day_close_raw = str(cfg.get("day_close_hhmm", "05:59")).strip()
+    _dc_h, _dc_m = (int(x) for x in day_close_raw.split(":"))
+    pallet_end_of_day_dt = dt.datetime.combine(run_date + dt.timedelta(days=1), dt.time(_dc_h, _dc_m, 0))
 
-    # If no suppliers.csv exists (e.g. synthetic test without suppliers.csv), derive supplier keys from rows
+    # If no suppliers.csv exists (e.g. synthetic test without suppliers.csv), derive supplier keys from rows;
+    # otherwise (#403-B2), include every remaining SRM supplier that carries Class L (pallet) items at day level.
     if not suppliers_rows:
         seen_vendors = sorted({r["vendor"] for r in rows if r.get("vendor")})
         suppliers_rows = [{"match": v, "trucks": [], "mail": False, "to_env": "", "cc_env": ""} for v in seen_vendors]
+    else:
+        suppliers_rows = list(suppliers_rows)
+        unlisted_l_vendors = sorted(
+            {
+                r["vendor"].strip()
+                for r in rows
+                if r.get("vendor")
+                and r.get("plan")
+                and (r["plan"].get("cls") or "") == "L"
+                and match_supplier_key(r["vendor"], suppliers_rows) is None
+            }
+        )
+        for v_pal in unlisted_l_vendors:
+            suppliers_rows.append(
+                {
+                    "match": v_pal,
+                    "trucks": [],
+                    "mail": False,
+                    "to_env": "",
+                    "cc_env": "",
+                    "auto_pallet_only": True,
+                }
+            )
 
     existing_trucks = {
         r["truck_id"]: dict(r)
@@ -374,7 +403,7 @@ def sync_plan_to_ledger(
         vendor_display = sup_parts[0]["vendor"]
         fixed_slots: List[int] = list(trucks_cfg.get(sup_key, []))
 
-        c_parts = [r for r in sup_parts if (r["plan"].get("cls") or "C") != "L"]
+        c_parts = [] if sup_row.get("auto_pallet_only") else [r for r in sup_parts if (r["plan"].get("cls") or "C") != "L"]
         l_parts = [r for r in sup_parts if (r["plan"].get("cls") or "") == "L"]
 
         # Candidate Day-0 slot trucks for Class C (fixed slots + any non-zero 'Other' slot)
@@ -443,9 +472,12 @@ def sync_plan_to_ledger(
                     if is_p == 0 and d_ts > dep_dt
                 ]
                 next_same_sup_dep = later_deps[0] if later_deps else next_day_first_dep
+                is_night_dep = (dep_dt.hour >= night_start_hour) or (dep_dt.hour < night_end_hour)
+                eff_cap_min = night_no_arrival_cap_min if is_night_dep else no_arrival_cap_min
                 deadline_dt = min(
                     next_same_sup_dep + dt.timedelta(minutes=next_truck_grace_min),
-                    dep_dt + dt.timedelta(minutes=no_arrival_cap_min),
+                    dep_dt + dt.timedelta(minutes=eff_cap_min),
+                    pallet_end_of_day_dt,
                 )
 
             existing = existing_trucks.get(truck_id)

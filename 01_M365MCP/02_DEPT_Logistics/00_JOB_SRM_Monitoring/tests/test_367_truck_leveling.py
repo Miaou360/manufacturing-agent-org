@@ -180,7 +180,7 @@ def test_384_r2_frozen_trucks_neither_source_nor_destination_and_in_day_avg():
     rf, of, qf = _make_part("99000041", "Vendor C", 2000.0, srm_f, [0.0] * 36)
     sum_a = plan_parts(
         D, [rf], {"99000041": of}, {"99000041": qf}, None, None, False, TR_BETA,
-        {"99000041": 20.0}, {"99000041": "C"}, run_ts=dt.datetime(2026, 11, 16, 6, 46),
+        {"99000041": 20.0}, {"99000041": "C"}, level_cfg={"enabled": True, "freeze_departed": True, "safety_margin": 0.15, "freeze_lead_min": 30.0, "overload_factor": 1.7, "max_carts_per_truck": {}}, run_ts=dt.datetime(2026, 11, 16, 6, 46),
     )
     d0_a = sum_a["suppliers"]["Vendor C"]["days"][D.isoformat()]
     assert d0_a["frozen_trucks"] == ["8-10"]
@@ -197,7 +197,7 @@ def test_384_r2_frozen_trucks_neither_source_nor_destination_and_in_day_avg():
     rb, ob, qb = _make_part("99000042", "Vendor C", 2000.0, srm_b, [0.0] * 36)
     sum_b = plan_parts(
         D, [rb], {"99000042": ob}, {"99000042": qb}, None, None, False, TR_BETA,
-        {"99000042": 20.0}, {"99000042": "C"}, run_ts=dt.datetime(2026, 11, 16, 6, 46),
+        {"99000042": 20.0}, {"99000042": "C"}, level_cfg={"enabled": True, "freeze_departed": True, "safety_margin": 0.15, "freeze_lead_min": 30.0, "overload_factor": 1.7, "max_carts_per_truck": {}}, run_ts=dt.datetime(2026, 11, 16, 6, 46),
     )
     assert [rb["plan"]["load"][t] / 20.0 for t in TR_BETA["Vendor C"]] == [0.0, 10.0, 21.0, 10.0, 21.0]
     assert sum_b["suppliers"]["Vendor C"]["days"][D.isoformat()]["carts_moved"] == 19.0
