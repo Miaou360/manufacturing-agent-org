@@ -294,7 +294,7 @@ def test_wait_for_file_until_size_settles(tmp_path):
 
 
 def test_collector_helpers(tmp_path):
-    assert collector.redact("https://host.example.com/srm/TSTA005?x=1") == "/srm/TSTA005"
+    assert collector.redact("https://host.example.com/srm/SCREEN_PLAN?x=1") == "/srm/SCREEN_PLAN"
     assert collector.target_name("planreq", dt.date(2026, 11, 13)) == "Plan & Require 20261113.xlsx"
     p = tmp_path / "Order Detail.csv"
     _write(p, _hourly_rows(True, [("099001234", "Vendor A X", "C", 0.0, [5.0] + [0.0] * 35)]))

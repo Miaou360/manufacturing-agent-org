@@ -102,7 +102,7 @@ SCAN_IGNORE_FILES: Set[str] = {
 
 _SAFE_ENV_LITERALS: Set[str] = {
     "", "common", "device_code", "en", "ko", "100", "200", "300", "true", "false", "0", "1",
-    "BINSYNTH9940", "smt", "smd", "oem", "p001", "p002", "acme", "ACME Manufacturing", "acme corp",
+    "BINSYNTH9940", "smt", "smd", "oem", "p001", "p002", "acme", "ACME Manufacturing", "acme corp", "acme plant", "ACME Plant",
     "auto_agent", "wms_user", "your_wms_id", "your_wms_password", "your_sap_user", "your_sap_password",
     "enterprise sso", "https://wms.example.com/login", "https://wms.example.com/wms_web",
 }

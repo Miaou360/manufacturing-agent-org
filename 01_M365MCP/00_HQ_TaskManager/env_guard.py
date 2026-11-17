@@ -32,6 +32,7 @@ DUMMY_PLACEHOLDERS = {
     "ACME Manufacturing",
     "ACME Corp",
     "ACME America",
+    "ACME Plant",
     "MAT-0000",
     "TEST-000",
 }

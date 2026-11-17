@@ -9,11 +9,11 @@
   "srm_home_path": "Home",
   "srm_login": {"user_selector": "#Input_UserName", "password_selector": "#Input_Password", "submit_texts": ["Login", "Log in"]},
   "screens": [
-    {"id": "TSTA005", "menu_texts": ["Material", "Material Plan", "Sequence Order Plan"], "exports": [
+    {"id": "SCREEN_PLAN", "menu_texts": ["Material", "Material Plan", "Sequence Order Plan"], "exports": [
       {"kind": "planreq", "tab_text": "Plan & Require"},
       {"kind": "order", "tab_text": "Order Detail"}
     ]},
-    {"id": "TSTA006", "menu_texts": ["Material", "Material Plan", "Sequence Order Require"], "exports": [
+    {"id": "SCREEN_REQUIRE", "menu_texts": ["Material", "Material Plan", "Sequence Order Require"], "exports": [
       {"kind": "require", "tab_text": "Require Detail"}
     ]}
   ],

@@ -2,9 +2,9 @@
 02_DEPT_Logistics / 00_JOB_SRM_Monitoring - SRM export download (Playwright; portal PC SSO, SRM .env account)
 =============================================================================================================
 Same clicks as the user's recording (11/12), for one delivery date per output folder:
-  Sequence Order Plan    (TSTA005): Delivery Date -> search -> tab 'Plan & Require' -> Export to Excel file,
+  Sequence Order Plan    (SCREEN_PLAN): Delivery Date -> search -> tab 'Plan & Require' -> Export to Excel file,
                                     tab 'Order Detail' -> Export to Excel file
-  Sequence Order Require (TSTA006): Delivery Date -> search -> tab 'Require Detail' -> Export to Excel file
+  Sequence Order Require (SCREEN_REQUIRE): Delivery Date -> search -> tab 'Require Detail' -> Export to Excel file
 Saved as '<Order Detail|Require Detail|Plan & Require> <YYYYMMDD>.xlsx'; every file is parsed right away and its first
 date must equal the delivery date (otherwise it is moved to 'rejected/' and the run fails).
 
@@ -672,7 +672,7 @@ class SrmSession:
 
     def widget_date(self, date_in: Any, delivery: dt.date, set_it: bool = False) -> Optional[bool]:
         """None = no DevExtreme widget found (only the typed text can be checked); else whether the widget's own
-        value - the one the screen queries with - is the delivery date (probe 11/13 07:10: TSTA006 showed the typed
+        value - the one the screen queries with - is the delivery date (probe 11/13 07:10: SCREEN_REQUIRE showed the typed
         11/14 but exported 11/13)."""
         try:
             got = date_in.evaluate(self._WIDGET_JS, {"set": set_it, "y": delivery.year, "m": delivery.month,

@@ -4,7 +4,7 @@
 * load_env()     : nearest parent .env, never overriding variables already set (skipped under pytest unless a
                    start folder is given)
 * company_name() : our company name on supplier files and mails = .env COMPANY_NAME. Never written in code (the
-                   pre-commit hook blocks .env values); the dummy 'ACME Tennessee' is used only under tests.
+                   pre-commit hook blocks .env values); the dummy 'ACME Plant' is used only under tests.
 * assert_clean() : live supplier mails must not carry dummy / test tokens.
 """
 from __future__ import annotations
@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Optional
 
 BASE_DIR = Path(__file__).resolve().parent
-_DUMMY_NAMES = {"", "ACME", "ACME Tennessee", "ACME Corp", "ACME America"}
+_DUMMY_NAMES = {"", "ACME", "ACME Plant", "ACME Corp", "ACME America"}
 _DUMMY_OUT = re.compile(r"(\bACME\b|example\.com|\b9900\d{4}\b)", re.IGNORECASE)
 
 
@@ -41,7 +41,7 @@ def load_env(start: Optional[Path] = None) -> None:
 def company_name() -> str:
     v = os.getenv("COMPANY_NAME", "").strip()
     if testing():
-        return v or "ACME Tennessee"
+        return v or "ACME Plant"
     if v in _DUMMY_NAMES:
         raise RuntimeError("COMPANY_NAME is missing or a dummy value in .env (needed for supplier files / mails)")
     return v
