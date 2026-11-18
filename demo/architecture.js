@@ -229,7 +229,7 @@
     {
       unit: "gi",
       source: "WMS–ERP interface error queues",
-      collect: "30m day / 1h night daemon + 07:18 snapshot",
+      collect: "Hourly (24h, :00) daemon + 07:18 snapshot",
       ledger: "<code>gi_error_history.db</code>",
       decide: "Classify root cause; score 1–7 deletion gates at 07:23",
       guard: "Delta_Accuracy ≥ 0, chain lock, submit hard-lock",

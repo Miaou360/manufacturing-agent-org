@@ -203,13 +203,8 @@ def _is_mb1b_posted_ok(res_dict: dict) -> tuple[bool, str]:
 def _next_job01_cycle_start(now: datetime) -> datetime:
     """
     Returns the wall-clock start time of the next scheduled 01_JOB cycle:
-    - Daytime (08:00 <= hour < 17:00): :00 and :30 (16:30 -> 17:00).
-    - Nighttime (17:00 <= hour or hour < 08:00): top of next hour (:00).
+    - All 24 hours: top of the next hour (:00).
     """
-    if 8 <= now.hour < 17:
-        if now.minute < 30:
-            return now.replace(minute=30, second=0, microsecond=0)
-        return now.replace(minute=0, second=0, microsecond=0) + timedelta(hours=1)
     return now.replace(minute=0, second=0, microsecond=0) + timedelta(hours=1)
 
 

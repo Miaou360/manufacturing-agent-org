@@ -103,8 +103,7 @@ def _run_pipeline_core(
     start_time = time.time()
     
     if not cycle_type:
-        now_dt = datetime.now()
-        cycle_type = "30-min cycle (Daytime)" if (8 <= now_dt.hour < 17 or (now_dt.hour == 17 and now_dt.minute <= 5)) else "1-hour cycle (Night)"
+        cycle_type = "1-hour cycle (24h)"
 
     logger.info("==========================================================================")
     logger.info(f" 🚀 [24H GI PIPELINE - {cycle_type}] Starting Error Resolution Run (Batch: {batch_id} | Plant: {plant})...")
@@ -406,25 +405,13 @@ def run_pipeline(
 
 def get_next_schedule_target(now: datetime, grace_seconds: float = 0.0) -> tuple:
     """
-    Computes the exact next schedule timestamp and interval type based on:
-    - 08:00 ~ 17:00: Every 30 minutes (:00, :30) -> 30분 주기 (주간)
-    - 17:01 ~ 07:59: Every 1 hour (:00) -> 1시간 주기 (야간)
+    Computes the exact next schedule timestamp and interval type:
+    - 00:00 ~ 23:00: Hourly on the hour (:00, 24h) -> "1-hour cycle (24h)"
     If grace_seconds > 0 (e.g. 60s on daemon startup) and now is within <= grace_seconds
-    after a scheduled slot, returns that slot immediately so late daemon startup does not skip it.
+    after a scheduled :00 slot, returns that slot immediately so late daemon startup does not skip it.
     """
     from datetime import timedelta
-    slots = []
-    # 00:00 to 07:00 (hourly)
-    for h in range(0, 8):
-        slots.append((h, 0, "1-hour cycle (Night)"))
-    # 08:00 to 17:00 (30-min)
-    for h in range(8, 17):
-        slots.append((h, 0, "30-min cycle (Daytime)"))
-        slots.append((h, 30, "30-min cycle (Daytime)"))
-    slots.append((17, 0, "30-min cycle (Daytime)"))
-    # 18:00 to 23:00 (hourly)
-    for h in range(18, 24):
-        slots.append((h, 0, "1-hour cycle (Night)"))
+    slots = [(h, 0, "1-hour cycle (24h)") for h in range(0, 24)]
 
     # Check slots today (including startup grace window if enabled)
     for h, m, label in slots:
@@ -437,7 +424,7 @@ def get_next_schedule_target(now: datetime, grace_seconds: float = 0.0) -> tuple
     # Tomorrow's first slot (00:00)
     tomorrow = now + timedelta(days=1)
     target = tomorrow.replace(hour=0, minute=0, second=0, microsecond=0)
-    return target, "1-hour cycle (Night)"
+    return target, "1-hour cycle (24h)"
 
 
 LOCK_FILE = BASE_DIR / "hourly_gi_pipeline.lock"
@@ -478,8 +465,7 @@ def start_24h_daemon(
 ):
     """
     Runs the 24/7 continuous autonomous resolution pipeline:
-    - 08:00 ~ 17:00: Every 30 minutes (:00, :30)
-    - 17:01 ~ 07:59: Every 1 hour (:00)
+    - 00:00 ~ 23:00: Every 1 hour on the hour (:00, 24h; 05:30-06:15 guard preserved)
     Aligned strictly to schedule clock slots (no premature startup runs).
     """
     acquire_singleton_lock()
@@ -487,8 +473,7 @@ def start_24h_daemon(
 
     logger.info("==========================================================================")
     logger.info(" ⏰ [24/7 CONTINUOUS DAEMON] Starting 24H Autonomous GI Error Pipeline...")
-    logger.info("    • 08:00 ~ 17:00 EST: 30분 주기 주간 정밀 해소 & 보고 (:00, :30 정시)")
-    logger.info("    • 17:01 ~ 07:59 EST: 1시간 주기 야간 무인 해소 & 보고 (:00 정시)")
+    logger.info("    • 00:00 ~ 23:00 EST: 1시간 주기 24시간 상시 정시 해소 (:00 정시, 05:30~06:15 동결 가드 유지)")
     logger.info("    • Singleton Protection: 1대 인스턴스 독점 보장 (중복 프로세스 자동 차단)")
     logger.info("    • Slot Deduplication: 동일 시간대 리포트 이메일 중복 발송 원천 차단")
     logger.info("==========================================================================")
@@ -532,7 +517,7 @@ def start_24h_daemon(
 def main():
     parser = argparse.ArgumentParser(description="24/7 Continuous SAP GI Error Resolution Pipeline")
     parser.add_argument("--plant", default=_get_ops_env("SAP_PLANT", "P001"), help="Plant (default: P001)")
-    parser.add_argument("--daemon", action="store_true", help="Run 24/7 continuous autonomous daemon (08-17h: 30m, night: 1h)")
+    parser.add_argument("--daemon", action="store_true", help="Run 24/7 continuous autonomous daemon (hourly on the hour, 24h)")
     parser.add_argument("--loop", type=float, default=0, help="Run repeatedly every N hours (legacy override)")
     parser.add_argument("--dry-run", action="store_true", help="Generate resolution plan only, do not post to SAP")
     parser.add_argument("--no-post", action="store_true", help="Strict read-only test mode (No MB1B postings, SAP queries only)")

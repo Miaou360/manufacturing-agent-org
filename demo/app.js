@@ -13,9 +13,9 @@
 
   // every task as concrete start minutes of the day
   function starts(task) {
-    if (task.daemon) { // every 30 min 08:00-17:00, hourly otherwise
+    if (task.daemon) { // hourly on the hour, 24h
       const out = [];
-      for (let m = 0; m < 1440; m += 30) if ((m >= 480 && m <= 1020) || m % 60 === 0) out.push(m);
+      for (let m = 0; m < 1440; m += 60) out.push(m);
       return out;
     }
     if (task.every) { const out = [], lim = task.until || 1439; for (let m = mins(task.t); m <= lim; m += task.every) out.push(m); return out; }

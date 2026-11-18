@@ -428,16 +428,16 @@ def test_d113_b1_rollback_race_and_wait_ceiling(tmp_path):
     from datetime import datetime
     from mb1b_executor import _compute_d113_wait_schedule, execute_d113_roundtrip_posting
 
-    # (a) Wait ceiling & next-01-cycle -5m hard cutoff
+    # (a) Wait ceiling & next-01-cycle -5m hard cutoff (hourly 24h -> next cycle at :00)
     sched_early = _compute_d113_wait_schedule(datetime(2026, 11, 2, 9, 3, 0))
-    assert sched_early["next_cycle_start"] == datetime(2026, 11, 2, 9, 30, 0)
-    assert sched_early["hard_deadline"] == datetime(2026, 11, 2, 9, 18, 0)  # 900s (15m) cap < 09:25
+    assert sched_early["next_cycle_start"] == datetime(2026, 11, 2, 10, 0, 0)
+    assert sched_early["hard_deadline"] == datetime(2026, 11, 2, 9, 18, 0)  # 900s (15m) cap < 09:55
     assert sched_early["tick1_wait_sec"] == 285  # 09:03:00 -> 09:07:45
     assert sched_early["tick2_wait_sec"] == 600  # +1 tick within 900s cap
 
-    sched_late = _compute_d113_wait_schedule(datetime(2026, 11, 2, 9, 18, 0))
-    assert sched_late["next_cycle_start"] == datetime(2026, 11, 2, 9, 30, 0)
-    assert sched_late["hard_deadline"] == datetime(2026, 11, 2, 9, 25, 0)  # Hard stop 5m before 09:30!
+    sched_late = _compute_d113_wait_schedule(datetime(2026, 11, 2, 9, 48, 0))
+    assert sched_late["next_cycle_start"] == datetime(2026, 11, 2, 10, 0, 0)
+    assert sched_late["hard_deadline"] == datetime(2026, 11, 2, 9, 55, 0)  # Hard stop 5m before 10:00!
     assert sched_late["total_budget_sec"] == 420
 
     # (b) Rollback race (SL00 deficit on rollback SL00->SL01) -> RESOLVED, NOT ROLLED_BACK, NO retry block!

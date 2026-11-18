@@ -64,6 +64,7 @@ EN: Dict[str, str] = {
     "FORCED_WEEKLY_GR_REASON": "Suspected missing GR (F) — verify SAP GR",
     "CYCLE_30M_DAY": "30-min cycle (Daytime)",
     "CYCLE_1H_NIGHT": "1-hour cycle (Night)",
+    "CYCLE_1H_24H": "1-hour cycle (24h)",
 }
 
 

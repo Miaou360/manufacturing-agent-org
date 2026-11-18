@@ -280,7 +280,7 @@ def build_gi_email_html(
     posting_results: List[Dict[str, Any]],
     run_date: str,
     run_time: str,
-    cycle_label: str = "30-min cycle (Daytime)"
+    cycle_label: str = "1-hour cycle (24h)"
 ) -> str:
     # Filter active target errors (excluding 901, 902)
     active_df = plan_df[~plan_df['Mvt_Original'].isin(['901', '902'])] if plan_df is not None and not plan_df.empty else pd.DataFrame()
@@ -558,7 +558,7 @@ def send_hourly_gi_report(
     to_recipients: List[str] = None,
     cycle_type: str = None
 ) -> bool:
-    """Dispatches the routine GI resolution report (30-min daytime / 1-hour nighttime) via Outlook COM."""
+    """Dispatches the routine GI resolution report (hourly 24h cycle) via Outlook COM."""
     now = datetime.now()
     if not run_date:
         run_date = now.strftime("%Y-%m-%d")
@@ -566,11 +566,7 @@ def send_hourly_gi_report(
         run_time = now.strftime("%I:%M %p EST")
 
     if not cycle_type:
-        # Daytime 08:00 ~ 17:00 -> 30-min cycle, Otherwise -> 1-hour cycle
-        if 8 <= now.hour < 17 or (now.hour == 17 and now.minute <= 5):
-            cycle_type = _EN["CYCLE_30M_DAY"]
-        else:
-            cycle_type = _EN["CYCLE_1H_NIGHT"]
+        cycle_type = _EN.get("CYCLE_1H_24H", "1-hour cycle (24h)")
 
     to_list = to_recipients if to_recipients is not None else DEFAULT_TO
     to_list = [r for r in to_list if is_valid_recipient(r)]
@@ -583,7 +579,7 @@ def send_hourly_gi_report(
     # Slot Deduplication Guardrail (Prevents duplicate sends for same 30m/1h slot)
     try:
         from db_manager import is_email_slot_already_sent, record_email_slot_sent
-        slot_minute = 30 if 15 <= now.minute < 45 else 0
+        slot_minute = 0
         slot_hour = now.hour if now.minute < 45 else (now.hour + 1) % 24
         slot_date = run_date.replace("-", "")
         slot_key = f"ROUTINE_{slot_date}_{slot_hour:02d}{slot_minute:02d}"
@@ -977,7 +973,7 @@ def build_daily_cumulative_email_html(
                             <div style="background-color: #f0f9ff; border: 1px solid #bae6fd; padding: 12px; border-radius: 6px;">
                                 <div style="color: #0369a1; font-size: 10px; font-weight: bold; text-transform: uppercase;">{f"Prev-Day ({target_prev_date}) Runs" if target_prev_date else "24H Pipeline Runs"}</div>
                                 <div style="color: #0c4a6e; font-size: 22px; font-weight: bold; margin-top: 2px;">{total_runs_24h} runs</div>
-                                <div style="color: #0369a1; font-size: 11px; margin-top: 2px;">30m Day / 1h Night</div>
+                                <div style="color: #0369a1; font-size: 11px; margin-top: 2px;">Hourly (24h, :00)</div>
                             </div>
                         </td>
                         <td style="width: 25%; padding: 4px;">

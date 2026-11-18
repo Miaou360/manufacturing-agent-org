@@ -5,7 +5,7 @@
 # 1. SCM_Agent_Daily_Stock_Accuracy: Daily 06:50 AM EST (Mon-Sat, Sunday Excluded per D38)
 # 2. SCM_Agent_Daily_Backlog_0620: Daily 06:20 AM EST (Pre-refresh & Save, D48/D51)
 # 3. SCM_Agent_Daily_Backlog_0815: Daily 08:15 AM EST (Morning Report & Resolution)
-# 4. SCM_Agent_Continuous_GI_Error: At Logon (24/7 continuous: 08-17h: 30m, night: 1h)
+# 4. SCM_Agent_Continuous_GI_Error: At Logon (24/7 continuous: 1h on the hour, 24h)
 # 5. SCM_Agent_Weekly_Backlog_Analysis: Weekly Friday 08:30 AM EST
 # 6. SCM_Agent_Daily_System_Reconciliation: Daily 06:35 AM EST
 # 7. SCM_Agent_Daily_SL01_R_Bins: Daily 04:15 AM EST (Mon-Sat, Sunday Excluded per D39)
@@ -91,7 +91,7 @@ try {
     Unregister-ScheduledTask -TaskName "SCM_Agent_Continuous_GI_Error" -Confirm:$false -ErrorAction SilentlyContinue
 } catch {}
 
-Register-ScheduledTask -TaskName "SCM_Agent_Continuous_GI_Error" -Action $giAction -Trigger @($giTriggerLogon, $giTriggerRepeat) -Settings $giSettings -Description "01_JOB_GR_GI_Error: 24/7 Continuous Autonomous Pipeline (Daytime 30m / Nighttime 1h). Headless background execution."
+Register-ScheduledTask -TaskName "SCM_Agent_Continuous_GI_Error" -Action $giAction -Trigger @($giTriggerLogon, $giTriggerRepeat) -Settings $giSettings -Description "01_JOB_GR_GI_Error: 24/7 Continuous Autonomous Pipeline (Hourly on the hour, 24h). Headless background execution."
 Write-Host "✅ Registered Task: SCM_Agent_Continuous_GI_Error (24/7 At Logon + 30m Auto-Recovery | Headless)"
 
 # Task 4b (D106): SCM_Agent_Daily_GI_Report_0730 (Standalone DB-only Daily Report @ 07:30 + 08:00 retry via 154-A XML)

@@ -17,7 +17,7 @@ A plant's stock lives in two systems, the ERP and the warehouse system, and they
 | Output | When | Who uses it | Decision it supports |
 | --- | --- | --- | --- |
 | [Daily cycle count list](https://miaou360.github.io/manufacturing-agent-org/demo/outputs.html#count) | 06:50 | Count team, inventory lead | Which 28 bins are most worth counting today? Ranked by risk, with the reason for each bin; results come back the same day and are compared with a random baseline. |
-| [Interface error resolution](https://miaou360.github.io/manufacturing-agent-org/demo/outputs.html#interface) | every 30 min | Inventory planner | Which failed receipt / issue postings were fixed safely, and which need a person? |
+| [Interface error resolution](https://miaou360.github.io/manufacturing-agent-org/demo/outputs.html#interface) | Hourly (24h) | Inventory planner | Which failed receipt / issue postings were fixed safely, and which need a person? |
 | [Production backlog report](https://miaou360.github.io/manufacturing-agent-org/demo/outputs.html#backlog) | 08:15 | Production control, management | What still blocks yesterday's production from being booked, and who acts on each line? |
 | [ERP – WMS reconciliation](https://miaou360.github.io/manufacturing-agent-org/demo/outputs.html#recon) | 07:30 | Inventory lead, finance | Is stock accuracy moving, and which differences are real rather than timing? |
 | [Supplier truck loading plan](https://miaou360.github.io/manufacturing-agent-org/demo/outputs.html#srm) | 06:40, 13:40 | Suppliers, logistics planner | What goes on each fixed truck today and tomorrow so no trailer is overloaded and no line runs short? |
@@ -68,7 +68,7 @@ Structure and schedules on the live map mirror the running system as of 2026-11-
 │   └── ztcode_stock_guard.py        # ERP GR/GI interface collision & chain protection guard
 └── 01_DEPT_Inventory/               # Autonomous Inventory & Warehouse Operations Department
     ├── 00_JOB_StockAccuracy/        # Daily/Weekly risk-scored & stratified cycle-count engine + LightGBM pipeline
-    ├── 01_JOB_GR_GI_Error/          # Continuous 30m/1h ERP-WMS GI/GR interface error classification & auto-clearing
+    ├── 01_JOB_GR_GI_Error/          # Continuous 1h (24h) ERP-WMS GI/GR interface error classification & auto-clearing
     ├── 02_JOB_Backlog_Clear/        # COGI production backlog root-cause engine & accuracy-preserving MB1B resolver
     ├── 03_JOB_Backlog_Analysis/     # MB51 movement decomposition & longitudinal backlog analytics mart
     ├── 04_JOB_SystemReconciliation/ # Plant-wide SAP vs. WMS stock reconciliation & variance tracking

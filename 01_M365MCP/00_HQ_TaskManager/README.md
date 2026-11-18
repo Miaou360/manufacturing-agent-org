@@ -22,7 +22,7 @@ graph TD
     TM --> MD["05_DEPT_Program_MasterData (BOM/사일로/마스터)"]:::planned
 
     INV --> SA["00_JOB_StockAccuracy (재고 정확도/순환실사)<br><b>[🟢 LIVE - Daily 04:00 AM]</b>"]:::live
-    INV --> GGE["01_JOB_GR_GI_Error (24시간 무중단 자동 해소)<br><b>[🟢 LIVE - 24/7 Daemon (주간 30m / 야간 1h)]</b>"]:::live
+    INV --> GGE["01_JOB_GR_GI_Error (24시간 무중단 자동 해소)<br><b>[🟢 LIVE - 24/7 Daemon (1h, 24h)]</b>"]:::live
     INV --> BL["02_JOB_Backlog_Clear (COGI 생산 백로그 실시간 해소)<br><b>[🟢 LIVE - Daily 06:10 / 08:15 AM]</b>"]:::live
     INV --> BLA["03_JOB_Backlog_Analysis (COGI 시계열 4대차원 심층 분석)<br><b>[🟢 LIVE - Weekly / Milestone 10/31]</b>"]:::live
     INV --> REC["04_JOB_SystemReconciliation (WMS vs SAP 전사 시스템 공식 정확도)<br><b>[🟢 LIVE - Daily 06:35 AM]</b>"]:::live
@@ -41,7 +41,7 @@ graph TD
 | :--- | :--- | :---: | :--- | :--- |
 | **00_HQ_TaskManager**<br>(오케스트레이션) | 총괄 PMO, 아침 브리핑, 팔로우업 추적, 자동화 파이프라인 통합 관제, Git 보안 동기화 | **🟢 LIVE** | `daily_briefing.py`<br>`follow_up_tracker.py`<br>`org_manager.py`<br>`git_auto_sync.py` | 매일 아침 수시 / 통합 관제 |
 | **01_DEPT_Inventory**<br>├ **00_JOB_StockAccuracy** | 재고 정확도 검증, 회전일수 온톨로지, 순환실사(40 Bins) 알림 | **🟢 LIVE** | `daily_pipeline.py`<br>`box_aging_tracker.py`<br>`stock_verifier.py`<br>`warehouse_notifier.py` | 월~토 04:00 AM EST<br>(일요일 발송 제외 정책) |
-| **01_DEPT_Inventory**<br>├ **01_JOB_GR_GI_Error** | ZTCODE_GI_ERR GI 인터페이스 에러 자동 해소, GR 의존성 보호, MB1B 311 자동 전기, 한국어 리포트 | **🟢 LIVE** | `hourly_gi_pipeline.py`<br>`sap_launcher.py`<br>`ztcode_gi_collector.py`<br>`gr_gi_resolver.py`<br>`mb1b_executor.py`<br>`gi_notifier.py` | **24시간 상시 가동**<br>(주간 08~17: 30분<br>야간 17~08: 1시간) |
+| **01_DEPT_Inventory**<br>├ **01_JOB_GR_GI_Error** | ZTCODE_GI_ERR GI 인터페이스 에러 자동 해소, GR 의존성 보호, MB1B 311 자동 전기, 한국어 리포트 | **🟢 LIVE** | `hourly_gi_pipeline.py`<br>`sap_launcher.py`<br>`ztcode_gi_collector.py`<br>`gr_gi_resolver.py`<br>`mb1b_executor.py`<br>`gi_notifier.py` | **24시간 상시 가동**<br>(전 시간대 1시간 정시 `:00`) |
 | **01_DEPT_Inventory**<br>├ **02_JOB_Backlog_Clear** | COGI 생산 백로그 실시간 SAVE 및 리프레시 검증, MB1B 311 잉여 이동전기, 플래너 누적 보고 | **🟢 LIVE** | `backlog_pipeline.py`<br>`sap_launcher.py`<br>`cogi_collector.py`<br>`backlog_resolver.py`<br>`mb1b_backlog_executor.py`<br>`notifier.py` | 매일 06:10 AM (1차 사전해소)<br>매일 08:15 AM (2차 본해소 & 메일) |
 | **01_DEPT_Inventory**<br>├ **03_JOB_Backlog_Analysis** | 주간/월간 COGI 백로그 시계열 4대차원 심층 분석, 온톨로지 결합, 4분면 매트릭스 | **🟢 LIVE** | `run_analysis.py`<br>`analytics_engine.py`<br>`report_generator.py`<br>`notifier.py` | 매주 금요일 08:30 AM EST<br>(1차 마일스톤: **10/31**) |
 | **01_DEPT_Inventory**<br>├ **04_JOB_SystemReconciliation** | SAP ZTCODE_STOCK_REC vs WMS 시스템 공식 재고정확도 분석, 재무 리스크 TOP 5 부품, AI 파이프라인 기여도 산출 | **🟢 LIVE** | `run_systemreconciliation.py`<br>`reconciliation_collector.py`<br>`reconciliation_engine.py`<br>`reconciliation_notifier.py`<br>`db_manager.py` | 매일 06:35 AM EST<br>(전일 마감 데이터 대사) |
@@ -111,7 +111,7 @@ graph TD
   3. **MB1B 311 자동 이동전기 (`mb1b_executor.py`)**:
      - SAP 모달 팝업 자동 방어, MMSC 미확장 저장위치 자동 등록(Auto-Heal).
   4. **24/7 무인 스케줄러 & 이메일 보고 정책 (`hourly_gi_pipeline.py`, `gi_notifier.py`)**:
-     - 주간 30분 / 야간 1시간 상시 가동 데몬. 매일 아침 08:00 AM EST 24시간 누적 종합 리포트 1회 발송 (`GI_ERROR_REPORT_TO`).
+     - 전 시간대 1시간 정시(`:00`, 24h) 상시 가동 데몬. 매일 아침 07:30/08:00 AM EST 24시간 누적 종합 리포트 1회 발송 (`GI_ERROR_REPORT_TO`).
      - Windows Task Scheduler: `\SCM_Agent_Continuous_GI_Error` (24/7 상시 백그라운드 구동).
      - 전용 가이드: [01_JOB_GR_GI_Error/README.md](file:///%USERPROFILE%/Workspace/manufacturing-agent-org/01_M365MCP/01_DEPT_Inventory/01_JOB_GR_GI_Error/README.md).
 

@@ -38,7 +38,7 @@ TASK_NAMES = [
     ("SCM_Agent_Daily_Stock_Accuracy", "WMS 크롤링 및 재고 정확도 순환실사", "매일 04:00 AM (365일 무휴 수집, 일요일 메일 스킵)"),
     ("SCM_Agent_Daily_Backlog_0610", "COGI 백로그 1차 사전 SAVE & 아카이브", "매일 06:10 AM"),
     ("SCM_Agent_Daily_Backlog_0815", "COGI 백로그 2차 최종 해소 & 리포트", "매일 08:15 AM"),
-    ("SCM_Agent_Continuous_GI_Error", "GI 인터페이스 에러 24시간 무중단 자동 해소", "24/7 상시 (주간 30m / 야간 1h)"),
+    ("SCM_Agent_Continuous_GI_Error", "GI 인터페이스 에러 24시간 무중단 자동 해소", "24/7 상시 (1h 정시, 24h)"),
     ("SCM_Agent_Weekly_Backlog_Analysis", "COGI 시계열 4대차원 주간 심층 분석", "매주 금 08:30 AM (08:15 백로그 해소 완료 후)")
 ]
 

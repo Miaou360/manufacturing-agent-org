@@ -26,7 +26,7 @@ window.ORG = {
       guards: ["Verified counts only", "Cool-down per bin", "Shadow before live"] },
     { id: "gi", dept: "inv", code: "01_JOB", name: "GR / GI Interface Errors",
       one: "Clears goods-issue and goods-receipt errors between WMS and ERP around the clock.",
-      does: ["Every 30 minutes in the day shift and hourly at night: classify each interface error and repost what is safe",
+      does: ["Every hour on the hour around the clock (24 h): classify each interface error and repost what is safe",
              "Morning list of documents that should be deleted, mailed for approval", "Daily report of what was cleared and what is left"],
       inputs: ["Interface error queues", "ERP stock by location", "WMS stock"], outputs: ["Stock transfers that unblock postings", "Deletion candidate list", "Daily error report"],
       guards: ["Accuracy objective (never make stock worse)", "Persistence over several snapshots", "Chain protection for linked documents"] },
@@ -106,7 +106,7 @@ window.ORG = {
     { unit: "srm", t: "15:40", name: "PM refresh (order change)", days: "On demand" },
     { unit: "dlv", t: "07:00", name: "Receipt tracking (per truck)", days: "Every 10 min", every: 10, until: 1410 },
     { unit: "acc", t: "00:12", name: "Stage-flow ingest", days: "Every 2 h", every: 120 },
-    { unit: "gi", t: "00:00", name: "Error resolution cycle", days: "30 min by day, hourly at night", daemon: true },
+    { unit: "gi", t: "00:00", name: "Error resolution cycle", days: "Hourly on the hour (24 h)", daemon: true },
   ],
   flow: {
     sources: ["ERP (SAP GUI)", "WMS (web)", "Supplier portal", "Microsoft 365", "Count sheets"],

@@ -41,7 +41,7 @@ graph TD
 
 #### 1. SQLite 파일 락(Lock Contention) 및 동시성 충돌 원천 차단
 - SQLite는 파일 기반 RDBMS이므로 **동일 DB 파일에 대해 단 1개의 프로세스만 쓰기(Single Writer)**가 가능합니다.
-- 특히 `01_JOB_GR_GI_Error`는 **24시간 내내 30분~1시간 주기로 백그라운드에서 상시 쓰기**를 수행합니다.
+- 특히 `01_JOB_GR_GI_Error`는 **24시간 내내 매시 정각(1시간 주기) 백그라운드에서 상시 쓰기**를 수행합니다.
 - 만약 모든 Job의 테이블을 단일 `inventory_master.db`로 합쳐버리면, 01_JOB이 쓰기 트랜잭션을 쥐고 있는 동안 00_JOB(1.17GB 연간 적재), 02_JOB(COGI 적재), 04_JOB(1,935행 일괄 INSERT)이 동시에 접근할 때 Windows OS 상에서 **`sqlite3.OperationalError: database is locked`**가 발생하여 파이프라인이 멈추게 됩니다.
 - **물리적으로 분리하면 각 Job이 전용 파일에 독립적으로 접근하므로 락 경쟁이 0%로 완벽히 차단**됩니다.
 

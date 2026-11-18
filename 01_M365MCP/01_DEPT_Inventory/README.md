@@ -33,7 +33,7 @@ graph TD
 
     subgraph "핵심 파이프라인 (Automated Jobs)"
         SYS1["00_JOB_StockAccuracy<br>(재고정확도 & 순환실사)"]:::sys
-        SYS2["01_JOB_GR_GI_Error<br>(30분 주기 GI 에러 자동해소)"]:::sys
+        SYS2["01_JOB_GR_GI_Error<br>(1시간 주기 24H GI 에러 자동해소)"]:::sys
         SYS3["02_JOB_Backlog_Clear<br>(COGI 실시간 해소/보고)"]:::sys
         SYS4["03_JOB_Backlog_Analysis<br>(시계열 4대차원 심층분석)"]:::sys
         SYS5["04_JOB_SystemReconciliation<br>(WMS vs SAP 공식 정확도 허브)"]:::sys
@@ -91,7 +91,7 @@ graph TD
 ├── 01_JOB_GR_GI_Error/           # [🟢 LIVE] ZTCODE_GI_ERR GI 인터페이스 에러 24/7 상시 자동 해소 파이프라인
 │   ├── README.md                 # 24H 상시 루틴 파이프라인 및 안전 가드레일 가이드
 │   ├── hourly_gi_pipeline.py     # 🚀 24/7 무중단 실시간 수집-동기화-플랜생성-MB1B전기-한국어메일 파이프라인
-│   ├── run_continuous_24h_pipeline.bat # 🌟 [24시간 상시 가동] 주간 30분 / 야간 1시간 연속 실행 배치 파일
+│   ├── run_continuous_24h_pipeline.bat # 🌟 [24시간 상시 가동] 매시 정각(:00) 1시간 주기 24시간 연속 실행 배치 파일
 │   ├── sap_launcher.py           # 🛡️ SAP 킥아웃 모달 자동 닫기 & 완전 종료 시 콜드스타트 자동 로그인 SSO
 │   ├── ztcode_gi_collector.py      # SAP ZTCODE_STOCK_REC 최신 에러 수집기 (범위: 당월 1일 ~ 당일)
 │   ├── sync_snapshot_collector.py# WMS & SAP MB52 동시 스냅샷 수집기 (T=0 시점 정합성)
@@ -137,7 +137,7 @@ graph TD
 | 시간대 (EST) | 실행 파이프라인 | 주관 모듈 | 실행 내용 및 주요 산출물 | 수신처 / 알림 |
 | :--- | :--- | :--- | :--- | :--- |
 | **매일 04:00**<br>(365일 무휴 수집<br>일요일 메일 스킵) | **재고정확도 실사**<br>(평일 Daily / 토 Weekly) | `00_JOB_StockAccuracy` | • WMS 재고 크롤링 및 전일 확정 실적 적재 (365일 무휴 데이터 수집)<br>• 온톨로지 기반 이상 빈 추출 (평일 40개 빈 / 토요일 50개 빈)<br>• 다분할 실사 엑셀 자동 생성 및 Outlook 발송 (일요일 제외) | To: Warehouse Team<br>CC: Materials Team |
-| **24/7 상시 무휴**<br>(주말/토·일 포함<br>주간: 30분, 야간: 1시간) | **GI 에러 24H 자동 해소** | `01_JOB_GR_GI_Error` | • 주말/평일 동일하게 ZTCODE_GI_ERR (당월 1일 ~ 당일) 에러 24/7 자동 추출 및 MB1B 311 자동 이동전기<br>• MMSC 표준 창고위치(`SL00, SL01, SL02, SL49, SP31`) 자가치유 연계<br>• GR 입고에러 연계 품번 이중차감 방지 보존<br>• **보고 정책**: 매일 아침 08:00 AM EST 24시간 누적 종합 리포트 1회 발송 (비-08시는 DB 적재)<br>• **SAP 상호 락**: `sap_session_lock`을 통해 백로그 파이프라인과의 화면 충돌 원천 차단 | To: Material Planner (`GI_ERROR_REPORT_TO`) |
+| **24/7 상시 무휴**<br>(주말/토·일 포함<br>전 시간대: 1시간 정각) | **GI 에러 24H 자동 해소** | `01_JOB_GR_GI_Error` | • 주말/평일 동일하게 ZTCODE_GI_ERR (당월 1일 ~ 당일) 에러 24/7 자동 추출 및 MB1B 311 자동 이동전기<br>• MMSC 표준 창고위치(`SL00, SL01, SL02, SL49, SP31`) 자가치유 연계<br>• GR 입고에러 연계 품번 이중차감 방지 보존<br>• **보고 정책**: 매일 아침 08:00 AM EST 24시간 누적 종합 리포트 1회 발송 (비-08시는 DB 적재)<br>• **SAP 상호 락**: `sap_session_lock`을 통해 백로그 파이프라인과의 화면 충돌 원천 차단 | To: Material Planner (`GI_ERROR_REPORT_TO`) |
 | **매일 06:10**<br>(주말/토·일 포함) | **COGI 1차 사전 해소** | `02_JOB_Backlog_Clear` | • 06:00 GI 에러 해소 완료 후 10분 뒤 최신 클린 재고 상태에서 시작<br>• SAP COGI SAVE ➔ 리프레시 동기화 완료 대기<br>• 원본 백로그 영구 보존 (`COGI_RAW_INITIAL_*.XLS`)<br>• MB1B 311 1차 이동전기 수행 (06:10 처리분 DB 적재) | 시스템 내부 적재<br>(06시는 메일 스킵) |
 | **매일 06:35**<br>(주말/토·일 포함) | **WMS vs SAP 공식 정확도 수집 & 리포트** | `04_JOB_SystemReconciliation` | • 06:00 SAP 야간 배치 완료 후 전일 마감 공식 재고정확도(ZTCODE_STOCK_REC radRA5) 추출<br>• `db/system_reconciliation.db` 적재 (1,935개 품목)<br>• 전일 AI 조치(MB1B 311)의 익일 100% 일치 전환 기여도(Attribution) 자동 산출<br>• 일일 공식 리포트(`reports/Reconciliation_Report_%Y%m%d.md`) 생성 | 시스템 적재 & 콘솔/리포트 |
 | **매일 08:15**<br>(주말/토·일 포함) | **COGI 2차 본해소 & 보고** | `02_JOB_Backlog_Clear` | • 08:00 GI 에러 해소 및 일일 브리핑 발송 완료 후 15분 뒤 안정적 실행<br>• 최신 COGI 추출 및 잔여 결손 2차 MB1B 311 해소<br>• 06:10 + 08:15 **누적 처리 합산 집계**<br>• 2대 펜딩 섹션 분리 및 상세 엑셀 첨부 메일 발송 | To: Warehouse / Production Control<br>CC: Materials Team |

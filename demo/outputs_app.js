@@ -66,7 +66,7 @@
       unit: "01_JOB · GR / GI Error",
       title: "Daily GI error cumulative report",
       tab: "Receipts and issues that failed to post",
-      when: "Continuous daemon every 30 min (06:00–22:00); daily cumulative report at 07:30",
+      when: "Continuous daemon every hour on the hour (24h); daily cumulative report at 07:30",
       who: "Inventory planner (only the rows held by guards or needing deletion/GR review)",
       decision: "Which failed interface postings did the agent clear overnight, which are held by safety/cooldown guards, and which stale portal rows are ready for deletion?",
       lead: "Summarizes 24-hour automated MB1B 311 transfers, 4-hour arrival-guard releases (D109), 24-hour repeat-failure cooldowns (D110), active remaining errors, and verified portal deletion drafts (D107).",

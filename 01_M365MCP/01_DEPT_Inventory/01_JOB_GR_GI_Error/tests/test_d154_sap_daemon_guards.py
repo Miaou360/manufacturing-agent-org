@@ -28,14 +28,14 @@ def test_a_vbs_task_xml_allows_battery_and_interactive_token():
 
 
 def test_b_get_next_schedule_target_startup_grace_window():
-    """Verify #154 Improvement B: Startup within <=60s after a scheduled slot runs that slot immediately."""
-    # Day slot: 11:30:00, daemon started at 11:30:03.694
-    started_at_day = datetime(2026, 10, 28, 11, 30, 3, 694000)
+    """Verify #154 Improvement B: Startup within <=60s after a scheduled :00 slot runs that slot immediately."""
+    # Day slot: 11:00:00, daemon started at 11:00:03.694
+    started_at_day = datetime(2026, 10, 28, 11, 0, 3, 694000)
     target_grace, label_grace = hourly_gi_pipeline.get_next_schedule_target(
         started_at_day, grace_seconds=60.0
     )
-    assert target_grace == datetime(2026, 10, 28, 11, 30, 0)
-    assert "30-min cycle" in label_grace
+    assert target_grace == datetime(2026, 10, 28, 11, 0, 0)
+    assert "1-hour cycle" in label_grace
 
     # Subsequent cycles (grace_seconds=0.0) should target the next 12:00:00 slot
     target_no_grace, _ = hourly_gi_pipeline.get_next_schedule_target(
@@ -51,8 +51,8 @@ def test_b_get_next_schedule_target_startup_grace_window():
     assert target_night_grace == datetime(2026, 10, 28, 21, 0, 0)
     assert "1-hour cycle" in label_night
 
-    # Outside 60s grace (e.g., 11:31:05 -> next slot is 12:00:00 even with grace_seconds=60.0)
-    started_late = datetime(2026, 10, 28, 11, 31, 5)
+    # Outside 60s grace (e.g., 11:01:05 -> next slot is 12:00:00 even with grace_seconds=60.0)
+    started_late = datetime(2026, 10, 28, 11, 1, 5)
     target_late, _ = hourly_gi_pipeline.get_next_schedule_target(
         started_late, grace_seconds=60.0
     )
