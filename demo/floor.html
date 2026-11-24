@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operations Floor</title>
+<meta name="description" content="One weekday on the operations floor of a manufacturing agent organization, drawn in pixels: agent robots read the ERP and the warehouse, pass their guards, email suppliers and put documents on people's desks.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f5f7; --card:#ffffff; --card2:#fbfbfd; --line:rgba(0,0,0,.08); --text:#1d1d1f; --sub:#6e6e73; --muted:#86868b;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 12px 40px rgba(0,0,0,.08);
+  --pill:rgba(255,255,255,.82); --pillText:#1d1d1f; --pillLine:rgba(0,0,0,.08);
+  --hq:#0a84ff; --inv:#30b45a; --log:#ff8a00; --chg:#af52de; --warn:#ff9f0a; --ok:#30b45a;
+  --accent:#0071e3;
+}
+:root[data-theme="dark"]{ --bg:#000; --card:#1c1c1e; --card2:#232325; --line:rgba(255,255,255,.1); --text:#f5f5f7; --sub:#a1a1a6; --muted:#8e8e93; --shadow:0 12px 40px rgba(0,0,0,.5); --accent:#2997ff; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --bg:#000; --card:#1c1c1e; --card2:#232325; --line:rgba(255,255,255,.1); --text:#f5f5f7; --sub:#a1a1a6; --muted:#8e8e93; --shadow:0 12px 40px rgba(0,0,0,.5); --accent:#2997ff; } }
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",Inter,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1200px;margin:0 auto;padding:40px 16px 56px}
+header.top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:24px}
+.eyebrow{font-size:14px;font-weight:600;color:var(--accent);margin-bottom:6px}
+h1{font-size:clamp(30px,4.4vw,48px);line-height:1.05;letter-spacing:-.02em;font-weight:700;margin:0 0 10px}
+.lede{font-size:clamp(16px,1.6vw,19px);line-height:1.45;color:var(--sub);margin:0;max-width:640px}
+nav.links{display:flex;gap:8px;flex-wrap:wrap}
+nav.links a{font-size:14px;font-weight:500;text-decoration:none;color:var(--text);padding:9px 15px;border-radius:999px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line)}
+nav.links a.primary{background:var(--accent);color:#fff;box-shadow:none}
+.card{background:var(--card);border-radius:22px;box-shadow:var(--shadow)}
+.stage{padding:18px}
+.toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.play{width:44px;height:44px;border-radius:50%;border:0;background:var(--text);color:var(--card);font-size:16px;cursor:pointer;display:grid;place-items:center}
+.seg{display:inline-flex;background:var(--card2);box-shadow:inset 0 0 0 1px var(--line);border-radius:10px;padding:3px}
+.seg button{font:600 13px inherit;font-family:inherit;border:0;background:transparent;color:var(--sub);padding:6px 11px;border-radius:8px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--card);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.jumps{display:flex;gap:6px;flex-wrap:wrap}
+.jumps button{font:500 13px inherit;font-family:inherit;color:var(--text);background:var(--card2);box-shadow:inset 0 0 0 1px var(--line);border:0;border-radius:999px;padding:7px 12px;cursor:pointer}
+.clockbox{margin-left:auto;text-align:right}
+.clock{font-size:34px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
+.daylbl{font-size:12px;color:var(--muted);margin-top:3px}
+.scrubwrap{position:relative;margin:2px 2px 14px}
+input[type=range]{width:100%;margin:0;accent-color:var(--accent)}
+.ticks{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:2px;font-variant-numeric:tabular-nums}
+.screen{position:relative;width:100%;aspect-ratio:512/288;border-radius:16px;overflow:hidden;background:#e9e7e1;container-type:inline-size}
+canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges;cursor:pointer}
+.lbl{position:absolute;transform:translate(-50%,0);background:var(--pill);color:var(--pillText);box-shadow:0 0 0 .5px var(--pillLine),0 2px 6px rgba(0,0,0,.08);-webkit-backdrop-filter:saturate(180%) blur(8px);backdrop-filter:saturate(180%) blur(8px);border-radius:7px;padding:3px 7px 4px;pointer-events:none;text-align:center;white-space:nowrap;line-height:1.15}
+.lbl b{display:block;font-size:clamp(8px,1.12cqw,12.5px);font-weight:600;letter-spacing:-.01em}
+.lbl small{display:block;font-size:clamp(7px,.86cqw,10px);color:#6e6e73;font-weight:500;letter-spacing:.02em}
+.lbl.room{background:rgba(255,255,255,.7)}
+.lbl.room b{font-size:clamp(8px,1.05cqw,12px);color:#3a3a3c}
+.sign{position:absolute;transform:translate(-50%,-50%);text-align:center;pointer-events:none;line-height:1.1;color:#fff}
+.sign b{display:block;font-size:clamp(8.5px,1.25cqw,14px);font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.sign small{display:block;font-size:clamp(7px,.9cqw,10.5px);font-weight:600;opacity:.92}
+.tag{position:absolute;transform:translate(-50%,-100%);font-size:clamp(7.5px,1cqw,11px);font-weight:600;color:#fff;border-radius:999px;padding:2px 7px;white-space:nowrap;pointer-events:none;box-shadow:0 2px 6px rgba(0,0,0,.18);display:none}
+@container (max-width:640px){ .lbl.desk,.lbl.minor,.tag{display:none!important} .sign small{display:none} }
+.teams{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;align-items:center}
+.teams .grp{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.teams .gname{font-size:12px;font-weight:600;color:var(--muted);margin-right:2px}
+.chip{font:500 13px inherit;font-family:inherit;color:var(--text);background:var(--card2);box-shadow:inset 0 0 0 1px var(--line);border:0;border-radius:999px;padding:6px 11px;cursor:pointer}
+.chip i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:1px}
+.grid2{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;margin-top:16px}
+@media (max-width:880px){ .grid2{grid-template-columns:1fr} }
+.panel{padding:20px 22px}
+.panel h2{font-size:13px;font-weight:600;color:var(--muted);margin:0 0 12px;text-transform:uppercase;letter-spacing:.06em}
+.ticker{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;min-height:190px}
+.ticker li{display:grid;grid-template-columns:52px 1fr;gap:12px;align-items:baseline;font-size:15px;line-height:1.4}
+.ticker time{font-size:13px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+.ticker .who{font-weight:600}
+.badge{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:1px}
+.badge.ok{background:rgba(48,180,90,.14);color:#1f8a45}
+.badge.hold{background:rgba(255,159,10,.18);color:#b36b00}
+.badge.mail{background:rgba(10,132,255,.13);color:#0a6fd6}
+:root[data-theme="dark"] .badge.ok{color:#5ad37e} :root[data-theme="dark"] .badge.hold{color:#ffb340} :root[data-theme="dark"] .badge.mail{color:#5aa9ff}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .badge.ok{color:#5ad37e} :root:not([data-theme="light"]) .badge.hold{color:#ffb340} :root:not([data-theme="light"]) .badge.mail{color:#5aa9ff} }
+.detail h3{font-size:22px;letter-spacing:-.01em;margin:0 0 4px}
+.detail .meta{font-size:13px;color:var(--muted);margin-bottom:12px;font-weight:500}
+.detail p{margin:0 0 14px;color:var(--sub);line-height:1.5;font-size:15px}
+.detail dl{display:grid;grid-template-columns:84px 1fr;gap:8px 14px;margin:0;font-size:14px}
+.detail dt{color:var(--muted);font-weight:500}
+.detail dd{margin:0;line-height:1.45}
+.foot{font-size:13px;color:var(--muted);margin-top:18px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow">Manufacturing Agent Organization</div>
+      <h1>The operations floor.</h1>
+      <p class="lede">Robots are the agents. People are people. Press play to watch one weekday: the robots read the ERP and the warehouse, pass their guards, email suppliers, and put a document on a desk only when a person has to decide.</p>
+    </div>
+    <nav class="links" aria-label="Pages">
+      <a href="index.html">Live map</a>
+      <a href="https://github.com/Miaou360/manufacturing-agent-org/blob/main/docs/ARCHITECTURE.md">How it is built</a>
+      <a class="primary" href="outputs.html">What it produces</a>
+      <a href="https://github.com/Miaou360/manufacturing-agent-org">GitHub</a>
+    </nav>
+  </header>
+
+  <section class="card stage" aria-label="Animated operations floor">
+    <div class="toolbar">
+      <button class="play" id="play" type="button" aria-label="Play">▶</button>
+      <div class="seg" role="group" aria-label="Speed">
+        <button type="button" data-speed="0.5" aria-pressed="false">0.5×</button>
+        <button type="button" data-speed="1" aria-pressed="true">1×</button>
+        <button type="button" data-speed="3" aria-pressed="false">3×</button>
+      </div>
+      <div class="jumps" aria-label="Jump to">
+        <button type="button" data-t="04:55">05:00 Receipt check</button>
+        <button type="button" data-t="06:35">06:35 Morning rush</button>
+        <button type="button" data-t="07:25">07:30 Counting</button>
+        <button type="button" data-t="13:35">13:40 Truck update</button>
+        <button type="button" data-t="01:00">Night</button>
+      </div>
+      <div class="clockbox"><div class="clock" id="clock">06:35</div><div class="daylbl">Weekday · 1× = one day in 4 min</div></div>
+    </div>
+    <div class="scrubwrap">
+      <input id="scrub" type="range" min="0" max="1439" step="1" value="395" aria-label="Time of day">
+      <div class="ticks" aria-hidden="true"><span>00</span><span>03</span><span>06</span><span>09</span><span>12</span><span>15</span><span>18</span><span>21</span><span>24</span></div>
+    </div>
+    <div class="screen" id="screen">
+      <canvas id="cv" width="512" height="288" role="img" aria-label="Pixel floor plan: ERP room, warehouse and supplier dock on the left; HQ, Inventory and Logistics agent desks in the middle; people on the right."></canvas>
+    </div>
+    <div class="teams" id="teams"></div>
+  </section>
+
+  <div class="grid2">
+    <section class="card panel" aria-labelledby="h-now">
+      <h2 id="h-now">What just happened</h2>
+      <ol class="ticker" id="ticker" aria-live="polite"></ol>
+    </section>
+    <section class="card panel detail" id="detail" aria-live="polite"></section>
+  </div>
+  <p class="foot">Schedules follow the running system on a weekday. Weekly jobs (Friday analysis, Saturday report, Sunday BOM) are left out. Names and quantities are generalized; the plant is synthetic.</p>
+</div>
+
+<script>
+"use strict";
+/* ============ Palette & teams ============ */
+const TEAM = { hq:"#0a84ff", inv:"#30b45a", log:"#ff8a00", chg:"#af52de" };
+const TEAM_DARK = { hq:"#0060c7", inv:"#22863f", log:"#c76a00", chg:"#8a3fb0" };
+const TEAM_NAME = { hq:"HQ", inv:"Inventory", log:"Logistics", chg:"Change desk" };
+const P = {
+  k:"#1c1c1e", K:"#3a3a3c", G:"#636366", g:"#8e8e93", s:"#c7c7cc", w:"#f5f5f7", W:"#ffffff",
+  c:"#64d2ff", y:"#ffd60a", r:"#ff453a", o:"#ff9f0a",
+};
+
+/* ============ Sprites ============ */
+// Robot 14 x 19. X = team colour, D = darker team colour, A = antenna light, E = eyes, H = hard hat.
+const ROBOT_TOP_ANT = ["......kk......", "......AA......"];
+const ROBOT_TOP_HAT = ["....HHHHHH....", "...HHHHHHHH..."];
+const ROBOT_HEAD = [
+  "..kkkkkkkkkk..",
+  ".kwwwwwwwwwwk.",
+  ".kwkkkkkkkkwk.",
+  ".kwkEEkkEEkwk.",
+  ".kwkkkkkkkkwk.",
+  ".kwwwwwwwwwwk.",
+  "..kkkkkkkkkk..",
+];
+const ROBOT_BODY = [
+  ".kDXXXXXXXXDk.",
+  "kwXXXXwwXXXXwk",
+  "kwXXXXXXXXXXwk",
+  ".kDXXXXXXXXDk.",
+  "..kDDDDDDDDk..",
+];
+const ROBOT_BODY_TYPE = [
+  ".kDXXXXXXXXDk.",
+  ".kXXXXwwXXXXk.",
+  "kwXXXXXXXXXXwk",
+  "w.kXXXXXXXXk.w",
+  "..kDDDDDDDDk..",
+];
+const LEGS = {
+  stand: ["...kGk..kGk...", "...kGk..kGk...", "...kk....kk..."],
+  a:     ["..kGk....kGk..", "..kGk....kGk..", "..kk......kk.."],
+  b:     ["....kGk..kGk..", "...kGk...kGk..", "...kk....kk..."],
+};
+// Person 12 x 15. Z shirt, Q skin, R hair, B trousers.
+const PERSON = [
+  "....RRRR....",
+  "...RRRRRR...",
+  "..RRQQQQRR..",
+  "..RQkQQkQR..",
+  "...QQQQQQ...",
+  "....QQQQ....",
+  "...ZZZZZZ...",
+  "..ZZZZZZZZ..",
+  ".QZZZZZZZZQ.",
+  ".QZZZZZZZZQ.",
+  "..ZZZZZZZZ..",
+  "...BBBBBB...",
+  "...BB..BB...",
+  "...BB..BB...",
+  "...kk..kk...",
+];
+const PERSON_WALK = PERSON.slice(0, 11).concat(["...BBBBBB...", "..BB...BB...", "..BB....BB..", "..kk....kk.."]);
+const PAPER  = ["WWWWW", "WgggW", "WWWWW", "WgggW", "WWWWW", "WggWW"];
+const PAPERY = ["yyyyy", "yGGGy", "yyyyy", "yGGGy", "yyyyy", "yGGyy"];
+const ENVELOPE = ["kkkkkkkk", "kWkWWkWk", "kWWkkWWk", "kWWWWWWk", "kkkkkkkk"];
+const SHIELD = [".kkkkkk.", "kOOOOOOk", "kOOOOOWk", "kWOOOWOk", ".kOWOWk.", "..kOWk..", "...kk..."];
+const BANG   = [".kkkkkk.", "kyyyyyyk", "kyykkyyk", "kyykkyyk", "kyyyyyyk", "kyykkyyk", ".kkkkkk.", "...kk..."];
+const CLIP   = ["kkkk", "kWWk", "kWgk", "kWWk", "kWgk", "kkkk"];
+
+/* ============ Layout (512 x 288) ============ */
+const CW = 512, CH = 288;
+const LEFT_X = 122, RIGHT_X = 398, AISLE_A = 82, AISLE_B = 140;
+const DOOR = { erp: 84, wms: 176, dock: 206 };
+const TARGET = { erp: [60, 92], wms: [52, 179], portal: [92, 212] };
+const PEOPLE = {
+  warehouse: { y: 50,  name: "Warehouse team",     role: "Counts the bins on the list" },
+  lead:      { y: 98,  name: "Inventory lead",     role: "Decides adjustments and deletions" },
+  prod:      { y: 146, name: "Production control", role: "Acts on what still blocks production" },
+  planner:   { y: 194, name: "Logistics planner",  role: "Talks to suppliers, changes trucks" },
+  owner:     { y: 242, name: "Operations owner",   role: "Approves changes, reads the summary" },
+};
+const PEOPLE_LOOK = {
+  warehouse: [{ Z:"#ff9f0a", Q:"#f1c7a0", R:"#3b2a20", B:"#3a3a3c" }, { Z:"#ffcc00", Q:"#a8754f", R:"#1c1c1e", B:"#48484a" }],
+  lead:      { Z:"#0a84ff", Q:"#f1c7a0", R:"#6b4423", B:"#3a3a3c" },
+  prod:      { Z:"#5e5ce6", Q:"#c68b5c", R:"#1c1c1e", B:"#3a3a3c" },
+  planner:   { Z:"#30b0c7", Q:"#f3d3b5", R:"#a0522d", B:"#3a3a3c" },
+  owner:     { Z:"#ff375f", Q:"#e0ac80", R:"#2c2c2e", B:"#1c1c1e" },
+};
+
+const AGENTS = [
+  { id:"hq",   team:"hq",  job:"HQ",     name:"HQ Task Manager",       desk:[238, 42],  aisle:AISLE_A,
+    when:"03:10 ledger backup · 07:35 morning summary",
+    one:"Keeps the jobs from colliding, backs up every ledger at night, and checks each morning that every scheduled job ran.",
+    reads:"Job registry and every job's run log", makes:"Morning operations summary · nightly ledger backups · owner-only system alerts", guards:"single ERP session · morning freeze 06:20–07:35 · secret scanner" },
+  { id:"acc",  team:"inv", job:"JOB 00", name:"Stock Accuracy",        desk:[132, 102], aisle:AISLE_A,
+    when:"06:50 count list, Mon–Sat · 07:15 and every 2 h shadow scores · 09:15 model shadow · Sat 09:40 weekly report",
+    one:"Picks the bins most worth counting today, and learns from what the warehouse team finds.",
+    reads:"Warehouse box-level stock, receipt and issue history, count results", makes:"Daily count list · Saturday high-rack list and weekly report · shadow model scores", guards:"count scope · recent-match skip · fresh snapshot · facts only" },
+  { id:"gi",   team:"inv", job:"JOB 01", name:"GR/GI Errors",          desk:[176, 102], aisle:AISLE_A,
+    when:"Every hour, around the clock · 07:18 deletion list · 07:30 report · 08:08 post-check",
+    one:"Every hour, around the clock: fixes failed receipt and issue postings that are safe to fix.",
+    reads:"ERP interface error queues, ERP and WMS stock", makes:"Guarded stock transfers · deletion candidates · daily error report", guards:"persistent difference · nothing in flight · accuracy not down · receipt-linked errors go to a person" },
+  { id:"bkl",  team:"inv", job:"JOB 02", name:"Backlog Clear",         desk:[220, 102], aisle:AISLE_A,
+    when:"06:20 snapshot · 08:15 clear · 08:30 second pass and report",
+    one:"Unblocks yesterday's production bookings by moving stock to where the ERP expects it.",
+    reads:"Production backlog, ERP and WMS stock", makes:"Guarded stock transfers · backlog report", guards:"accuracy not down · dry run by default · off switch" },
+  { id:"ana",  team:"inv", job:"JOB 03", name:"Backlog Analysis",      desk:[264, 102], aisle:AISLE_A,
+    when:"Fridays at 08:30",
+    one:"Every Friday: why does the backlog keep coming back, and which team can fix it for good?",
+    reads:"Material movements, backlog history, other jobs' ledgers (read-only)", makes:"Weekly analysis", guards:"read-only on other ledgers" },
+  { id:"rec",  team:"inv", job:"JOB 04", name:"System Reconciliation", desk:[132, 160], aisle:AISLE_B,
+    when:"06:45 daily",
+    one:"Compares ERP and WMS stock for the whole plant every morning.",
+    reads:"ERP stock report, WMS stock", makes:"Stock accuracy · value at risk · register of chronic mismatches", guards:"stale-export guard" },
+  { id:"rbin", team:"inv", job:"JOB 05", name:"Release Lag",           desk:[176, 160], aisle:AISLE_B,
+    when:"04:15 daily",
+    one:"Finds boxes already released to production that still sit in a rack bin after two working days: never moved, or moved without a scan.",
+    reads:"WMS box-level stock (storage location and bin)", makes:"Release-lag report, every box ranked by signal", guards:"read-only · owner-only alerts" },
+  { id:"col",  team:"inv", job:"JOB 06", name:"Data Collector",        desk:[220, 160], aisle:AISLE_B,
+    when:"02:15 movements · 05:45 and 14:00 pulling plan · Sun 04:40 bills of material",
+    one:"Brings in the raw data everyone else works from.",
+    reads:"ERP movement reports, WMS pulling plan, bills of material", makes:"Raw operations ledger", guards:"retry with session recovery · retention rules" },
+  { id:"srm",  team:"log", job:"JOB 00", name:"Truck Dispatch",        desk:[316, 102], aisle:AISLE_A,
+    when:"06:40 and 13:40, Mon–Sat",
+    one:"Reads the supplier portal, levels each supplier's orders across its fixed truck slots, and emails every supplier its truck schedule.",
+    reads:"Supplier portal orders, morning stock, truck timetable and trailer caps", makes:"Truck schedule email to each supplier (06:40 for today; 13:40 updated through the next working day) · internal monitoring workbook", guards:"no shortage · minimal change · trailer cap · output verified" },
+  { id:"dlv",  team:"log", job:"JOB 02", name:"Receipt Check",         desk:[360, 102], aisle:AISLE_A,
+    when:"Once a day at 05:00",
+    one:"Once a day at 05:00: checks yesterday's warehouse receipts against yesterday's truck schedule, and flags what arrived short or over.",
+    reads:"Frozen truck schedules, warehouse receipt scans", makes:"Delivery status by supplier and truck", guards:"owner-only until approved · read-only on sibling ledgers" },
+  { id:"grr",  team:"log", job:"JOB 03", name:"GR Reconciliation",     desk:[316, 160], aisle:AISLE_B,
+    when:"07:45, Mon–Sat",
+    one:"Matches every warehouse receipt scan to an ERP receipt posting, and reports only what needs a check: receipts the ERP never booked, manual postings, and postings with no scan.",
+    reads:"Warehouse receipts, ERP receipt postings, truck records (read-only)", makes:"Receipt reconciliation", guards:"read-only · owner-only until approved" },
+];
+const byId = Object.fromEntries(AGENTS.map(a => [a.id, a]));
+AGENTS.forEach(a => { a.seat = [a.desk[0] + 14, a.desk[1] + 2]; a.exit = [a.desk[0] + 14, a.aisle]; });
+const CHANGE = [[206, 242], [250, 242]];
+const SIGNS = [
+  { team:"inv", x:278, y:170, title:"Inventory", sub:"7 jobs" },
+  { team:"log", x:374, y:170, title:"Logistics", sub:"3 jobs" },
+  { team:"hq",  x:298, y:44,  title:"HQ",        sub:"governance" },
+  { team:"chg", x:168, y:246, title:"Change desk", sub:"build · review" },
+];
+
+/* ============ The day ============ */
+const hm = s => { const [h, m] = s.split(":").map(Number); return h * 60 + m; };
+const fmt = m => { m = ((Math.floor(m) % 1440) + 1440) % 1440; return String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0"); };
+// src: rooms to visit (erp | wms | portal). to: people ids. mail: envelopes to suppliers.
+const EVENTS = [
+  { a:"col", t:"02:15", src:["erp"], work:8, text:"Collects yesterday's material movements from the ERP" },
+  { a:"hq",  t:"03:10", src:[], work:14, text:"Backs up every ledger online", guard:"ok" },
+  { a:"rbin",t:"04:15", src:["wms"], work:6, to:["lead"], doc:"Release-lag report", text:"Boxes released to production but still in a rack bin" },
+  { a:"dlv", t:"05:00", src:["wms"], work:10, to:["owner"], doc:"Delivery status", text:"Checks yesterday's receipts against yesterday's truck schedule", guard:"ok" },
+  { a:"col", t:"05:45", src:["wms"], work:6, text:"Collects the warehouse pulling plan" },
+  { a:"bkl", t:"06:20", src:["erp"], work:6, text:"Snapshots the production backlog" },
+  { a:"srm", t:"06:40", src:["portal"], work:10, mail:true, text:"Emails each supplier today's truck schedule", guard:"ok" },
+  { a:"rec", t:"06:45", src:["erp","wms"], work:8, to:["lead"], doc:"Reconciliation", text:"ERP vs WMS reconciliation" },
+  { a:"acc", t:"06:50", src:["wms"], work:10, to:["warehouse"], doc:"Count list", text:"Today's count list for the warehouse team", guard:"ok" },
+  { a:"gi",  t:"07:18", src:["erp"], work:5, to:["lead"], doc:"Deletion candidates", text:"Deletion candidates for approval" },
+  { a:"hq",  t:"07:35", src:[], work:6, to:["owner"], doc:"Morning summary", text:"Morning operations summary" },
+  { a:"grr", t:"07:45", src:["wms","erp"], work:8, to:["owner"], doc:"GR reconciliation", text:"Matches receipt scans to ERP postings — reports only what needs a check" },
+  { a:"gi",  t:"07:30", src:[], work:4, to:["lead"], doc:"Error report", text:"Daily GR/GI error report" },
+  { a:"gi",  t:"08:08", src:["erp"], work:4, text:"Post-check: confirms the approved deletions went through", guard:"ok" },
+  { a:"bkl", t:"08:15", src:["erp"], work:10, text:"Clears the backlog with guarded stock transfers", guard:"ok" },
+  { a:"bkl", t:"08:30", src:["erp"], work:6, to:["prod"], doc:"Backlog report", text:"Second pass, then what still blocks yesterday's bookings" },
+  { a:"acc", t:"09:15", src:[], work:6, text:"Model scores today's bins in shadow" },
+  { a:"srm", t:"13:40", src:["portal"], work:10, mail:true, text:"Emails each supplier its updated schedule through the next working day", guard:"ok" },
+  { a:"col", t:"14:00", src:["wms"], work:6, text:"Collects the afternoon pulling plan" },
+];
+for (let h = 0; h < 24; h++) {
+  if (h === 7) continue;
+  const hold = (h === 11 || h === 15);
+  EVENTS.push({ a:"gi", t:`${String(h).padStart(2, "0")}:00`, src:["erp"], work:5, quiet:!hold,
+    to: hold ? ["lead"] : undefined, doc: hold ? "2 errors for a person" : undefined,
+    text: hold ? "Two receipt-linked errors handed to a person" : "Hourly error cycle — safe fixes posted", guard: hold ? "hold" : "ok" });
+}
+// Supplier trucks arrive on the slots emailed at 06:40.
+const TRUCKS = [["08:00","08:50"],["10:00","10:50"],["12:00","12:50"],["14:00","14:50"],["16:00","16:50"]].map(([a, b]) => [hm(a), hm(b)]);
+// Warehouse team: starts counting about 07:30, results in about two hours.
+const COUNT = { leave: hm("07:12"), start: hm("07:30"), back: hm("09:20"), hand: hm("09:45") };
+
+/* ============ Paths ============ */
+const SPEED = 18; // canvas px per plant minute
+function route(p, q) {
+  if (p.k === q.k && (p.k !== "A" || p.y === q.y)) return [[q.x, q.y]];
+  const via = {
+    "A>A": [[LEFT_X, p.y], [LEFT_X, q.y]], "A>L": [[LEFT_X, p.y]], "L>A": [[LEFT_X, q.y]],
+    "A>R": [[RIGHT_X, p.y]], "R>A": [[RIGHT_X, q.y]],
+    "L>R": [[LEFT_X, AISLE_A], [RIGHT_X, AISLE_A]], "R>L": [[RIGHT_X, AISLE_A], [LEFT_X, AISLE_A]],
+  }[p.k + ">" + q.k] || [];
+  return via.concat([[q.x, q.y]]);
+}
+function place(kind, id, slot = 0) {
+  if (kind === "seat") { const a = byId[id]; return { net:{ x:a.exit[0], y:a.exit[1], k:"A" }, inside:[a.exit, a.seat] }; }
+  if (kind === "room") { const d = DOOR[id === "portal" ? "dock" : id]; const t = TARGET[id]; return { net:{ x:LEFT_X, y:d, k:"L" }, inside:[[LEFT_X, d], [106, d], [t[0] + slot * 26, t[1]]] }; }
+  if (kind === "person") { const p = PEOPLE[id]; return { net:{ x:RIGHT_X, y:p.y, k:"R" }, inside:[[RIGHT_X, p.y], [418, p.y]] }; }
+  if (kind === "home") { const p = PEOPLE.warehouse; return { net:{ x:RIGHT_X, y:p.y, k:"R" }, inside:[[RIGHT_X, p.y], [446 + slot * 22, p.y + 6]] }; }
+  throw new Error(kind);
+}
+function pathBetween(a, b) {
+  const pts = a.inside.slice().reverse().concat(route(a.net, b.net), b.inside);
+  return pts.filter((p, i) => i === 0 || p[0] !== pts[i - 1][0] || p[1] !== pts[i - 1][1]);
+}
+const plen = pts => pts.slice(1).reduce((L, p, i) => L + Math.hypot(p[0] - pts[i][0], p[1] - pts[i][1]), 0);
+function along(pts, f) {
+  let L = plen(pts) * Math.max(0, Math.min(1, f)), acc = 0;
+  for (let i = 1; i < pts.length; i++) {
+    const s = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
+    if (acc + s >= L) { const u = s ? (L - acc) / s : 0; return [pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * u, pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * u, pts[i][0] - pts[i - 1][0]]; }
+    acc += s;
+  }
+  const z = pts[pts.length - 1]; return [z[0], z[1], 0];
+}
+
+/* ============ Timelines ============ */
+const SEGS = Object.fromEntries(AGENTS.map(a => [a.id, []]));
+const DELIVER = [], MAILS = [], LOG = [];
+(function build() {
+  const free = Object.fromEntries(AGENTS.map(a => [a.id, 0]));
+  for (const e of EVENTS.map(e => ({ ...e, tm: hm(e.t) })).sort((x, y) => x.tm - y.tm)) {
+    const a = byId[e.a], S = SEGS[a.id];
+    let t = Math.max(e.tm, free[a.id]), cur = place("seat", a.id);
+    LOG.push({ t: e.tm, who: a.id, text: e.text, guard: e.guard, quiet: e.quiet, mail: e.mail });
+    S.push({ t0: t, t1: t + 1, m: "rise" }); t += 1;
+    for (const src of e.src) {
+      const dst = place("room", src), pts = pathBetween(cur, dst), d = plen(pts) / SPEED;
+      S.push({ t0: t, t1: t + d, m: "walk", pts }); t += d;
+      S.push({ t0: t, t1: t + 3, m: "read", at: pts[pts.length - 1] }); t += 3; cur = dst;
+    }
+    if (e.src.length) { const h = place("seat", a.id), pts = pathBetween(cur, h), d = plen(pts) / SPEED; S.push({ t0: t, t1: t + d, m: "walk", pts, carry: "data" }); t += d; cur = h; }
+    S.push({ t0: t, t1: t + e.work, m: "type", guard: e.guard }); t += e.work;
+    if (e.mail) { MAILS.push({ t, from: a.id }); S.push({ t0: t, t1: t + 4, m: "type", guard: e.guard, sending: true }); t += 4; }
+    const hold = e.guard === "hold";
+    for (const to of (e.to || [])) {
+      const dst = place("person", to), pts = pathBetween(cur, dst), d = plen(pts) / SPEED;
+      S.push({ t0: t, t1: t + d, m: "walk", pts, carry: hold ? "paperY" : "paper" }); t += d;
+      S.push({ t0: t, t1: t + 1.5, m: "read", at: pts[pts.length - 1] });
+      DELIVER.push({ t, to, doc: e.doc, hold }); t += 1.5; cur = dst;
+    }
+    if (e.to && e.to.length) { const h = place("seat", a.id), pts = pathBetween(cur, h), d = plen(pts) / SPEED; S.push({ t0: t, t1: t + d, m: "walk", pts }); t += d; }
+    free[a.id] = t;
+  }
+})();
+// Warehouse team: two people walk to the warehouse, count, walk back; one hands the results to Stock Accuracy.
+const TEAM_SEGS = [0, 1].map(i => {
+  const home = place("home", null, i), wh = place("room", "wms", i);
+  const out = pathBetween(home, wh), back = pathBetween(wh, home);
+  const segs = []; let t = COUNT.leave + i * 2;
+  segs.push({ t0: t, t1: t + plen(out) / 20, m: "walk", pts: out, carry: "clip" }); t += plen(out) / 20;
+  segs.push({ t0: t, t1: COUNT.back, m: "count", at: out[out.length - 1] }); t = COUNT.back + i * 2;
+  segs.push({ t0: t, t1: t + plen(back) / 20, m: "walk", pts: back, carry: "clip" }); t += plen(back) / 20;
+  if (i === 0) {
+    t = Math.max(t, COUNT.hand);
+    const accPt = { net:{ x:byId.acc.exit[0], y:AISLE_A, k:"A" }, inside:[[byId.acc.exit[0], AISLE_A]] };
+    const go = pathBetween(home, accPt), ret = go.slice().reverse();
+    segs.push({ t0: t, t1: t + plen(go) / 20, m: "walk", pts: go, carry: "paper" }); t += plen(go) / 20;
+    segs.push({ t0: t, t1: t + 2, m: "stand", at: go[go.length - 1] });
+    DELIVER.push({ t, to: "acc", doc: "Count results", hold: false });
+    LOG.push({ t, who: "warehouse", text: "Hands the count results to Stock Accuracy — tomorrow's list learns" }); t += 2;
+    segs.push({ t0: t, t1: t + plen(ret) / 20, m: "walk", pts: ret });
+  }
+  return segs;
+});
+LOG.push({ t: COUNT.leave, who: "warehouse", text: "Picks up today's count list and heads to the warehouse" });
+LOG.push({ t: COUNT.start, who: "warehouse", text: "Starts counting the bins on the list — results in about two hours" });
+for (const [a] of TRUCKS) LOG.push({ t: a, who: "truck", text: "Arrives on its emailed slot — boxes go into the warehouse" });
+LOG.sort((x, y) => x.t - y.t);
+
+/* ============ Canvas helpers ============ */
+const cv = document.getElementById("cv"), ctx = cv.getContext("2d");
+let lights = [];
+const R = (x, y, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
+function spr(rows, x, y, map = {}, flip = false) {
+  x = Math.round(x); y = Math.round(y); const w = rows[0].length;
+  for (let j = 0; j < rows.length; j++) for (let i = 0; i < w; i++) {
+    const ch = rows[j][flip ? w - 1 - i : i]; if (ch === ".") continue;
+    const col = map[ch] || P[ch]; if (!col) continue;
+    ctx.fillStyle = col; ctx.fillRect(x + i, y + j, 1, 1);
+  }
+}
+const shadow = (x, y, w) => { ctx.fillStyle = "rgba(0,0,0,.13)"; ctx.fillRect(Math.round(x - w / 2), Math.round(y), w, 2); ctx.fillRect(Math.round(x - w / 2 + 1), Math.round(y - 1), w - 2, 1); };
+
+/* ============ Static background ============ */
+const bg = document.createElement("canvas"); bg.width = CW; bg.height = CH;
+(function () {
+  const b = bg.getContext("2d"); const F = (x, y, w, h, c) => { b.fillStyle = c; b.fillRect(x, y, w, h); };
+  // wall
+  F(0, 0, CW, 24, "#fbfbfd"); F(0, 22, CW, 2, "#d9d5cd"); F(0, 21, CW, 1, "#ebe8e1");
+  // left rooms (light concrete)
+  F(0, 24, 112, CH - 24, "#dcdde2");
+  for (let y = 24; y < CH; y += 12) F(0, y, 112, 1, "#d3d5db");
+  for (let x = 0; x < 112; x += 24) F(x, 24, 1, CH - 24, "#d3d5db");
+  F(0, 96, 112, 3, "#c7c7cc"); F(0, 182, 112, 3, "#c7c7cc");
+  F(74, 182, 28, 3, "#dcdde2"); // dock-to-warehouse doorway
+  // office floor
+  for (let y = 24; y < CH; y += 8) for (let x = 116; x < 404; x += 8) F(x, y, 8, 8, ((x + y) / 8) % 2 ? "#ece9e2" : "#e7e3db");
+  // people side
+  F(408, 24, 104, CH - 24, "#e4e6ee");
+  for (let y = 26; y < CH; y += 4) for (let x = 410 + ((y / 4) % 2) * 2; x < CW; x += 4) F(x, y, 1, 1, "#dde0ea");
+  for (const p of Object.values(PEOPLE)) { F(408, p.y + 22, 104, 2, "#ffffff"); F(408, p.y + 24, 104, 1, "#d1d1d6"); }
+  // walls with doors
+  F(112, 24, 4, CH - 24, "#c7c7cc"); F(404, 24, 4, CH - 24, "#c7c7cc");
+  for (const d of Object.values(DOOR)) F(112, d - 8, 4, 16, "#e7e3db");
+  for (const p of Object.values(PEOPLE)) F(404, p.y - 8, 4, 16, "#e4e6ee");
+  // ERP racks
+  for (const x of [10, 34, 58, 82]) { F(x, 30, 18, 50, "#2c2c2e"); F(x, 30, 18, 2, "#48484a"); for (let y = 35; y < 78; y += 6) F(x + 2, y, 14, 4, "#3a3a3c"); F(x + 1, 80, 16, 2, "rgba(0,0,0,.15)"); }
+  // warehouse racks + boxes
+  const boxes = ["#c8a77e", "#b8946a", "#d4b58c"];
+  for (const x of [8, 44, 80]) {
+    F(x, 106, 2, 64, "#ff9f0a"); F(x + 24, 106, 2, 64, "#ff9f0a");
+    for (const y of [124, 142, 160]) { F(x, y, 26, 2, "#aeaeb2"); for (let i = 0; i < 3; i++) { const bx = x + 2 + i * 8; F(bx, y - 9, 7, 9, boxes[(x + y + i) % 3]); F(bx + 3, y - 9, 1, 9, "#e8d5b5"); } }
+    F(x, 170, 26, 2, "rgba(0,0,0,.12)");
+  }
+  // dock: lane stripes, gate, portal kiosk
+  for (let x = 0; x < 112; x += 8) { F(x, 230, 4, 3, "#ffd60a"); F(x + 4, 230, 4, 3, "#1c1c1e"); }
+  F(0, 234, 3, 42, "#aeaeb2"); for (let y = 236; y < 276; y += 3) F(0, y, 3, 1, "#8e8e93");
+  F(84, 190, 16, 14, "#2c2c2e"); F(86, 192, 12, 8, "#30b0c7"); F(90, 204, 4, 6, "#48484a");
+  // team zones (soft tinted floor)
+  const zone = (x, y, w, h, c) => { b.fillStyle = c; b.globalAlpha = .07; b.fillRect(x, y, w, h); b.globalAlpha = .45; b.fillRect(x, y, w, 1); b.fillRect(x, y + h - 1, w, 1); b.fillRect(x, y, 1, h); b.fillRect(x + w - 1, y, 1, h); b.globalAlpha = 1; };
+  zone(124, 88, 180, 106, TEAM.inv); zone(308, 88, 90, 106, TEAM.log); zone(226, 28, 104, 44, TEAM.hq); zone(150, 222, 150, 52, TEAM.chg);
+  // signposts (board drawn here, text is HTML)
+  for (const s of SIGNS) {
+    const w = 52, h = 18; const x = s.x - w / 2, y = s.y - h / 2;
+    F(s.x - 1, y + h, 3, 12, "#8d6e4c"); F(s.x - 4, y + h + 12, 9, 2, "rgba(0,0,0,.15)");
+    F(x, y, w, h, TEAM[s.team]); F(x, y + h - 2, w, 2, TEAM_DARK[s.team]); F(x + 1, y, w - 2, 1, "rgba(255,255,255,.35)");
+  }
+  // plants, cooler
+  const plant = (x, y) => { F(x + 2, y + 8, 7, 7, "#d4b58c"); F(x, y, 11, 8, "#34c759"); F(x + 3, y - 3, 5, 4, "#28a745"); F(x + 1, y + 15, 9, 2, "rgba(0,0,0,.12)"); };
+  plant(330, 254); plant(380, 254); plant(380, 34); plant(124, 262);
+  F(126, 226, 10, 18, "#ffffff"); F(127, 221, 8, 6, "#64d2ff"); F(126, 244, 10, 2, "rgba(0,0,0,.12)");
+  // window frames (sky is drawn per frame)
+  for (const x of [150, 196, 300, 346]) { F(x - 1, 3, 36, 16, "#d1d1d6"); }
+})();
+
+/* ============ Desk + characters ============ */
+function desk(x, y, on, busy, team, tk) {
+  R(x + 1, y + 11, 26, 2, "rgba(0,0,0,.12)");
+  R(x, y, 28, 9, "#e8d5b8"); R(x, y, 28, 1, "#f3e6d1"); R(x, y + 8, 28, 1, "#cdb48e");
+  R(x + 2, y + 9, 2, 3, "#b89a72"); R(x + 24, y + 9, 2, 3, "#b89a72");
+  R(x + 9, y - 9, 11, 9, "#1c1c1e");
+  const sc = on ? (busy ? ((tk >> 2) % 2 ? "#8fe1ff" : "#64d2ff") : "#4fb6d9") : "#3a3a3c";
+  R(x + 10, y - 8, 9, 6, sc);
+  if (on) { lights.push([x + 10, y - 8, sc, 9, 6]); if (busy) { R(x + 11, y - 7, 5, 1, "#ffffff"); R(x + 11, y - 5, ((tk >> 1) % 5) + 2, 1, "#ffffff"); } }
+  R(x + 13, y - 1, 3, 1, "#3a3a3c");
+  R(x + 2, y + 2, 4, 3, TEAM[team]);
+}
+function robot(x, y, team, mode, tk, flip) {
+  const ox = Math.round(x - 7), oy = Math.round(y - 19);
+  let eyes = mode === "type" ? "#ffd60a" : mode === "hold" ? "#ff453a" : "#64d2ff";
+  if (mode !== "type" && ((tk + ox * 13) % 120) < 4) eyes = "#3a3a3c";
+  const m = { X: TEAM[team], D: TEAM_DARK[team], A: TEAM[team], E: eyes, H: "#ffd60a" };
+  shadow(x, y, 12);
+  spr(team === "log" ? ROBOT_TOP_HAT : ROBOT_TOP_ANT, ox, oy, m, flip);
+  spr(ROBOT_HEAD, ox, oy + 2, m, flip);
+  lights.push([ox + 4, oy + 5, eyes, 2, 1], [ox + 8, oy + 5, eyes, 2, 1]);
+  if (team !== "log") lights.push([ox + 6, oy + 1, TEAM[team], 2, 1]);
+  spr(mode === "type" && (tk >> 2) % 2 ? ROBOT_BODY_TYPE : ROBOT_BODY, ox, oy + 9, m, flip);
+  const legs = mode === "walk" ? ((tk >> 2) % 2 ? LEGS.a : LEGS.b) : LEGS.stand;
+  spr(legs, ox, oy + 14, m, flip);
+}
+function person(x, y, look, walking, tk, flip, seated) {
+  const ox = Math.round(x - 6), oy = Math.round(y - 15);
+  if (!seated) shadow(x, y, 10);
+  const rows = walking && (tk >> 2) % 2 ? PERSON_WALK : PERSON;
+  spr(seated ? rows.slice(0, 11) : rows, ox, oy, look, flip);
+}
+
+/* ============ State at time T ============ */
+let T = hm("06:35"), playing = false, speed = 1, tk = 0;
+const MIN_PER_SEC = 6;
+function agentAt(a, t) {
+  for (const s of SEGS[a.id]) if (t >= s.t0 && t < s.t1) {
+    if (s.m === "walk") { const p = along(s.pts, (t - s.t0) / (s.t1 - s.t0)); return { pos: p, walk: true, flip: p[2] < 0, carry: s.carry }; }
+    if (s.m === "read") return { pos: s.at, stand: true };
+    if (s.m === "type") return { seat: true, type: true, guard: s.guard, sending: s.sending, showGuard: t > s.t1 - 3 };
+    return { seat: true };
+  }
+  return { seat: true };
+}
+function teamAt(i, t) {
+  for (const s of TEAM_SEGS[i]) if (t >= s.t0 && t < s.t1) {
+    if (s.m === "walk") { const p = along(s.pts, (t - s.t0) / (s.t1 - s.t0)); return { pos: p, walk: true, flip: p[2] < 0, carry: s.carry }; }
+    if (s.m === "count") { const k = Math.floor((t - s.t0) / 18) % 3; const base = s.at; return { pos: [base[0] + [0, 10, -8][k], base[1] + [0, -2, 1][k]], counting: true }; }
+    return { pos: s.at, stand: true };
+  }
+  return null;
+}
+const office = (id, t) => id === "owner" ? (t >= hm("07:05") && t < hm("17:10")) : (t >= hm("06:30") && t < hm("16:40"));
+function sky(t) { const h = t / 60; return h < 5 || h >= 20 ? "#1a2550" : h < 6.5 ? "#5a5fa6" : h < 8 ? "#ffb38a" : h < 17 ? "#9fd6ff" : h < 18.6 ? "#ffb066" : "#6a5fa6"; }
+function dark(t) { const h = t / 60; return h < 5 ? .48 : h < 7 ? .48 * (1 - (h - 5) / 2) : h < 17 ? 0 : h < 19.5 ? .48 * ((h - 17) / 2.5) : .48; }
+
+/* ============ Overlays (labels, signs, name tags) ============ */
+const screenEl = document.getElementById("screen");
+const pct = (x, y, el) => { el.style.left = (x / CW * 100) + "%"; el.style.top = (y / CH * 100) + "%"; };
+function label(html, x, y, cls) { const el = document.createElement("div"); el.className = "lbl " + cls; el.innerHTML = html; pct(x, y, el); screenEl.appendChild(el); return el; }
+label("<b>ERP</b>", 56, 26, "room"); label("<b>Warehouse</b>", 56, 100, "room"); label("<b>Supplier dock</b>", 40, 187, "room"); label("<b>Portal</b>", 92, 214, "room minor");
+const SHORT = { rec: "Reconciliation" };
+for (const a of AGENTS) label(`<small>${a.job}</small><b>${SHORT[a.id] || a.name}</b>`, a.desk[0] + 14, a.desk[1] + 15, "desk");
+for (const [id, p] of Object.entries(PEOPLE)) label(`<b>${p.name}</b>`, 462, p.y + 10, "desk");
+for (const s of SIGNS) { const el = document.createElement("div"); el.className = "sign"; el.innerHTML = `<b>${s.title}</b><small>${s.sub}</small>`; pct(s.x, s.y, el); screenEl.appendChild(el); }
+const TAGS = {};
+for (const a of AGENTS) { const el = document.createElement("div"); el.className = "tag"; el.textContent = a.name; el.style.background = TEAM[a.team]; screenEl.appendChild(el); TAGS[a.id] = el; }
+{ const el = document.createElement("div"); el.className = "tag"; el.textContent = "Warehouse team"; el.style.background = "#8e6a3d"; screenEl.appendChild(el); TAGS.warehouse = el; }
+
+/* ============ Draw ============ */
+function draw() {
+  tk++; lights = [];
+  ctx.drawImage(bg, 0, 0);
+  const s = sky(T);
+  for (const x of [150, 196, 300, 346]) { R(x, 4, 34, 14, s); R(x + 16, 4, 2, 14, "#d1d1d6"); if (T / 60 < 5 || T / 60 >= 20) { R(x + 6, 7, 1, 1, "#fff"); R(x + 26, 12, 1, 1, "#fff"); } }
+  // wall clock
+  R(247, 3, 16, 16, "#d1d1d6"); R(248, 4, 14, 14, "#ffffff");
+  const cx = 255, cy = 11, hh = (T / 60) % 12, mm = T % 60;
+  for (let i = 0; i < 4; i++) R(cx + Math.sin(hh / 12 * 6.283) * i, cy - Math.cos(hh / 12 * 6.283) * i, 1, 1, "#1c1c1e");
+  for (let i = 0; i < 6; i++) R(cx + Math.sin(mm / 60 * 6.283) * i, cy - Math.cos(mm / 60 * 6.283) * i, 1, 1, "#ff453a");
+  // ERP LEDs
+  for (const x of [10, 34, 58, 82]) for (let y = 36; y < 78; y += 6) if (((tk >> 3) + x + y) % 6) { const c = (x + y) % 4 ? "#30d158" : "#64d2ff"; R(x + 14, y + 1, 1, 1, c); lights.push([x + 14, y + 1, c, 1, 1]); }
+  const items = [];
+  // trucks + forklift
+  for (const [a, b] of TRUCKS) {
+    if (T >= a - 8 && T <= b + 8) {
+      const off = T < a ? (a - T) * 12 : T > b ? (T - b) * 12 : 0, x = 6 - off, y = 240;
+      items.push({ y: y + 30, f: () => {
+        R(x + 2, y + 30, 74, 2, "rgba(0,0,0,.12)");
+        R(x, y, 56, 28, "#ffffff"); R(x, y, 56, 1, "#e5e5ea"); R(x, y + 11, 56, 3, "#0a84ff"); R(x + 56, y + 8, 18, 20, "#2c2c2e"); R(x + 60, y + 11, 11, 7, "#9fd6ff");
+        for (const wx of [x + 8, x + 40, x + 60]) R(wx, y + 26, 8, 5, "#1c1c1e");
+      }});
+      if (T > a + 4 && T < b - 4) { const ph = ((T - a) % 20) / 20, fy = ph < .5 ? 252 - ph * 2 * 70 : 182 + (ph - .5) * 2 * 70, carry = ph < .5;
+        items.push({ y: fy + 8, f: () => { R(78, fy, 14, 8, "#ffd60a"); R(90, fy - 8, 2, 16, "#636366"); R(80, fy - 4, 6, 4, "#1c1c1e"); R(79, fy + 7, 4, 3, "#1c1c1e"); R(87, fy + 7, 4, 3, "#1c1c1e"); if (carry) R(92, fy - 2, 7, 7, "#c8a77e"); } }); }
+    }
+  }
+  // agents
+  for (const a of AGENTS) {
+    const st = agentAt(a, T), [dx, dy] = a.desk;
+    const on = st.type || !st.seat || a.id === "gi" || a.id === "hq";
+    items.push({ y: dy + 9, f: () => {
+      if (st.seat) robot(a.seat[0], a.seat[1] - 1, a.team, st.type ? (st.guard === "hold" && st.showGuard ? "hold" : "type") : "idle", tk, false);
+      desk(dx, dy, on, !!st.type, a.team, tk);
+      if (st.type && st.showGuard && st.guard) spr(st.guard === "hold" ? BANG : SHIELD, a.seat[0] - 4, dy - 32, { O: "#30d158" });
+    }});
+    const tag = TAGS[a.id];
+    if (!st.seat) {
+      items.push({ y: st.pos[1], f: () => {
+        robot(st.pos[0], st.pos[1], a.team, st.walk ? "walk" : "stand", tk, st.flip);
+        if (st.carry === "paper") spr(PAPER, st.pos[0] - 2, st.pos[1] - 27);
+        if (st.carry === "paperY") spr(PAPERY, st.pos[0] - 2, st.pos[1] - 27);
+        if (st.carry === "data") { R(st.pos[0] - 3, st.pos[1] - 26, 6, 4, "#64d2ff"); lights.push([Math.round(st.pos[0] - 3), Math.round(st.pos[1] - 26), "#64d2ff", 6, 4]); }
+      }});
+      tag.style.display = "block"; pct(st.pos[0], st.pos[1] - (st.carry ? 29 : 22), tag);
+    } else tag.style.display = "none";
+  }
+  // emails to suppliers: three envelopes fly from Truck Dispatch out through the dock gate
+  for (const m of MAILS) for (let k = 0; k < 3; k++) {
+    const t0 = m.t + k * 1.2, f = (T - t0) / 7;
+    if (f > 0 && f < 1) {
+      const sx = byId.srm.seat[0], sy = byId.srm.desk[1] - 22, ex = 8, ey = 214 + k * 6;
+      const x = sx + (ex - sx) * f, y = sy + (ey - sy) * f - Math.sin(f * Math.PI) * 46;
+      items.push({ y: 999, f: () => { spr(ENVELOPE, x - 4, y - 2); lights.push([Math.round(x - 4), Math.round(y - 2), "#ffffff", 8, 5]); } });
+    }
+  }
+  // change desk
+  items.push({ y: CHANGE[0][1] + 9, f: () => {
+    robot(CHANGE[0][0] + 14, CHANGE[0][1] + 1, "chg", (tk >> 6) % 3 ? "type" : "idle", tk, false);
+    robot(CHANGE[1][0] + 14, CHANGE[1][1] + 1, "chg", (tk >> 6) % 3 === 1 ? "idle" : "type", tk + 31, false);
+    desk(CHANGE[0][0], CHANGE[0][1], true, true, "chg", tk); desk(CHANGE[1][0], CHANGE[1][1], true, (tk >> 5) % 2 === 0, "chg", tk + 7);
+  }});
+  // people
+  for (const [id, p] of Object.entries(PEOPLE)) {
+    const pile = DELIVER.filter(d => d.to === id && d.t <= T && d.t > T - 420).slice(-4);
+    const dx = 448, dy = p.y - 4;
+    if (id === "warehouse") {
+      const ws = [teamAt(0, T), teamAt(1, T)];
+      items.push({ y: dy + 9, f: () => {
+        R(dx - 8, dy + 1, 44, 8, "#e8d5b8"); R(dx - 8, dy + 1, 44, 1, "#f3e6d1"); R(dx - 7, dy + 9, 42, 2, "rgba(0,0,0,.1)");
+        R(416, p.y - 2, 11, 3, "#aeaeb2"); pile.forEach((d, i) => spr(d.hold ? PAPERY : PAPER, 418 + i * 2, p.y - 8 - i));
+      }});
+      [0, 1].forEach(i => {
+        if (!office("warehouse", T)) return;
+        const st = ws[i], look = PEOPLE_LOOK.warehouse[i];
+        if (!st) items.push({ y: dy + 2, f: () => person(dx + 6 + i * 22, dy + 2, look, false, tk, i === 1) });
+        else items.push({ y: st.pos[1], f: () => {
+          person(st.pos[0], st.pos[1], look, st.walk, tk + i * 3, st.flip);
+          if (st.carry === "clip" || st.counting) spr(CLIP, st.pos[0] + 4, st.pos[1] - 10);
+          if (st.carry === "paper") spr(PAPER, st.pos[0] - 2, st.pos[1] - 23);
+        }});
+      });
+      const lead = ws[0];
+      if (lead && (lead.walk || lead.stand) && office("warehouse", T)) { TAGS.warehouse.style.display = "block"; pct(lead.pos[0], lead.pos[1] - 19, TAGS.warehouse); } else TAGS.warehouse.style.display = "none";
+      continue;
+    }
+    const here = office(id, T);
+    items.push({ y: dy + 9, f: () => {
+      if (here) person(dx + 14, dy + 2, PEOPLE_LOOK[id], false, tk, true, true);
+      R(dx, dy + 1, 28, 8, "#e8d5b8"); R(dx, dy + 1, 28, 1, "#f3e6d1"); R(dx + 1, dy + 9, 26, 2, "rgba(0,0,0,.1)");
+      R(dx + 3, dy - 6, 9, 7, "#1c1c1e"); R(dx + 4, dy - 5, 7, 5, here ? "#4fb6d9" : "#3a3a3c");
+      R(416, p.y - 2, 11, 3, "#aeaeb2"); pile.forEach((d, i) => spr(d.hold ? PAPERY : PAPER, 418 + i * 2, p.y - 8 - i));
+      if (pile.some(d => d.hold) && (tk >> 4) % 2) spr(BANG, 428, p.y - 20);
+    }});
+  }
+  items.sort((u, v) => u.y - v.y).forEach(it => it.f());
+  const dk = dark(T);
+  if (dk > 0) {
+    ctx.fillStyle = `rgba(10,18,48,${dk})`; ctx.fillRect(0, 0, CW, CH);
+    for (const L of lights) { ctx.fillStyle = L[2]; ctx.fillRect(L[0], L[1], L[3] || 1, L[4] || 1); }
+    ctx.globalAlpha = Math.min(.3, dk);
+    for (const L of lights) if ((L[3] || 1) > 4) { ctx.fillStyle = L[2]; ctx.fillRect(L[0] - 2, L[1] - 2, L[3] + 4, L[4] + 4); }
+    ctx.globalAlpha = 1;
+  }
+}
+
+/* ============ Ticker, details, chips ============ */
+const tickerEl = document.getElementById("ticker"), detailEl = document.getElementById("detail");
+const whoName = w => w === "warehouse" ? "Warehouse team" : w === "truck" ? "Supplier truck" : byId[w].name;
+const whoTeam = w => w === "warehouse" || w === "truck" ? null : byId[w].team;
+let tickKey = "";
+function ticker() {
+  const shown = LOG.filter(l => l.t <= T && !(l.quiet && l.t < T - 45)).slice(-6).reverse();
+  const key = shown.map(s => s.t + s.who).join("|"); if (key === tickKey) return; tickKey = key;
+  tickerEl.innerHTML = shown.length ? "" : `<li><time>—</time><span>Quiet night. The hourly error cycle keeps running.</span></li>`;
+  for (const l of shown) {
+    const team = whoTeam(l.who), dot = team ? `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${TEAM[team]};margin-right:7px;vertical-align:1px"></span>` : "";
+    const b = l.mail ? `<span class="badge mail">email to suppliers</span>` : l.guard === "ok" ? `<span class="badge ok">guards passed</span>` : l.guard === "hold" ? `<span class="badge hold">handed to a person</span>` : "";
+    const li = document.createElement("li"); li.innerHTML = `<time>${fmt(l.t)}</time><span>${dot}<span class="who">${whoName(l.who)}</span> — ${l.text}${b}</span>`; tickerEl.appendChild(li);
+  }
+}
+function showAgent(id) {
+  const a = byId[id], when = a.when;
+  detailEl.innerHTML = `<h2>Agent</h2><h3>${a.name}</h3><div class="meta"><span style="color:${TEAM[a.team]}">●</span> ${TEAM_NAME[a.team]} · ${a.job}</div><p>${a.one}</p>
+  <dl><dt>When</dt><dd>${when}</dd><dt>Reads</dt><dd>${a.reads}</dd><dt>Produces</dt><dd>${a.makes}</dd><dt>Guards</dt><dd>${a.guards}</dd></dl>`;
+}
+function showPerson(id) {
+  const p = PEOPLE[id];
+  const got = DELIVER.filter(d => d.to === id).map(d => `${fmt(d.t)} · ${d.doc}`);
+  const extra = id === "warehouse" ? "Gets the count list around 07:00, starts counting about 07:30, and has the results back in about two hours." : id === "owner" ? "Approves every code change before it merges, and anything irreversible before it happens." : "Gets a document only when a person has to act on it.";
+  detailEl.innerHTML = `<h2>Person</h2><h3>${p.name}</h3><div class="meta">${p.role}</div><p>${extra}</p><dl><dt>Receives</dt><dd>${got.length ? got.join("<br>") : "—"}</dd></dl>`;
+}
+function showChange() {
+  detailEl.innerHTML = `<h2>Change desk</h2><h3>Builder and reviewer</h3><div class="meta"><span style="color:${TEAM.chg}">●</span> How a change gets made</div>
+  <p>The agents change their own code too. A builder works on a branch, a second agent reviews the diff and the evidence, the owner approves, and it merges outside the morning freeze.</p>
+  <dl><dt>Rule</dt><dd>No change between 06:20 and 07:35, or within 30 minutes of a job's run.</dd><dt>Why</dt><dd>The review is where silent regressions get caught before they reach the morning.</dd></dl>`;
+}
+showAgent("srm");
+const teamsEl = document.getElementById("teams");
+for (const team of ["hq", "inv", "log"]) {
+  const g = document.createElement("div"); g.className = "grp"; g.innerHTML = `<span class="gname">${TEAM_NAME[team]}</span>`;
+  for (const a of AGENTS.filter(a => a.team === team)) { const b = document.createElement("button"); b.className = "chip"; b.type = "button"; b.innerHTML = `<i style="background:${TEAM[team]}"></i>${a.team === "hq" ? a.name : a.job.replace("JOB ", "") + " · " + a.name}`; b.onclick = () => showAgent(a.id); g.appendChild(b); }
+  teamsEl.appendChild(g);
+}
+cv.addEventListener("click", ev => {
+  const r = cv.getBoundingClientRect(), x = (ev.clientX - r.left) / r.width * CW, y = (ev.clientY - r.top) / r.height * CH;
+  let best = null, bd = 1e9;
+  for (const a of AGENTS) { const st = agentAt(a, T); for (const p of [st.pos || a.seat, [a.desk[0] + 14, a.desk[1]]]) { const d = Math.hypot(p[0] - x, p[1] - 8 - y); if (d < bd) { bd = d; best = () => showAgent(a.id); } } }
+  for (const [id, p] of Object.entries(PEOPLE)) { const d = Math.hypot(458 - x, p.y - y); if (d < bd) { bd = d; best = () => showPerson(id); } }
+  for (const i of [0, 1]) { const st = teamAt(i, T); if (st) { const d = Math.hypot(st.pos[0] - x, st.pos[1] - 8 - y); if (d < bd) { bd = d; best = () => showPerson("warehouse"); } } }
+  { const d = Math.hypot(240 - x, 236 - y); if (d < bd) { bd = d; best = showChange; } }
+  if (best && bd < 28) best();
+});
+
+/* ============ Controls & loop ============ */
+const playBtn = document.getElementById("play"), scrub = document.getElementById("scrub"), clockEl = document.getElementById("clock");
+const setPlay = v => { playing = v; playBtn.textContent = v ? "❚❚" : "▶"; playBtn.setAttribute("aria-label", v ? "Pause" : "Play"); };
+playBtn.onclick = () => setPlay(!playing);
+document.querySelectorAll(".seg button").forEach(b => b.onclick = () => { speed = Number(b.dataset.speed); document.querySelectorAll(".seg button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); });
+document.querySelectorAll(".jumps button").forEach(b => b.onclick = () => { T = hm(b.dataset.t); setPlay(true); });
+scrub.oninput = () => { T = Number(scrub.value); };
+const q = new URLSearchParams(location.search);
+if (q.get("t")) T = hm(q.get("t"));
+if (q.get("theme")) document.documentElement.dataset.theme = q.get("theme");
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (!reduce && q.get("paused") !== "1") setPlay(true);
+let last = performance.now();
+(function frame(now) {
+  const dt = Math.min(.1, (now - last) / 1000); last = now;
+  if (playing) { T += dt * MIN_PER_SEC * speed; if (T >= 1440) T -= 1440; }
+  scrub.value = String(Math.floor(T)); clockEl.textContent = fmt(T);
+  draw(); ticker();
+  requestAnimationFrame(frame);
+})(last);
+</script>
+</body>
+</html>

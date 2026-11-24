@@ -1,0 +1,152 @@
+# Link types between object types.
+#
+#   from / to      object types (must exist in objects.yaml)
+#   cardinality    many_to_one | one_to_one | one_to_many
+#   via            the property on `from` that holds the key of `to`
+#   time_varying   true = the link changes over time and is kept per daily snapshot
+#   set_by         the logic module or action that creates the link, if it is not in the source data
+
+version: 1
+
+link_types:
+
+  box_material:
+    from: Box
+    to: Material
+    cardinality: many_to_one
+    via: Box.material_id
+
+  box_bin:
+    from: Box
+    to: Bin
+    cardinality: many_to_one
+    via: Box.bin_code
+    time_varying: true
+
+  box_storage_location:
+    description: The storage location belongs to the box, not the bin; one bin can hold boxes booked in different storage locations.
+    from: Box
+    to: StorageLocation
+    cardinality: many_to_one
+    via: Box.sloc
+    time_varying: true
+
+  bin_zone:
+    from: Bin
+    to: Zone
+    cardinality: many_to_one
+    via: Bin.zone_code
+
+  stock_position_material:
+    from: StockPosition
+    to: Material
+    cardinality: many_to_one
+    via: StockPosition.material_id
+
+  stock_position_storage_location:
+    from: StockPosition
+    to: StorageLocation
+    cardinality: many_to_one
+    via: StockPosition.sloc
+
+  count_task_bin:
+    from: CountTask
+    to: Bin
+    cardinality: many_to_one
+    via: CountTask.bin_code
+    set_by: actions.publish_count_list
+
+  count_result_task:
+    from: CountResult
+    to: CountTask
+    cardinality: one_to_one
+    via: [CountResult.run_id, CountResult.bin_code]
+    set_by: actions.record_count_result
+
+  interface_error_material:
+    from: InterfaceError
+    to: Material
+    cardinality: many_to_one
+    via: InterfaceError.material_id
+
+  interface_error_storage_location:
+    from: InterfaceError
+    to: StorageLocation
+    cardinality: many_to_one
+    via: InterfaceError.sloc
+
+  stock_transfer_material:
+    from: StockTransfer
+    to: Material
+    cardinality: many_to_one
+    via: StockTransfer.material_id
+
+  stock_transfer_from_location:
+    from: StockTransfer
+    to: StorageLocation
+    cardinality: many_to_one
+    via: StockTransfer.from_sloc
+
+  stock_transfer_to_location:
+    from: StockTransfer
+    to: StorageLocation
+    cardinality: many_to_one
+    via: StockTransfer.to_sloc
+
+  stock_transfer_interface_error:
+    from: StockTransfer
+    to: InterfaceError
+    cardinality: many_to_one
+    via: StockTransfer.resolves_error_id
+    set_by: actions.post_stock_transfer
+
+  stock_transfer_backlog_line:
+    from: StockTransfer
+    to: BacklogLine
+    cardinality: many_to_one
+    via: StockTransfer.resolves_backlog_line_id
+    set_by: actions.post_stock_transfer
+
+  backlog_line_material:
+    from: BacklogLine
+    to: Material
+    cardinality: many_to_one
+    via: BacklogLine.material_id
+
+  order_line_material:
+    from: DeliveryOrderLine
+    to: Material
+    cardinality: many_to_one
+    via: DeliveryOrderLine.material_id
+
+  order_line_supplier:
+    from: DeliveryOrderLine
+    to: Supplier
+    cardinality: many_to_one
+    via: DeliveryOrderLine.supplier_id
+
+  order_line_truck_run:
+    from: DeliveryOrderLine
+    to: TruckRun
+    cardinality: many_to_one
+    via: DeliveryOrderLine.truck_run_id
+    set_by: logic.truck_leveling
+
+  truck_run_supplier:
+    from: TruckRun
+    to: Supplier
+    cardinality: many_to_one
+    via: TruckRun.supplier_id
+
+  goods_receipt_box:
+    from: GoodsReceipt
+    to: Box
+    cardinality: one_to_one
+    via: GoodsReceipt.barcode
+
+  goods_receipt_truck_run:
+    from: GoodsReceipt
+    to: TruckRun
+    cardinality: many_to_one
+    via: GoodsReceipt.truck_run_id
+    set_by: logic.receipt_matching

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manufacturing Agent Organization — What it produces</title>
+<meta name="description" content="Sample outputs of a multi-agent operations organization for manufacturing supply chain: the daily cycle count list, interface error report, backlog report, ERP-WMS reconciliation, weekly analysis, supplier monitoring and the morning summary. Synthetic plant.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="outputs.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="mark" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div>
+      <h1>What the organization produces</h1>
+      <p>One working day of outputs: who receives each one, what they decide with it, and what the agents did on their own. Shown for the synthetic plant of the <a href="https://miaou360.github.io/3d-warehouse-visualizer/">3D Warehouse Visualizer</a> — same parts, same rack locations.</p>
+    </div>
+  </div>
+  <nav class="navlinks"><a class="repo" href="floor.html">Operations floor</a><a class="repo" href="index.html">Live map</a><a class="repo" href="https://github.com/Miaou360/manufacturing-agent-org/blob/main/docs/ARCHITECTURE.md">How it is built</a><a class="repo" href="https://github.com/Miaou360/manufacturing-agent-org">Repository ↗</a></nav>
+</header>
+
+<p class="notice" id="notice"></p>
+
+<div class="out-layout">
+  <nav class="out-nav" id="out-nav" aria-label="Outputs of the day"></nav>
+  <main class="panel out-main" id="out-main" aria-live="polite"></main>
+</div>
+
+<footer>
+  <span id="asof"></span>
+  <span>Formats follow the real reports; every part, supplier, quantity and result on this page is generated (tools/build_sample_outputs.py, fixed seed).</span>
+</footer>
+<div class="tip" id="tip" hidden></div>
+<script src="outputs.js"></script>
+<script src="outputs_app.js"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+# Action types: the only ways objects change.
+#
+#   performed_by   agent.* (scheduled agent), person.* (a person, through a sheet or an approval),
+#                  or agent.any (whichever agent found the problem; the action log records that agent)
+#   creates / updates / reads   object types or Type.property
+#   guards         checks that must pass before the action runs; each id is implemented in actions/guards.py
+#   on_guard_fail  hold_and_alert_owner | hand_to_person | send_with_flags
+#   approval       none | owner | reviewed_change
+#   side_effects   what leaves the system (ERP posting, file, mail); adapters are stubs in the simulation
+#
+# Every run of every action writes one row to the action log (who, when, inputs, guard results, outcome).
+
+version: 1
+
+action_types:
+
+  publish_count_list:
+    description: Choose today's bins to count and send the list to the warehouse team.
+    performed_by: agent.stock_accuracy
+    reads: [Bin, Box, StorageLocation, Material, CountResult]
+    creates: [CountTask]
+    updates: [Bin.skip_until]
+    guards:
+      - id: count_scope
+        rule: the bin's count scope matches the list (daily or weekly) and only boxes in count-eligible storage locations are counted
+      - id: recent_match_skip
+        rule: skip a bin whose last count matched and whose barcode set is unchanged since (7 days for daily, 14 days for weekly)
+      - id: fresh_snapshot
+        rule: the warehouse snapshot is at most 24 hours old
+    on_guard_fail: hold_and_alert_owner
+    approval: none
+    side_effects: [count list file to the warehouse team]
+
+  record_count_result:
+    description: Store what the warehouse team found.
+    performed_by: person.warehouse_team
+    reads: [CountTask]
+    creates: [CountResult]
+    updates: [Bin.last_counted_at]
+    guards:
+      - id: facts_only
+        rule: a blank count means not counted, never zero; no quantity is inferred from notes
+    on_guard_fail: hand_to_person
+    approval: none
+    side_effects: []
+
+  clear_interface_error:
+    description: Clear a failed ERP posting that is safe to clear.
+    performed_by: agent.interface_errors
+    reads: [InterfaceError, GoodsReceipt]
+    updates: [InterfaceError.status]
+    guards:
+      - id: not_receipt_linked
+        rule: never clear an error that is tied to a goods receipt
+      - id: protected_movement
+        rule: protected movement types are never cleared
+    on_guard_fail: hand_to_person
+    approval: none
+    side_effects: [ERP error-list change]
+
+  post_stock_transfer:
+    description: Move ERP stock between storage locations so a failed issue or a production backlog can be booked.
+    performed_by: agent.interface_errors
+    reads: [StockPosition, InterfaceError, GoodsReceipt]
+    creates: [StockTransfer]
+    updates: [StockPosition.erp_qty, InterfaceError.status]
+    guards:
+      - id: persistent_difference
+        rule: the difference is present in two snapshots taken at least 15 minutes apart, the older one at most 60 minutes old
+      - id: nothing_in_flight
+        rule: no receipt or issue for the material is still travelling from the WMS to the ERP
+      - id: accuracy_not_down
+        rule: plant stock accuracy after the move is not lower than before
+    on_guard_fail: hand_to_person
+    approval: none
+    side_effects: [ERP stock transfer posting]
+
+  send_truck_plan:
+    description: Level delivery orders across a supplier's fixed truck slots and send the plan.
+    performed_by: agent.order_dispatch
+    reads: [DeliveryOrderLine, Supplier, Material, StockPosition]
+    creates: [TruckRun]
+    updates: [DeliveryOrderLine.truck_run_id, TruckRun.planned_carts]
+    guards:
+      - id: no_shortage
+        rule: projected stock never drops below zero; orders are only pulled to earlier trucks, never pushed later
+      - id: minimal_change
+        rule: a supplier's orders are changed only when a truck exceeds its trailer cap or the overload threshold
+      - id: trailer_cap
+        rule: planned carts per truck stay within the supplier's trailer cap
+      - id: output_verified
+        rule: the plan's totals match the portal orders per material and day (checks V1-V6)
+    on_guard_fail: send_with_flags
+    approval: none
+    side_effects: [truck plan file to each supplier, owner in copy]
+
+  send_delivery_status:
+    description: Tell each supplier which materials arrived short or over against the truck plan.
+    performed_by: agent.receipt_tracking
+    reads: [TruckRun, DeliveryOrderLine, GoodsReceipt]
+    updates: [TruckRun.status]
+    guards:
+      - id: owner_approved_recipients
+        rule: until the owner approves supplier delivery, the status goes to the owner only
+    on_guard_fail: hold_and_alert_owner
+    approval: owner
+    side_effects: [delivery status file]
+
+  change_count_scope:
+    description: Change which bins or storage locations are counted.
+    performed_by: person.owner
+    reads: [Bin, StorageLocation]
+    updates: [Bin.count_scope, StorageLocation.count_eligible]
+    guards:
+      - id: reviewed_change
+        rule: applied as a reviewed change; a second agent reviews it and the owner approves it before it takes effect
+    on_guard_fail: hand_to_person
+    approval: reviewed_change
+    side_effects: []
+
+  raise_system_alert:
+    description: Report a failed run, stale data or a held action.
+    performed_by: agent.any
+    reads: []
+    guards:
+      - id: owner_only
+        rule: system alerts go to the owner only, never to operational recipients
+    on_guard_fail: hold_and_alert_owner
+    approval: none
+    side_effects: [alert mail to the owner]

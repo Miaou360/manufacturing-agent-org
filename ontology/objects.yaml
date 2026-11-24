@@ -1,0 +1,231 @@
+# Object types of the plant ontology.
+#
+# Each object type describes one kind of thing in the plant. For each type:
+#   key            properties that identify one object
+#   maintained_by  the agent (or person) that keeps the objects current
+#   backed_by      the ledger table the objects are materialized from
+#   simulated      false = part of the real model but not built in the simulation
+#   properties     name -> {type, description?, derived_by?}
+#                  derived_by names the logic module that computes and writes the value.
+#                  set_by names the action that writes the value.
+#                  A property with neither comes straight from a source system.
+#
+# Types: string, integer, number, boolean, date, datetime, enum (with values).
+
+version: 1
+
+object_types:
+
+  Material:
+    description: A part number the plant stocks.
+    key: [material_id]
+    maintained_by: agent.stock_accuracy
+    backed_by: ledger.material_master
+    simulated: true
+    properties:
+      material_id: {type: string}
+      description: {type: string}
+      unit_pack_qty: {type: integer, description: pieces per box}
+      small_part: {type: boolean, derived_by: logic.turnover_profile, description: heuristic from the description text}
+      turnover_days_trimmed_mean: {type: number, derived_by: logic.turnover_profile}
+      turnover_days_median: {type: number, derived_by: logic.turnover_profile}
+      mover_class: {type: enum, values: [FAST, NORMAL, SLOW, STAGNANT, NO_ISSUE_YET], derived_by: logic.turnover_profile}
+      profile_as_of: {type: datetime, derived_by: logic.turnover_profile}
+
+  Box:
+    description: One labelled box (barcode) of one material.
+    key: [barcode]
+    maintained_by: agent.stock_accuracy
+    backed_by: ledger.wms_box_snapshot
+    simulated: true
+    properties:
+      barcode: {type: string}
+      material_id: {type: string}
+      qty: {type: integer, description: pieces in the box}
+      received_at: {type: datetime}
+      bin_code: {type: string}
+      sloc: {type: string, description: storage location the box is booked in}
+      status: {type: enum, values: [IN_STORAGE, ISSUED_TO_PRODUCTION, ISSUED_WITHOUT_RECEIPT]}
+      dwell_days: {type: number, derived_by: logic.turnover_profile}
+
+  Bin:
+    description: A physical rack position, floor lane or cart that holds boxes.
+    key: [bin_code]
+    maintained_by: agent.stock_accuracy
+    backed_by: ledger.bin_master
+    simulated: true
+    properties:
+      bin_code: {type: string}
+      facility: {type: string}
+      zone_code: {type: string}
+      rack_level: {type: integer}
+      count_scope: {type: enum, values: [DAILY, WEEKLY, EXCLUDED]}
+      last_counted_at: {type: datetime, set_by: actions.record_count_result}
+      skip_until: {type: date, derived_by: logic.count_selection, description: set when a recent count matched and the barcode set is unchanged}
+
+  Zone:
+    description: A group of bins with the same handling (high rack, floor, lineside).
+    key: [zone_code]
+    maintained_by: agent.stock_accuracy
+    backed_by: ledger.zone_master
+    simulated: true
+    properties:
+      zone_code: {type: string}
+      median_dwell_days: {type: number, derived_by: logic.turnover_profile}
+      lookback_days: {type: integer, derived_by: logic.turnover_profile}
+
+  StorageLocation:
+    description: An ERP / WMS storage location (SLoc). Count eligibility lives here, not in bin names.
+    key: [sloc]
+    maintained_by: person.owner
+    backed_by: ledger.sloc_master
+    simulated: true
+    properties:
+      sloc: {type: string}
+      facility: {type: string}
+      count_eligible: {type: boolean}
+
+  StockPosition:
+    description: One material in one storage location, as the ERP and the WMS each see it.
+    key: [material_id, sloc, snapshot_date]
+    maintained_by: agent.reconciliation
+    backed_by: ledger.stock_position_snapshot
+    simulated: true
+    properties:
+      material_id: {type: string}
+      sloc: {type: string}
+      snapshot_date: {type: date}
+      erp_qty: {type: number}
+      wms_qty: {type: number}
+      diff_qty: {type: number}
+      consecutive_days_different: {type: integer}
+
+  CountTask:
+    description: One bin on one count list.
+    key: [run_id, bin_code]
+    maintained_by: agent.stock_accuracy
+    backed_by: ledger.count_task
+    simulated: true
+    properties:
+      run_id: {type: string}
+      bin_code: {type: string}
+      list_date: {type: date}
+      lane: {type: enum, values: [RISK, RANDOM_BASELINE, HIGH_RACK]}
+      rank: {type: integer}
+      risk_score: {type: number, derived_by: logic.count_selection}
+      reason: {type: string, derived_by: logic.count_selection}
+      book_boxes: {type: integer, description: boxes the WMS showed when the list was made}
+
+  CountResult:
+    description: What the warehouse team found for one count task.
+    key: [run_id, bin_code]
+    maintained_by: person.warehouse_team
+    backed_by: ledger.count_result
+    simulated: true
+    properties:
+      run_id: {type: string}
+      bin_code: {type: string}
+      counted_boxes: {type: integer, description: blank in the sheet means not counted, never zero}
+      diff_boxes: {type: integer}
+      cause_class: {type: enum, values: [LINE_SCAN_MISS, EMPTY, BIN_TO_BIN_MISS, PART_MISSING, WRONG_PART, UNCLASSIFIED], derived_by: logic.mismatch_cause}
+      field_notes: {type: string}
+
+  InterfaceError:
+    description: An ERP posting that failed between the WMS and the ERP.
+    key: [error_id]
+    maintained_by: agent.interface_errors
+    backed_by: ledger.interface_error_snapshot
+    simulated: true
+    properties:
+      error_id: {type: string, description: snapshot id + material + movement type}
+      snapshot_id: {type: string}
+      material_id: {type: string}
+      movement_type: {type: string}
+      sloc: {type: string}
+      qty: {type: number}
+      receipt_linked: {type: boolean}
+      status: {type: enum, values: [OPEN, CLEARED, HANDED_TO_PERSON]}
+
+  StockTransfer:
+    description: An ERP stock transfer between storage locations.
+    key: [document_no]
+    maintained_by: agent.interface_errors
+    backed_by: ledger.stock_transfer
+    simulated: true
+    properties:
+      document_no: {type: string}
+      material_id: {type: string}
+      from_sloc: {type: string}
+      to_sloc: {type: string}
+      qty: {type: number}
+      status: {type: enum, values: [PROPOSED, POSTED, HELD, FAILED]}
+      reason: {type: string}
+      resolves_error_id: {type: string, description: the interface error this transfer is meant to clear, if any}
+      resolves_backlog_line_id: {type: string, description: the backlog line this transfer is meant to clear, if any}
+
+  BacklogLine:
+    description: A production issue that could not be booked because stock was short in the ERP.
+    key: [backlog_line_id]
+    maintained_by: agent.backlog
+    backed_by: ledger.backlog_snapshot
+    simulated: false
+    properties:
+      backlog_line_id: {type: string, description: snapshot id + material + order}
+      snapshot_id: {type: string}
+      material_id: {type: string}
+      order_no: {type: string}
+      sloc: {type: string}
+      qty: {type: number}
+
+  Supplier:
+    description: A supplier that delivers by fixed truck slots.
+    key: [supplier_id]
+    maintained_by: agent.order_dispatch
+    backed_by: ledger.supplier_master
+    simulated: true
+    properties:
+      supplier_id: {type: string}
+      trailer_cap_carts: {type: integer}
+      truck_slots: {type: string, description: departure times per day}
+
+  DeliveryOrderLine:
+    description: One material on one supplier-portal delivery order for one time window.
+    key: [order_no, material_id, due_window]
+    maintained_by: agent.order_dispatch
+    backed_by: ledger.delivery_order_snapshot
+    simulated: true
+    properties:
+      order_no: {type: string}
+      material_id: {type: string}
+      supplier_id: {type: string}
+      due_window: {type: string}
+      ordered_boxes: {type: integer}
+      truck_run_id: {type: string, derived_by: logic.truck_leveling}
+
+  TruckRun:
+    description: One truck slot of one supplier on one day.
+    key: [truck_run_id]
+    maintained_by: agent.order_dispatch
+    backed_by: ledger.truck_run
+    simulated: true
+    properties:
+      truck_run_id: {type: string}
+      supplier_id: {type: string}
+      run_date: {type: date}
+      slot: {type: string}
+      planned_carts: {type: integer, derived_by: logic.truck_leveling}
+      status: {type: enum, values: [PLANNED, DEPARTED, ARRIVED, CLOSED]}
+
+  GoodsReceipt:
+    description: A box received at the dock (WMS scan) and its ERP receipt posting.
+    key: [barcode]
+    maintained_by: agent.receipt_tracking
+    backed_by: ledger.goods_receipt
+    simulated: true
+    properties:
+      barcode: {type: string}
+      material_id: {type: string}
+      qty: {type: integer}
+      received_at: {type: datetime}
+      erp_posted: {type: boolean}
+      truck_run_id: {type: string, derived_by: logic.receipt_matching}

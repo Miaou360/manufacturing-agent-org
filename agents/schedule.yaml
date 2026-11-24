@@ -1,0 +1,148 @@
+# Who runs which action, and when.
+#
+# Times are local plant time and follow the production job registry.
+# Agents are listed by department and job number. The simulation runs the agents marked
+# simulated: true in order of sim_at, on one synthetic day, and takes every step time from
+# this file. Runs without days: run every day.
+
+version: 2
+
+hq:
+  name: HQ Task Manager
+  runs:
+    - {at: "03:10", does: "online backup of every ledger"}
+    - {at: "07:35", does: "morning operations summary; every scheduled run is checked against this file"}
+  freeze_window:
+    start: "06:20"
+    end: "07:35"
+    rule: No code changes or heavy batch jobs while the morning outputs are produced.
+  erp_session_lock:
+    mode: single_writer
+    rule: Only one agent may hold the ERP session at a time.
+  system_alerts: owner_only
+
+agents:
+
+  # ---------- Inventory ----------
+
+  - id: agent.stock_accuracy
+    name: Stock Accuracy
+    department: inventory
+    job: "00"
+    runs:
+      - {at: "06:50", days: Mon-Sat, does: "turnover profile, then the daily count list"}
+      - {at: "06:50", days: Sat, does: "weekly high-rack count list"}
+      - {at: "07:15", does: "shadow model scores, then every 2 hours at minute 12"}
+      - {at: "09:15", does: "model shadow scoring"}
+      - {at: "09:40", days: Sat, does: "weekly count report"}
+    actions: [publish_count_list]
+    simulated: true
+    sim_at: "06:50"
+
+  - id: agent.interface_errors
+    name: GR/GI Errors
+    department: inventory
+    job: "01"
+    runs:
+      - {every: hourly, does: "clear safe interface errors and post guarded transfers"}
+      - {at: "07:18", does: "deletion candidates for approval"}
+      - {at: "07:30", does: "daily error report"}
+      - {at: "08:08", does: "post-check of approved deletions"}
+    actions: [clear_interface_error, post_stock_transfer]
+    simulated: true
+    sim_at: "08:00"
+
+  - id: agent.backlog
+    name: Backlog Clear
+    department: inventory
+    job: "02"
+    runs:
+      - {at: "06:20", does: "backlog snapshot"}
+      - {at: "08:15", does: "clear the backlog with guarded transfers"}
+      - {at: "08:30", does: "second pass, then one report to production control"}
+    actions: [post_stock_transfer]
+    simulated: false
+
+  - id: agent.backlog_analysis
+    name: Backlog Analysis
+    department: inventory
+    job: "03"
+    runs:
+      - {at: "08:30", days: Fri, does: "weekly analysis of why the backlog comes back"}
+    actions: []
+    simulated: false
+
+  - id: agent.reconciliation
+    name: System Reconciliation
+    department: inventory
+    job: "04"
+    runs:
+      - {at: "06:45", does: "ERP and warehouse stock positions, accuracy and value at risk"}
+    actions: []
+    simulated: true
+    sim_at: "06:45"
+
+  - id: agent.release_lag
+    name: Release Lag
+    department: inventory
+    job: "05"
+    runs:
+      - {at: "04:15", does: "boxes released to production that still sit in a rack bin"}
+    actions: []
+    simulated: false
+
+  - id: agent.collector
+    name: Data Collector
+    department: inventory
+    job: "06"
+    runs:
+      - {at: "02:15", does: "yesterday's material movements"}
+      - {at: "05:45", does: "warehouse pulling plan"}
+      - {at: "14:00", does: "warehouse pulling plan"}
+      - {at: "04:40", days: Sun, does: "bills of material"}
+    actions: []
+    simulated: false
+
+  # ---------- Logistics ----------
+
+  - id: agent.order_dispatch
+    name: Truck Dispatch
+    department: logistics
+    job: "00"
+    runs:
+      - {at: "06:40", days: Mon-Sat, does: "today's truck plans, one per supplier"}
+      - {at: "13:40", days: Mon-Sat, does: "updated truck plans through the next working day"}
+    actions: [send_truck_plan]
+    simulated: true
+    sim_at: "06:40"
+
+  - id: agent.receipt_tracking
+    name: Receipt Check
+    department: logistics
+    job: "02"
+    runs:
+      - {at: "05:00", does: "yesterday's receipts against yesterday's truck plans"}
+    actions: [send_delivery_status]
+    simulated: true
+    sim_at: "05:00"
+
+  - id: agent.gr_reconciliation
+    name: GR Reconciliation
+    department: logistics
+    job: "03"
+    runs:
+      - {at: "07:45", days: Mon-Sat, does: "receipt scans against ERP receipt postings"}
+    actions: []
+    simulated: false
+
+# People act through sheets and approvals. The simulation records their step at sim_at.
+people:
+  - id: person.warehouse_team
+    name: Warehouse team
+    does: counts the bins on the list from about 07:30; results come back in about two hours
+    actions: [record_count_result]
+    sim_at: "09:30"
+  - id: person.owner
+    name: Operations owner
+    does: approves code changes, scope changes and anything irreversible
+    actions: [change_count_scope]

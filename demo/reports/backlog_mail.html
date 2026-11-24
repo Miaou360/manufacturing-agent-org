@@ -1,0 +1,754 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f7fafc; margin: 0; padding: 20px; }
+            .container { max-width: 920px; margin: 0 auto; background-color: #ffffff; border-radius: 6px; border: 1px solid #e2e8f0; overflow: hidden; }
+            .header { background: #1a365d; color: #ffffff; padding: 18px 24px; }
+            .header h1 { margin: 0 0 4px 0; font-size: 18px; font-weight: bold; }
+            .header p { margin: 0; opacity: 0.85; font-size: 12px; }
+            .content { padding: 20px 24px; }
+            .section-header { font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; color: #2d3748; margin: 20px 0 8px 0; border-bottom: 2px solid #edf2f7; padding-bottom: 4px; }
+            .gr-header { color: #c2410c; border-bottom: 2px solid #fed7aa; }
+            table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 16px; }
+            th { background-color: #f1f5f9; color: #475569; padding: 8px 10px; text-align: left; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; }
+            .gr-th { background-color: #ffedd5; color: #9a3412; border-bottom: 1px solid #fdba74; }
+            .footer { background-color: #f8fafc; padding: 14px 24px; font-size: 11px; color: #94a3b8; border-top: 1px solid #e2e8f0; text-align: center; }
+        </style>
+    <style>*,*::before,*::after{box-sizing:border-box;}html,body{max-width:100%;overflow-x:hidden;}.tbl-scroll{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}html[data-narrow='1'] body{padding:8px !important;}html[data-narrow='1'] .container{border-radius:6px !important;}html[data-narrow='1'] .content{padding:12px !important;}html[data-narrow='1'] table[role='presentation']>tbody>tr>td,html[data-narrow='1'] table.kpi-grid>tbody>tr>td{display:block !important;width:100% !important;margin-bottom:6px !important;}</style></head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>Daily Backlog (production backlog) Resolution & Status Report (2026-11-16, 08:42)</h1>
+                <p>Plant: Facility North (Two-Facility Plant) | Cumulative Resolution Report (06:20 AM & 08:15 AM Cycles) | Variance Minimization (&Delta;V &le; 0)</p>
+            </div>
+            <div class="content">
+                
+                <!-- KPI SUMMARY TABLE -->
+                <table class="kpi-grid" style="width: 100%; border: none; margin-bottom: 16px;">
+                    <tr>
+                        <td style="width: 20%; padding: 3px;">
+                            <div style="background-color: #eff6ff; border: 1px solid #bfdbfe; padding: 10px; border-radius: 4px;">
+                                <div style="color: #1d4ed8; font-size: 10px; font-weight: bold; text-transform: uppercase;">Total Daily Backlog</div>
+                                <div style="color: #1e3a8a; font-size: 18px; font-weight: bold;">46</div>
+                                <div style="color: #475569; font-size: 10px;">Deficit: 5,184.0</div>
+                            </div>
+                        </td>
+                        <td style="width: 20%; padding: 3px;">
+                            <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 10px; border-radius: 4px;">
+                                <div style="color: #15803d; font-size: 10px; font-weight: bold; text-transform: uppercase;">Transfer Posted</div>
+                                <div style="color: #14532d; font-size: 18px; font-weight: bold;">29</div>
+                                <div style="color: #475569; font-size: 10px;">Transferred: 3,348.0</div>
+                            </div>
+                        </td>
+                        <td style="width: 20%; padding: 3px;">
+                            <div style="background-color: #fff7ed; border: 1px solid #fed7aa; padding: 10px; border-radius: 4px;">
+                                <div style="color: #c2410c; font-size: 10px; font-weight: bold; text-transform: uppercase;">Pending GR Errors</div>
+                                <div style="color: #9a3412; font-size: 18px; font-weight: bold;">5</div>
+                                <div style="color: #475569; font-size: 10px;">Planner (840.0)</div>
+                            </div>
+                        </td>
+                        <td style="width: 20%; padding: 3px;">
+                            <div style="background-color: #fefce8; border: 1px solid #fef08a; padding: 10px; border-radius: 4px;">
+                                <div style="color: #a16207; font-size: 10px; font-weight: bold; text-transform: uppercase;">GI-Linked Backlogs</div>
+                                <div style="color: #854d0e; font-size: 18px; font-weight: bold;">4</div>
+                                <div style="color: #475569; font-size: 10px;">Critical (D/A/F) 2 · Pending GR (B) 1 · ⚠️ Anomaly 1</div>
+                            </div>
+                        </td>
+                        <td style="width: 20%; padding: 3px;">
+                            <div style="background-color: #fef2f2; border: 1px solid #fecaca; padding: 10px; border-radius: 4px;">
+                                <div style="color: #b91c1c; font-size: 10px; font-weight: bold; text-transform: uppercase;">Other Backlog Items</div>
+                                <div style="color: #7f1d1d; font-size: 18px; font-weight: bold;">8</div>
+                                <div style="color: #475569; font-size: 10px;">Deficit: 588.0</div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- SECTION 1: PENDING GR ERRORS -->
+                <div class="section-header gr-header">Pending Goods Receipt (GR) Errors &bull; Action Required by Each Planner</div>
+                <div class="tbl-scroll"><table>
+                    <thead>
+                        <tr>
+                            <th class="gr-th">Material</th>
+                            <th class="gr-th">Description</th>
+                            <th class="gr-th" style="text-align: center;">Target SLoc</th>
+                            <th class="gr-th" style="text-align: right;">production backlog Qty</th>
+                            <th class="gr-th" style="text-align: right;">Pending GR</th>
+                            <th class="gr-th" style="text-align: center;">Vendor</th>
+                            <th class="gr-th">Reason / Action Guide</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+            <tr style="border-bottom: 1px solid #fed7aa; background-color: #fffaf0;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #9a3412;">PART-0101</td>
+                <td style="padding: 7px 10px; color: #4a5568;"><span title="Outer Precision Cover">Outer Precision Cover</span></td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="font-weight: bold; color: #2b6cb0;">SP31</span></td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #c2410c;">240.0</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #047857;">288.0</td>
+                <td style="padding: 7px 10px; text-align: center; color: #4b5563;">Supplier 003</td>
+                <td style="padding: 7px 10px; color: #7c2d12; font-size: 11px;">Inbound receipt in ERP stock report (288 EA from Supplier 003) pending planner release</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #fed7aa; background-color: #fffaf0;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #9a3412;">PART-0024</td>
+                <td style="padding: 7px 10px; color: #4a5568;"><span title="Inner Mounting Cover">Inner Mounting Cover</span></td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="font-weight: bold; color: #2b6cb0;">SP31</span></td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #c2410c;">144.0</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #047857;">192.0</td>
+                <td style="padding: 7px 10px; text-align: center; color: #4b5563;">Supplier 007</td>
+                <td style="padding: 7px 10px; color: #7c2d12; font-size: 11px;">Inbound receipt in ERP stock report (192 EA from Supplier 007) pending planner release</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #fed7aa; background-color: #fffaf0;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #9a3412;">PART-0008</td>
+                <td style="padding: 7px 10px; color: #4a5568;"><span title="Outer Control Frame">Outer Control Frame</span></td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #fef3c7; color: #92400e; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 11px;">SL49 [quality hold]</span></td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #c2410c;">180.0</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #047857;">204.0</td>
+                <td style="padding: 7px 10px; text-align: center; color: #4b5563;">Supplier 012</td>
+                <td style="padding: 7px 10px; color: #7c2d12; font-size: 11px;">Inbound receipt in ERP stock report (204 EA from Supplier 012) pending planner release</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #fed7aa; background-color: #fffaf0;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #9a3412;">PART-0064</td>
+                <td style="padding: 7px 10px; color: #4a5568;"><span title="Compact Mounting Bearing">Compact Mounting Bearing</span></td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="font-weight: bold; color: #2b6cb0;">SP31</span></td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #c2410c;">240.0</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #047857;">288.0</td>
+                <td style="padding: 7px 10px; text-align: center; color: #4b5563;">Supplier 014</td>
+                <td style="padding: 7px 10px; color: #7c2d12; font-size: 11px;">Inbound receipt in ERP stock report (288 EA from Supplier 014) pending planner release</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #fed7aa; background-color: #fffaf0;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #9a3412;">PART-0172</td>
+                <td style="padding: 7px 10px; color: #4a5568;"><span title="Optical Filter Cable">Optical Filter Cable</span></td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="font-weight: bold; color: #2b6cb0;">SP31</span></td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #c2410c;">36.0</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #047857;">60.0</td>
+                <td style="padding: 7px 10px; text-align: center; color: #4b5563;">Supplier 022</td>
+                <td style="padding: 7px 10px; color: #7c2d12; font-size: 11px;">Inbound receipt in ERP stock report (60 EA from Supplier 022) pending planner release</td>
+            </tr>
+            
+                    </tbody>
+                </table></div>
+
+                <!-- SECTION 1.5: PENDING GI ERRORS (D44 Movement Block + policy guard Root-Cause Verdict) -->
+                <div class="section-header" style="color: #a16207; border-bottom: 2px solid #fef08a;">GI Error-Linked Backlogs &bull; Root Cause by Preceding 01 Verdict (D71 Movement Block Active)</div>
+                <div style="font-size: 11px; color: #64748b; margin-top: 2px; margin-bottom: 8px;">
+                    02 runs immediately after 01 (06:00 &amp; 08:00). Remaining GI-linked backlogs are classified by why 01 could not clear the linked GI error (Stock shortage D / Book mismatch A / Suspected missing GR F / Pending GR B / ⚠️ Anomaly).
+                </div>
+                <div class="tbl-scroll"><table>
+                    <thead>
+                        <tr>
+                            <th style="background-color: #fef9c3; color: #854d0e; border-bottom: 1px solid #fde047;">Material</th>
+                            <th style="background-color: #fef9c3; color: #854d0e; border-bottom: 1px solid #fde047;">Description</th>
+                            <th style="background-color: #fef9c3; color: #854d0e; border-bottom: 1px solid #fde047; text-align: center;">Target SLoc</th>
+                            <th style="background-color: #fef9c3; color: #854d0e; border-bottom: 1px solid #fde047; text-align: right;">production backlog Qty</th>
+                            <th style="background-color: #fef9c3; color: #854d0e; border-bottom: 1px solid #fde047;">Backlog Root Cause </th>
+                            <th style="background-color: #fef9c3; color: #854d0e; border-bottom: 1px solid #fde047;">Linked GI Error</th>
+                            <th style="background-color: #fef9c3; color: #854d0e; border-bottom: 1px solid #fde047;">01 Verdict &bull; Cycle Time &amp; Evidence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+            <tr style="border-bottom: 1px solid #fde047; background-color: #fefce8;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #854d0e;">PART-0184</td>
+                <td style="padding: 7px 10px; color: #4a5568;"><span title="Inner Control Switch">Inner Control Switch</span></td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="font-weight: bold; color: #2b6cb0;">SP31</span></td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #a16207;">24.0</td>
+                <td style="padding: 7px 10px;"><span style="background-color: #fef3c7; color: #92400e; border: 1px solid #fde68a; display: inline-block; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">[HOLD] Pending Receipt Linked</span></td>
+                <td style="padding: 7px 10px; color: #334155; font-size: 11px;">311 SL01-&gt;SP31 (24 EA, 2026-11-16)</td>
+                <td style="padding: 7px 10px; font-size: 11px;"><div style='font-weight: 600; color: #1e293b;'>01 Verdict: PROTECTED_GR_DEPENDENT <span style='color: #64748b; font-weight: normal;'>(2026-11-16 08:00)</span></div><div style='color: #475569; margin-top: 2px;'>Held to prevent duplicate movement while interface queue item is open</div></td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #fde047; background-color: #fefce8;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #854d0e;">PART-0041</td>
+                <td style="padding: 7px 10px; color: #4a5568;"><span title="Rear Flexible Spring">Rear Flexible Spring</span></td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="font-weight: bold; color: #2b6cb0;">SP31</span></td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #a16207;">240.0</td>
+                <td style="padding: 7px 10px;"><span style="background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; display: inline-block; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">[ACTION] Plant-Wide Zero Stock</span></td>
+                <td style="padding: 7px 10px; color: #334155; font-size: 11px;">311 SL01-&gt;SP31 (240 EA, 2026-11-16)</td>
+                <td style="padding: 7px 10px; font-size: 11px;"><div style='font-weight: 600; color: #1e293b;'>01 Verdict: PROTECTED_GR_DEPENDENT <span style='color: #64748b; font-weight: normal;'>(2026-11-16 08:00)</span></div><div style='color: #475569; margin-top: 2px;'>Held to prevent duplicate movement while interface queue item is open</div></td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #fde047; background-color: #fefce8;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #854d0e;">PART-0171</td>
+                <td style="padding: 7px 10px; color: #4a5568;"><span title="Standard Protective Plate">Standard Protective Plate</span></td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="font-weight: bold; color: #2b6cb0;">SP31</span></td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #a16207;">72.0</td>
+                <td style="padding: 7px 10px;"><span style="background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; display: inline-block; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">[GUARD] Accuracy Guard Held</span></td>
+                <td style="padding: 7px 10px; color: #334155; font-size: 11px;">311 SL01-&gt;SP31 (72 EA, 2026-11-16)</td>
+                <td style="padding: 7px 10px; font-size: 11px;"><div style='font-weight: 600; color: #1e293b;'>01 Verdict: SKIPPED_ACCURACY_GUARD <span style='color: #64748b; font-weight: normal;'>(2026-11-16 08:00)</span></div><div style='color: #475569; margin-top: 2px;'>Held to prevent duplicate movement while interface queue item is open</div></td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #fde047; background-color: #fefce8;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #854d0e;">PART-0065</td>
+                <td style="padding: 7px 10px; color: #4a5568;"><span title="Rotary Mounting Assembly">Rotary Mounting Assembly</span></td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="font-weight: bold; color: #2b6cb0;">SP31</span></td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #a16207;">72.0</td>
+                <td style="padding: 7px 10px;"><span style="background-color: #fef3c7; color: #92400e; border: 1px solid #fde68a; display: inline-block; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">[WATCH] New GI Queued After 07:00</span></td>
+                <td style="padding: 7px 10px; color: #334155; font-size: 11px;">311 SL01-&gt;SP31 (72 EA, 2026-11-16)</td>
+                <td style="padding: 7px 10px; font-size: 11px;"><div style='font-weight: 600; color: #1e293b;'>01 Verdict: PROTECTED_GR_DEPENDENT <span style='color: #64748b; font-weight: normal;'>(2026-11-16 08:00)</span></div><div style='color: #475569; margin-top: 2px;'>Held to prevent duplicate movement while interface queue item is open</div></td>
+            </tr>
+            
+                    </tbody>
+                </table></div>
+
+                <!-- SECTION 2: PENDING BACKLOG ITEMS -->
+                <div class="section-header" style="color: #b91c1c; border-bottom: 2px solid #fecaca;">Pending Backlog Items</div>
+                <div class="tbl-scroll"><table>
+                    <thead>
+                        <tr>
+                            <th>Material</th>
+                            <th>Description</th>
+                            <th style="text-align: center;">Target SLoc</th>
+                            <th style="text-align: right;">Deficit Qty</th>
+                            <th style="text-align: center;">ERP Error</th>
+                            <th>Reason / Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0185</td>
+                <td style="padding: 7px 10px; color: #4a5568;"><span title="Inner Signal Clamp">Inner Signal Clamp</span></td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="font-weight: bold; color: #2b6cb0;">SP31</span></td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #e53e3e;">36.0</td>
+                <td style="padding: 7px 10px; text-align: center; color: #718096; font-weight: bold;">M7-021</td>
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">
+                    Zero unrestricted stock in SL01/SL02 (physical floor check requested)
+                    
+                </td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0028</td>
+                <td style="padding: 7px 10px; color: #4a5568;"><span title="Front Protective Bearing">Front Protective Bearing</span></td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="font-weight: bold; color: #2b6cb0;">SP31</span></td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #e53e3e;">180.0</td>
+                <td style="padding: 7px 10px; text-align: center; color: #718096; font-weight: bold;">M7-021</td>
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">
+                    Held by 2-snapshot persistence guard (transient timing variance)
+                    <br><span style='color: #2b6cb0; font-size: 10px;'>[Best Candidate: SL01 | ERP: 216.0 | WMS: 180.0]</span>
+                </td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0056</td>
+                <td style="padding: 7px 10px; color: #4a5568;"><span title="Primary Drive Gasket">Primary Drive Gasket</span></td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #fef3c7; color: #92400e; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 11px;">SL49 [quality hold]</span></td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #e53e3e;">96.0</td>
+                <td style="padding: 7px 10px; text-align: center; color: #718096; font-weight: bold;">M7-021</td>
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">
+                    Transfer from SL01 would lower plant stock accuracy (-0.34 pt)
+                    <br><span style='color: #2b6cb0; font-size: 10px;'>[Best Candidate: SL01 | ERP: 108.0 | WMS: 0.0]</span>
+                </td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0153</td>
+                <td style="padding: 7px 10px; color: #4a5568;"><span title="Front Signal Assembly">Front Signal Assembly</span></td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="font-weight: bold; color: #2b6cb0;">SP31</span></td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #e53e3e;">24.0</td>
+                <td style="padding: 7px 10px; text-align: center; color: #718096; font-weight: bold;">M7-021</td>
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">
+                    Partially replenished (24.0 EA transferred) &bull; Remaining 24.0 EA deficit in production backlog
+                    <br><span style='color: #2b6cb0; font-size: 10px;'>[Best Candidate: SL02 | ERP: 24.0 | WMS: 0.0]</span>
+                </td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0138</td>
+                <td style="padding: 7px 10px; color: #4a5568;"><span title="Rotary Sensor Gasket">Rotary Sensor Gasket</span></td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="font-weight: bold; color: #2b6cb0;">SP31</span></td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #e53e3e;">24.0</td>
+                <td style="padding: 7px 10px; text-align: center; color: #718096; font-weight: bold;">M7-021</td>
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">
+                    Zero unrestricted stock in SL01/SL02 (physical floor check requested)
+                    
+                </td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0100</td>
+                <td style="padding: 7px 10px; color: #4a5568;"><span title="Upper Support Lens">Upper Support Lens</span></td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="font-weight: bold; color: #2b6cb0;">SP31</span></td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #e53e3e;">144.0</td>
+                <td style="padding: 7px 10px; text-align: center; color: #718096; font-weight: bold;">M7-021</td>
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">
+                    Held by 2-snapshot persistence guard (transient timing variance)
+                    <br><span style='color: #2b6cb0; font-size: 10px;'>[Best Candidate: SL01 | ERP: 180.0 | WMS: 144.0]</span>
+                </td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0039</td>
+                <td style="padding: 7px 10px; color: #4a5568;"><span title="Rotary Guide Actuator">Rotary Guide Actuator</span></td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="font-weight: bold; color: #2b6cb0;">SP31</span></td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #e53e3e;">72.0</td>
+                <td style="padding: 7px 10px; text-align: center; color: #718096; font-weight: bold;">M7-021</td>
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">
+                    Transfer from SL01 would lower plant stock accuracy (-0.34 pt)
+                    <br><span style='color: #2b6cb0; font-size: 10px;'>[Best Candidate: SL01 | ERP: 84.0 | WMS: 0.0]</span>
+                </td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0177</td>
+                <td style="padding: 7px 10px; color: #4a5568;"><span title="Outer Support Bearing">Outer Support Bearing</span></td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="font-weight: bold; color: #2b6cb0;">SP31</span></td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #e53e3e;">12.0</td>
+                <td style="padding: 7px 10px; text-align: center; color: #718096; font-weight: bold;">M7-021</td>
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">
+                    Partially replenished (24.0 EA transferred) &bull; Remaining 12.0 EA deficit in production backlog
+                    <br><span style='color: #2b6cb0; font-size: 10px;'>[Best Candidate: SL02 | ERP: 24.0 | WMS: 0.0]</span>
+                </td>
+            </tr>
+            
+                    </tbody>
+                </table></div>
+
+                <!-- SECTION 2.5: REMAINING ERP DEFICITS (D32) -->
+                <div class="section-header" style="color: #2563eb; border-bottom: 2px solid #bfdbfe;">Remaining ERP Deficits (Plant-wide ERP Shortage &bull; WMS &gt; ERP)</div>
+                <div style="font-size: 11px; color: #64748b; margin-top: 4px; margin-bottom: 8px;">
+                    Materials where WMS physical inventory exceeds ERP system stock after all available warehouse transfers. Requires manual review or PO delivery check.
+                </div>
+                <div class="tbl-scroll"><table>
+                    <thead>
+                        <tr>
+                            <th>Material</th>
+                            <th>Description</th>
+                            <th style="text-align: center;">SLoc</th>
+                            <th style="text-align: center;">Persistence</th>
+                            <th style="text-align: right;">ERP Stock</th>
+                            <th style="text-align: right;">WMS Stock</th>
+                            <th style="text-align: right; color: #dc2626;">Deficit Qty</th>
+                            <th style="text-align: center;">Accuracy</th>
+                            <th style="text-align: center;">Streak</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0101</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Outer Precision Cover">Outer Precision Cover</span></td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 11px;">SL01</span></td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #f1f5f9; color: #475569; padding: 1px 6px; border-radius: 3px; font-size: 10px;">New / pending interface</span></td>
+                <td style="padding: 6px 10px; text-align: right; color: #4b5563;">60.0</td>
+                <td style="padding: 6px 10px; text-align: right; color: #4b5563;">84.0</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #dc2626;">24.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2563eb;">89.1%</td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #f1f5f9; color: #475569; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: bold;">1d</span></td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0024</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Inner Mounting Cover">Inner Mounting Cover</span></td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 11px;">SL01</span></td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #f1f5f9; color: #475569; padding: 1px 6px; border-radius: 3px; font-size: 10px;">New / pending interface</span></td>
+                <td style="padding: 6px 10px; text-align: right; color: #4b5563;">60.0</td>
+                <td style="padding: 6px 10px; text-align: right; color: #4b5563;">156.0</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #dc2626;">96.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2563eb;">89.1%</td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #f1f5f9; color: #475569; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: bold;">2d</span></td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0008</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Outer Control Frame">Outer Control Frame</span></td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #fef3c7; color: #92400e; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 11px;">SL49 [SL49 quality hold &bull; Not a cycle-count target]</span></td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #fee2e2; color: #991b1b; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: bold;">Sustained shortage</span></td>
+                <td style="padding: 6px 10px; text-align: right; color: #4b5563;">60.0</td>
+                <td style="padding: 6px 10px; text-align: right; color: #4b5563;">96.0</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #dc2626;">36.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2563eb;">89.1%</td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #fee2e2; color: #991b1b; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: bold;">3d</span></td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0064</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Compact Mounting Bearing">Compact Mounting Bearing</span></td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 11px;">SL01</span></td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #fee2e2; color: #991b1b; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: bold;">Sustained shortage</span></td>
+                <td style="padding: 6px 10px; text-align: right; color: #4b5563;">60.0</td>
+                <td style="padding: 6px 10px; text-align: right; color: #4b5563;">96.0</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #dc2626;">36.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2563eb;">89.1%</td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #fee2e2; color: #991b1b; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: bold;">4d</span></td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0172</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Optical Filter Cable">Optical Filter Cable</span></td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 11px;">SL01</span></td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #fee2e2; color: #991b1b; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: bold;">Sustained shortage</span></td>
+                <td style="padding: 6px 10px; text-align: right; color: #4b5563;">180.0</td>
+                <td style="padding: 6px 10px; text-align: right; color: #4b5563;">204.0</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #dc2626;">24.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2563eb;">89.1%</td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #fee2e2; color: #991b1b; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: bold;">5d</span></td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0184</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Inner Control Switch">Inner Control Switch</span></td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 11px;">SL02</span></td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #fee2e2; color: #991b1b; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: bold;">Sustained shortage</span></td>
+                <td style="padding: 6px 10px; text-align: right; color: #4b5563;">60.0</td>
+                <td style="padding: 6px 10px; text-align: right; color: #4b5563;">84.0</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #dc2626;">24.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2563eb;">89.1%</td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #fee2e2; color: #991b1b; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: bold;">6d</span></td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0041</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Rear Flexible Spring">Rear Flexible Spring</span></td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 11px;">SL01</span></td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #fee2e2; color: #991b1b; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: bold;">Sustained shortage</span></td>
+                <td style="padding: 6px 10px; text-align: right; color: #4b5563;">180.0</td>
+                <td style="padding: 6px 10px; text-align: right; color: #4b5563;">276.0</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #dc2626;">96.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2563eb;">89.1%</td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #fee2e2; color: #991b1b; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: bold;">7d</span></td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0171</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Standard Protective Plate">Standard Protective Plate</span></td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 11px;">SL01</span></td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #fee2e2; color: #991b1b; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: bold;">Sustained shortage</span></td>
+                <td style="padding: 6px 10px; text-align: right; color: #4b5563;">180.0</td>
+                <td style="padding: 6px 10px; text-align: right; color: #4b5563;">216.0</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #dc2626;">36.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2563eb;">89.1%</td>
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #fee2e2; color: #991b1b; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: bold;">8d</span></td>
+            </tr>
+            
+                    </tbody>
+                </table></div>
+
+                <!-- SECTION 3: CUMULATIVE TRANSFERS POSTED -->
+                <div class="section-header">Completed Transfer Postings (Today's Cumulative: 06:20 & 08:15 Runs)</div>
+                <div class="tbl-scroll"><table>
+                    <thead>
+                        <tr>
+                            <th style="text-align: center; width: 90px;">Run Cycle</th>
+                            <th>Material</th>
+                            <th>Description</th>
+                            <th style="text-align: center;">Route</th>
+                            <th style="text-align: right;">Transfer Qty</th>
+                            <th style="text-align: center;">Header Text</th>
+                            <th>ERP Posting Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">06:20 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0113</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Lower Sensor Socket">Lower Sensor Socket</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SL49</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">180.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000001 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">06:20 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0007</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Inner Signal Frame">Inner Signal Frame</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">180.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000002 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">06:20 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0088</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Digital Precision Cable">Digital Precision Cable</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">72.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000003 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">06:20 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0109</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Lower Drive Gasket">Lower Drive Gasket</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">96.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000004 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">06:20 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0161</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Auxiliary Signal Clamp">Auxiliary Signal Clamp</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL02 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">48.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000005 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">06:20 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0180</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Digital Support Actuator">Digital Support Actuator</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">36.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000006 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">06:20 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0054</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Lower Modular Assembly">Lower Modular Assembly</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL02 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">48.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000007 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">06:20 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0193</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Rear Signal Panel">Rear Signal Panel</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL02 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">144.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000008 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">06:20 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0091</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Thermal Flexible Cable">Thermal Flexible Cable</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL02 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">144.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000009 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">06:20 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0178</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Compact Filter Adapter">Compact Filter Adapter</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">180.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000010 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">06:20 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0068</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Optical Sensor Lens">Optical Sensor Lens</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">36.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000011 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">06:20 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0166</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Auxiliary Filter Socket">Auxiliary Filter Socket</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SL49</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">180.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000012 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">06:20 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0121</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Primary Modular Clamp">Primary Modular Clamp</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">144.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000013 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">06:20 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0165</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Rear Support Module">Rear Support Module</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">180.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000014 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">06:20 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0096</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Front Flexible Frame">Front Flexible Frame</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL02 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">240.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000015 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">06:20 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0002</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Outer Modular Clamp">Outer Modular Clamp</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">96.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000016 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">06:20 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0083</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Primary Protective Lens">Primary Protective Lens</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">48.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000017 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">08:15 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0033</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Outer Protective Assembly">Outer Protective Assembly</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL02 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">240.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000018 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">08:15 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0150</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Auxiliary Sensor Actuator">Auxiliary Sensor Actuator</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">36.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000019 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">08:15 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0182</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Optical Filter Socket">Optical Filter Socket</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL02 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">180.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000020 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">08:15 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0127</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Upper Drive Panel">Upper Drive Panel</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">48.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000021 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">08:15 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0009</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Optical Drive Cable">Optical Drive Cable</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">24.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000022 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">08:15 AM</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0147</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Primary Guide Cooler">Primary Guide Cooler</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SL49</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">180.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_Clear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000023 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">08:30 MaxClear</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0006</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Optical Control Switch">Optical Control Switch</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">72.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_MaxClear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000024 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">08:30 MaxClear</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0097</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Primary Protective Plate">Primary Protective Plate</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL02 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">144.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_MaxClear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000025 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">08:30 MaxClear</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0189</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Primary Flexible Cable">Primary Flexible Cable</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">12.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_MaxClear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000026 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">08:30 MaxClear</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0158</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Rear Flexible Connector">Rear Flexible Connector</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">180.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_MaxClear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000027 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">08:30 MaxClear</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0058</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Outer Flexible Spring">Outer Flexible Spring</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">36.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_MaxClear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000028 posted (transfer posting 311)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; padding: 2px 7px; border-radius: 4px; font-weight: bold; font-size: 11px;">08:30 MaxClear</span></td>
+                <td style="padding: 6px 10px; font-weight: bold; color: #1a202c;">PART-0155</td>
+                <td style="padding: 6px 10px; color: #4a5568;"><span title="Standard Flexible Cooler">Standard Flexible Cooler</span></td>
+                <td style="padding: 6px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 6px 10px; text-align: right; font-weight: bold; color: #22543d;">144.0</td>
+                <td style="padding: 6px 10px; text-align: center; color: #2b6cb0; font-family: monospace;">Backlog_MaxClear</td>
+                <td style="padding: 6px 10px; color: #047857; font-size: 11px;">Mat. Doc DOC-000029 posted (transfer posting 311)</td>
+            </tr>
+            
+                    </tbody>
+                </table></div>
+
+                <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 10px 14px; border-radius: 4px; font-size: 11px; color: #64748b;">
+                    Attached: <strong>Unresolved_Backlog_Report_20261116_0800.xlsx</strong> containing complete itemized details.
+                </div>
+            </div>
+            <div class="footer">
+                Automated Inventory Team Pipeline &bull; Two-Facility Plant Facility North &bull; Cumulative Daily Resolution Report
+            </div>
+        </div>
+    </body>
+    </html>
+    

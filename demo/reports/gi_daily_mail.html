@@ -1,0 +1,951 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 24px; }
+            .container { max-width: 900px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; border: 1px solid #cbd5e1; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+            .header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #ffffff; padding: 22px 28px; }
+            .header h1 { margin: 0 0 6px 0; font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+            .header p { margin: 0; opacity: 0.9; font-size: 13px; color: #cbd5e1; }
+            .content { padding: 24px 28px; }
+            .section-header { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #1e293b; margin: 24px 0 10px 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px; }
+            .res-header { color: #15803d; border-bottom: 2px solid #86efac; }
+            .rem-header { color: #b91c1c; border-bottom: 2px solid #fca5a5; }
+            .run-header { color: #0369a1; border-bottom: 2px solid #93c5fd; }
+            table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 18px; }
+            th { background-color: #f1f5f9; color: #334155; padding: 9px 10px; text-align: left; font-size: 11px; text-transform: uppercase; border-bottom: 2px solid #cbd5e1; font-weight: 700; }
+            .footer { background-color: #f8fafc; padding: 14px 28px; font-size: 11px; color: #64748b; border-top: 1px solid #e2e8f0; text-align: center; }
+        </style>
+    <style>*,*::before,*::after{box-sizing:border-box;}html,body{max-width:100%;overflow-x:hidden;}.tbl-scroll{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}html[data-narrow='1'] body{padding:8px !important;}html[data-narrow='1'] .container{border-radius:6px !important;}html[data-narrow='1'] .content{padding:12px !important;}html[data-narrow='1'] table[role='presentation']>tbody>tr>td,html[data-narrow='1'] table.kpi-grid>tbody>tr>td{display:block !important;width:100% !important;margin-bottom:6px !important;}</style></head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>[GI Error] Daily Comprehensive Report (Prev-Day 2026-11-15 Resolution & Status)</h1>
+                <p>Plant: Facility North (Two-Facility Plant) &bull; Reported At: 2026-11-16 07:30 &bull; Scope: Prev-Day 2026-11-15 00:00 ~ 23:59 (Local Time)</p>
+            </div>
+            <div class="content">
+                
+                <!-- 4 KPI SUMMARY CARDS -->
+                <table class="kpi-grid" style="width: 100%; border: none; margin-bottom: 20px;">
+                    <tr>
+                        <td style="width: 25%; padding: 4px;">
+                            <div style="background-color: #f0f9ff; border: 1px solid #bae6fd; padding: 12px; border-radius: 6px;">
+                                <div style="color: #0369a1; font-size: 10px; font-weight: bold; text-transform: uppercase;">Prev-Day (2026-11-15) Runs</div>
+                                <div style="color: #0c4a6e; font-size: 22px; font-weight: bold; margin-top: 2px;">24 runs</div>
+                                <div style="color: #0369a1; font-size: 11px; margin-top: 2px;">Hourly (24h, :00)</div>
+                            </div>
+                        </td>
+                        <td style="width: 25%; padding: 4px;">
+                            <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 6px;">
+                                <div style="color: #15803d; font-size: 10px; font-weight: bold; text-transform: uppercase;">Prev-Day (2026-11-15) Postings</div>
+                                <div style="color: #14532d; font-size: 22px; font-weight: bold; margin-top: 2px;">23 posted</div>
+                                <div style="color: #166534; font-size: 11px; margin-top: 2px;">Posted Qty: 1,866.0 EA</div>
+                            </div>
+                        </td>
+                        <td style="width: 25%; padding: 4px;">
+                            <div style="background-color: #fef2f2; border: 1px solid #fecaca; padding: 12px; border-radius: 6px;">
+                                <div style="color: #b91c1c; font-size: 10px; font-weight: bold; text-transform: uppercase;">Remaining (07:30)</div>
+                                <div style="color: #7f1d1d; font-size: 22px; font-weight: bold; margin-top: 2px;">11</div>
+                                <div style="color: #991b1b; font-size: 11px; margin-top: 2px;">Short Qty: 656.0 EA</div>
+                            </div>
+                        </td>
+                        <td style="width: 25%; padding: 4px;">
+                            <div style="background-color: #fff7ed; border: 1px solid #fed7aa; padding: 12px; border-radius: 6px;">
+                                <div style="color: #c2410c; font-size: 10px; font-weight: bold; text-transform: uppercase;">Pending GR / Short</div>
+                                <div style="color: #9a3412; font-size: 22px; font-weight: bold; margin-top: 2px;">2 / 8</div>
+                                <div style="color: #c2410c; font-size: 11px; margin-top: 2px;">Held: 144.0 | Short: 476.0</div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- SECTION 1: RESOLUTION POSTINGS -->
+                <div class="section-header res-header">&check; 1. Prev-Day (2026-11-15 00:00~23:59) Automated Transfer Postings (transfer posting 311) (23)</div>
+                <div class="tbl-scroll"><table>
+                    <thead>
+                        <tr>
+                            <th style="width: 12%;">Posted At</th>
+                            <th style="width: 12%;">Material</th>
+                            <th style="width: 18%;">Description</th>
+                            <th style="width: 13%; text-align: center;">Route (From&rarr;To)</th>
+                            <th style="width: 12%; text-align: right;">Posted Qty</th>
+                            <th style="width: 16%;">Mat. Doc</th>
+                            <th style="width: 16%; text-align: center;">Type</th>
+                            <th style="width: 12%; text-align: center;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 06:00</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0067</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Thermal Guide Cover">Thermal Guide Cover</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">120.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000038</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #15803d; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Full Resolution</span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 06:29</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0123</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Upper Support Relay">Upper Support Relay</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">36.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000039</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #15803d; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Full Resolution</span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 07:58</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0046</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Standard Precision Panel">Standard Precision Panel</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL00 &rarr; SL01</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">36.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000040</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #fef3c7; color: #b45309; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">SL00 Guard Release </span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 08:27</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0183</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Auxiliary Drive Bracket">Auxiliary Drive Bracket</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SL00</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">18.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000041</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #15803d; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Dest Roundtrip </span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 08:56</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0116</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Optical Guide Plate">Optical Guide Plate</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SP31 &rarr; SL01</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">180.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000042</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #e0f2fe; color: #0369a1; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Dest Pump </span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 09:25</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0022</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Linear Modular Connector">Linear Modular Connector</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL02 &rarr; SP31</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">90.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000043</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #15803d; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Full Roundtrip </span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 10:54</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0199</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Center Protective Switch">Center Protective Switch</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SL49</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">18.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000044</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #e0f2fe; color: #0369a1; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Partial Rebalance</span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 11:23</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0173</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Digital Control Cooler">Digital Control Cooler</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">24.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000045</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #15803d; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Full Resolution</span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 11:52</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0070</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Rear Precision Cooler">Rear Precision Cooler</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">24.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000046</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #15803d; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Full Resolution</span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 12:21</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0185</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Inner Signal Clamp">Inner Signal Clamp</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL00 &rarr; SL01</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">180.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000047</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #fef3c7; color: #b45309; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">SL00 Guard Release </span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 13:50</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0025</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Digital Precision Lens">Digital Precision Lens</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SL00</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">120.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000048</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #15803d; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Dest Roundtrip </span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 14:19</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0156</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Rotary Signal Spring">Rotary Signal Spring</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SP31 &rarr; SL01</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">180.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000049</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #e0f2fe; color: #0369a1; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Dest Pump </span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 14:48</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0187</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Linear Filter Assembly">Linear Filter Assembly</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL02 &rarr; SP31</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">36.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000050</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #15803d; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Full Roundtrip </span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 15:17</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0015</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Linear Mounting Spring">Linear Mounting Spring</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SL49</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">18.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000051</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #e0f2fe; color: #0369a1; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Partial Rebalance</span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 16:46</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0124</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Center Signal Bearing">Center Signal Bearing</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">180.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000052</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #15803d; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Full Resolution</span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 17:15</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0100</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Upper Support Lens">Upper Support Lens</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">18.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000053</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #15803d; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Full Resolution</span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 17:44</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0101</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Outer Precision Cover">Outer Precision Cover</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL00 &rarr; SL01</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">18.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000054</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #fef3c7; color: #b45309; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">SL00 Guard Release </span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 18:13</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0107</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Standard Flexible Plate">Standard Flexible Plate</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SL00</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">180.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000055</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #15803d; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Dest Roundtrip </span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 19:42</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0153</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Front Signal Assembly">Front Signal Assembly</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SP31 &rarr; SL01</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">24.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000056</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #e0f2fe; color: #0369a1; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Dest Pump </span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 20:11</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0149</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Lower Signal Cable">Lower Signal Cable</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL02 &rarr; SP31</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">36.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000057</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #15803d; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Full Roundtrip </span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 20:40</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0133</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Inner Mounting Housing">Inner Mounting Housing</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SL49</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">90.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000058</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #e0f2fe; color: #0369a1; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Partial Rebalance</span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 21:09</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0145</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Outer Flexible Cover">Outer Flexible Cover</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">120.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000059</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #15803d; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Full Resolution</span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 22:38</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #1a202c;">PART-0144</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Linear Signal Assembly">Linear Signal Assembly</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SP31</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">120.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000060</td>
+                <td style="padding: 7px 10px; text-align: center;"><span style="background-color: #dcfce7; color: #15803d; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: bold;">Full Resolution</span></td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #15803d; font-size: 11px;">POSTED</td>
+            </tr>
+            
+                    </tbody>
+                </table></div>
+
+                
+                <!-- SECTION 1B: policy guard SL00 GUARD RELEASE POSTINGS -->
+                <div class="section-header" style="color: #b45309; border-bottom: 2px solid #fcd34d;">&#9889; 1-B. SL00 Arrival-Hold Guard Release Postings (GUARD_RELEASED_D109: 3)</div>
+                <div class="tbl-scroll"><table>
+                    <thead>
+                        <tr>
+                            <th style="width: 12%;">Posted At</th>
+                            <th style="width: 11%;">Material</th>
+                            <th style="width: 17%;">Description</th>
+                            <th style="width: 11%; text-align: center;">Route</th>
+                            <th style="width: 10%; text-align: right;">Posted Qty</th>
+                            <th style="width: 14%;">Mat. Doc</th>
+                            <th style="width: 36%;">policy guard Release Basis (Cycles &bull; 3-File GR Check &bull; Gap Trend)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+            <tr style="border-bottom: 1px solid #fde68a; background-color: #fffbeb;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 07:58</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #92400e;">PART-0046</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Standard Precision Panel">Standard Precision Panel</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL00 &rarr; SL01</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #b45309;">36.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000040</td>
+                <td style="padding: 7px 10px; color: #78350f; font-size: 11px;">SL00 receipt aged >= 4h with verified WMS putaway</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #fde68a; background-color: #fffbeb;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 12:21</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #92400e;">PART-0185</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Inner Signal Clamp">Inner Signal Clamp</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL00 &rarr; SL01</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #b45309;">180.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000047</td>
+                <td style="padding: 7px 10px; color: #78350f; font-size: 11px;">SL00 receipt aged >= 4h with verified WMS putaway</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #fde68a; background-color: #fffbeb;">
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 17:44</td>
+                <td style="padding: 7px 10px; font-weight: bold; color: #92400e;">PART-0101</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Outer Precision Cover">Outer Precision Cover</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL00 &rarr; SL01</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #b45309;">18.0</td>
+                <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000054</td>
+                <td style="padding: 7px 10px; color: #78350f; font-size: 11px;">SL00 receipt aged >= 4h with verified WMS putaway</td>
+            </tr>
+            
+                    </tbody>
+                </table></div>
+        
+                <!-- SECTION 1B-policy guard: DESTINATION WAREHOUSE ROUNDTRIP CLEAR (ENGLISH PER policy guard/policy guard) -->
+                <div class="section-header" style="color: #15803d; border-bottom: 2px solid #86efac;">&#128260; 1-B . SL00&rarr;SL0x Same-Cycle Destination Roundtrip Clear (ROUNDTRIP_CLEAR_VIA_DEST_D113: 3 item(s))</div>
+                <div class="tbl-scroll"><table>
+                    <thead>
+                        <tr>
+                            <th style="width: 12%;">Exec Time</th>
+                            <th style="width: 11%;">Material</th>
+                            <th style="width: 17%;">Description</th>
+                            <th style="width: 11%; text-align: center;">Route</th>
+                            <th style="width: 10%; text-align: right;">Qty (EA)</th>
+                            <th style="width: 14%;">ERP Doc No.</th>
+                            <th style="width: 36%;">Status &amp; policy guard Verification Summary (SL00 WMS=ERP, GR=0, Net Change 0)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                <tr style="border-bottom: 1px solid #bbf7d0; background-color: #f0fdf4;">
+                    <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 08:27</td>
+                    <td style="padding: 7px 10px; font-weight: bold; color: #14532d;">PART-0183</td>
+                    <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Auxiliary Drive Bracket">Auxiliary Drive Bracket</span></td>
+                    <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SL00</td>
+                    <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">18.0</td>
+                    <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000041</td>
+                    <td style="padding: 7px 10px; font-size: 11px; color: #15803d; font-weight: bold;">POSTED &mdash; Cleared safely</td>
+                </tr>
+                
+                <tr style="border-bottom: 1px solid #bbf7d0; background-color: #f0fdf4;">
+                    <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 13:50</td>
+                    <td style="padding: 7px 10px; font-weight: bold; color: #14532d;">PART-0025</td>
+                    <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Digital Precision Lens">Digital Precision Lens</span></td>
+                    <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SL00</td>
+                    <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">120.0</td>
+                    <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000048</td>
+                    <td style="padding: 7px 10px; font-size: 11px; color: #15803d; font-weight: bold;">POSTED &mdash; Cleared safely</td>
+                </tr>
+                
+                <tr style="border-bottom: 1px solid #bbf7d0; background-color: #f0fdf4;">
+                    <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 18:13</td>
+                    <td style="padding: 7px 10px; font-weight: bold; color: #14532d;">PART-0107</td>
+                    <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Standard Flexible Plate">Standard Flexible Plate</span></td>
+                    <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL01 &rarr; SL00</td>
+                    <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">180.0</td>
+                    <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000055</td>
+                    <td style="padding: 7px 10px; font-size: 11px; color: #15803d; font-weight: bold;">POSTED &mdash; Cleared safely</td>
+                </tr>
+                
+                    </tbody>
+                </table></div>
+            
+                <!-- SECTION 1B-policy guard: DESTINATION DEFICIT-PUMP CLEAR (ENGLISH PER policy guard/policy guard) -->
+                <div class="section-header" style="color: #0369a1; border-bottom: 2px solid #7dd3fc;">&#128260; 1-B . Destination Warehouse Deficit-Pump Clear (DEST_PUMP_CLEAR_D115: 3 item(s))</div>
+                <div class="tbl-scroll"><table>
+                    <thead>
+                        <tr>
+                            <th style="width: 12%;">Exec Time</th>
+                            <th style="width: 11%;">Material</th>
+                            <th style="width: 17%;">Description</th>
+                            <th style="width: 11%; text-align: center;">Pump Route</th>
+                            <th style="width: 10%; text-align: right;">Pump Qty (EA)</th>
+                            <th style="width: 14%;">ERP Doc No.</th>
+                            <th style="width: 36%;">Status &amp; policy guard Verification Summary (Dest WMS-ERP &ge; 0.9x Err, GR=0, |ERP-WMS| Reduced)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                <tr style="border-bottom: 1px solid #bae6fd; background-color: #f0f9ff;">
+                    <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 08:56</td>
+                    <td style="padding: 7px 10px; font-weight: bold; color: #0c4a6e;">PART-0116</td>
+                    <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Optical Guide Plate">Optical Guide Plate</span></td>
+                    <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SP31 &rarr; SL01</td>
+                    <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #0369a1;">180.0</td>
+                    <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000042</td>
+                    <td style="padding: 7px 10px; font-size: 11px; color: #0369a1; font-weight: bold;">POSTED &mdash; Cleared safely</td>
+                </tr>
+                
+                <tr style="border-bottom: 1px solid #bae6fd; background-color: #f0f9ff;">
+                    <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 14:19</td>
+                    <td style="padding: 7px 10px; font-weight: bold; color: #0c4a6e;">PART-0156</td>
+                    <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Rotary Signal Spring">Rotary Signal Spring</span></td>
+                    <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SP31 &rarr; SL01</td>
+                    <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #0369a1;">180.0</td>
+                    <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000049</td>
+                    <td style="padding: 7px 10px; font-size: 11px; color: #0369a1; font-weight: bold;">POSTED &mdash; Cleared safely</td>
+                </tr>
+                
+                <tr style="border-bottom: 1px solid #bae6fd; background-color: #f0f9ff;">
+                    <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 19:42</td>
+                    <td style="padding: 7px 10px; font-weight: bold; color: #0c4a6e;">PART-0153</td>
+                    <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Front Signal Assembly">Front Signal Assembly</span></td>
+                    <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SP31 &rarr; SL01</td>
+                    <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #0369a1;">24.0</td>
+                    <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #1e40af;">DOC-000056</td>
+                    <td style="padding: 7px 10px; font-size: 11px; color: #0369a1; font-weight: bold;">POSTED &mdash; Cleared safely</td>
+                </tr>
+                
+                    </tbody>
+                </table></div>
+            
+                <!-- SECTION 1B-policy guard: ZERO-GAIN FULL ROUNDTRIP CLEAR (ENGLISH PER policy guard/policy guard) -->
+                <div class="section-header" style="color: #15803d; border-bottom: 2px solid #86efac;">&#128257; 1-C . Zero-Gain Full Roundtrip Clear (FULL_ROUNDTRIP_D116: 3 item(s))</div>
+                <div class="tbl-scroll"><table>
+                    <thead>
+                        <tr>
+                            <th style="width: 12%;">Exec Time</th>
+                            <th style="width: 11%;">Material</th>
+                            <th style="width: 17%;">Description</th>
+                            <th style="width: 11%; text-align: center;">Roundtrip Route</th>
+                            <th style="width: 10%; text-align: right;">Transfer Qty</th>
+                            <th style="width: 14%;">ERP Doc No.</th>
+                            <th style="width: 36%;">Status &amp; policy guard Verification Summary (ERP(B)&ge;E Own Stock, GR=0, A&amp;B Invariant)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                <tr style="border-bottom: 1px solid #bbf7d0; background-color: #f0fdf4;">
+                    <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 09:25</td>
+                    <td style="padding: 7px 10px; font-weight: bold; color: #14532d;">PART-0022</td>
+                    <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Linear Modular Connector">Linear Modular Connector</span></td>
+                    <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL02 &rarr; SP31</td>
+                    <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">90.0</td>
+                    <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #166534;">DOC-000043</td>
+                    <td style="padding: 7px 10px; font-size: 11px; color: #15803d; font-weight: bold;">POSTED &mdash; Cleared safely</td>
+                </tr>
+                
+                <tr style="border-bottom: 1px solid #bbf7d0; background-color: #f0fdf4;">
+                    <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 14:48</td>
+                    <td style="padding: 7px 10px; font-weight: bold; color: #14532d;">PART-0187</td>
+                    <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Linear Filter Assembly">Linear Filter Assembly</span></td>
+                    <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL02 &rarr; SP31</td>
+                    <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">36.0</td>
+                    <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #166534;">DOC-000050</td>
+                    <td style="padding: 7px 10px; font-size: 11px; color: #15803d; font-weight: bold;">POSTED &mdash; Cleared safely</td>
+                </tr>
+                
+                <tr style="border-bottom: 1px solid #bbf7d0; background-color: #f0fdf4;">
+                    <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">2026-11-15 20:11</td>
+                    <td style="padding: 7px 10px; font-weight: bold; color: #14532d;">PART-0149</td>
+                    <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Lower Signal Cable">Lower Signal Cable</span></td>
+                    <td style="padding: 7px 10px; text-align: center; color: #4a5568;">SL02 &rarr; SP31</td>
+                    <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #15803d;">36.0</td>
+                    <td style="padding: 7px 10px; font-family: monospace; font-weight: bold; color: #166534;">DOC-000057</td>
+                    <td style="padding: 7px 10px; font-size: 11px; color: #15803d; font-weight: bold;">POSTED &mdash; Cleared safely</td>
+                </tr>
+                
+                    </tbody>
+                </table></div>
+            
+                <div style="background-color: #fff1f2; border: 1px solid #fda4af; border-radius: 6px; padding: 9px 13px; font-size: 11px; color: #9f1239; margin-bottom: 14px;">
+                    <strong>&#9888; Suspected Missing GR (F &bull; Human Review):</strong> Material(s) <span title="Front Modular Spring"><strong>PART-0061</strong> <span style='color:#475569;'>— Front Modular Spring</span></span> &mdash; SL00 WMS=ERP=0 while physical surplus exists at destination SLoc (0 active GR errors). <strong>Please verify ERP GR posting</strong> (automated transfer skipped).
+                </div>
+            
+                <div style="background-color: #fff7ed; border: 1px solid #fdba74; border-radius: 6px; padding: 9px 13px; font-size: 11px; color: #9a3412; margin-bottom: 14px;">
+                    <strong>&#9888; Residual GI Error After policy guard Release (Retry Blocked):</strong> Material(s) <span title="Front Precision Adapter"><strong>PART-0034</strong> <span style='color:#475569;'>— Front Precision Adapter</span></span> &mdash; GI error remained after prior <code>GUARD_RELEASED_D109</code> posting (duplicate-posting safeguard active &bull; human review required).
+                </div>
+            
+                
+                <div style="background-color: #fef2f2; border: 1px solid #fca5a5; border-radius: 6px; padding: 9px 13px; font-size: 11px; color: #991b1b; margin-bottom: 14px;">
+                    <strong>&#9208; policy guard Consecutive-Failure 24h Cooldown (1 item(s) &bull; auto-retry paused):</strong>
+                    <ul style="margin: 5px 0 0 18px; padding: 0;"><li style='margin: 3px 0;'><span title="Thermal Flexible Bracket"><strong>PART-0163</strong> <span style='color:#475569;'>— Thermal Flexible Bracket</span></span> (<code>SL01->SP31</code>) &mdash; <strong>3 consecutive</strong> failure(s) &rarr; auto-retry paused until <code>2026-11-17 06:30</code> <span style='color:#7f1d1d;'>(M7-021 deficit in source SLoc during concurrent consumption)</span></li></ul>
+                </div>
+    
+
+                <!-- SECTION 2: CURRENT REMAINING ACTIVE ERRORS -->
+                <div class="section-header rem-header">&bull; 2. Current (07:30) Remaining GI Errors &amp; Breakdown (11)</div>
+                <div class="tbl-scroll"><table>
+                    <thead>
+                        <tr>
+                            <th style="width: 12%;">Material</th>
+                            <th style="width: 18%;">Description</th>
+                            <th style="width: 8%; text-align: center;">Mvt</th>
+                            <th style="width: 12%; text-align: center;">Deficit SLoc</th>
+                            <th style="width: 12%; text-align: right;">Short Qty</th>
+                            <th style="width: 20%;">Category</th>
+                            <th style="width: 32%;">Analysis &amp; Recommended Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+            <tr style="border-bottom: 1px solid #fed7aa; background-color: #fffaf0;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #9a3412;">PART-0102</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Front Precision Actuator">Front Precision Actuator</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">311</td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #2b6cb0;">SP31</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #c2410c;">48.0</td>
+                <td style="padding: 7px 10px; color: #9a3412; font-weight: bold;">Pending GR (B)</td>
+                <td style="padding: 7px 10px; color: #7c2d12; font-size: 11px;">Active ERP stock report GR error pending &bull; Held to prevent duplicate deduction (auto-resolves once GR posts)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #fed7aa; background-color: #fffaf0;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #9a3412;">PART-0001</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Front Guide Adapter">Front Guide Adapter</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">311</td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #2b6cb0;">SL01</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #c2410c;">96.0</td>
+                <td style="padding: 7px 10px; color: #9a3412; font-weight: bold;">Pending GR (B)</td>
+                <td style="padding: 7px 10px; color: #7c2d12; font-size: 11px;">Active ERP stock report GR error pending &bull; Held to prevent duplicate deduction (auto-resolves once GR posts)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e9d5ff; background-color: #faf5ff;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #6b21a8;">PART-0062</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Lower Control Actuator">Lower Control Actuator</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">311</td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #2b6cb0;">SP31</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #7e22ce;">36.0</td>
+                <td style="padding: 7px 10px; color: #7e22ce; font-weight: bold;">Chain Auto-Resolve</td>
+                <td style="padding: 7px 10px; color: #581c87; font-size: 11px;">Upstream SL00->SL01 transfer queued in current cycle</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #fecaca; background-color: #fef2f2;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #991b1b;">PART-0163</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Thermal Flexible Bracket">Thermal Flexible Bracket</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">311</td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #2b6cb0;">SP31</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #b91c1c;">72.0</td>
+                <td style="padding: 7px 10px; color: #b91c1c; font-weight: bold;">Cooldown Hold (policy guard · 24h)</td>
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">ERP M7-021 deficit persisted after 3 attempts</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #fecaca; background-color: #fef2f2;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #991b1b;">PART-0085</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Lower Protective Housing">Lower Protective Housing</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">311</td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #2b6cb0;">SL01</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #b91c1c;">120.0</td>
+                <td style="padding: 7px 10px; color: #b91c1c; font-weight: bold;">SL00 Arrival Hold (D37/policy guard)</td>
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">SL00 arrival < 4h window; awaiting normal interface</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #fecaca; background-color: #fef2f2;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #991b1b;">PART-0034</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Front Precision Adapter">Front Precision Adapter</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">311</td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #2b6cb0;">SP31</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #b91c1c;">60.0</td>
+                <td style="padding: 7px 10px; color: #b91c1c; font-weight: bold;">Residual After policy guard (No Retry)</td>
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">policy guard single-shot release already used; manual check</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #fecaca; background-color: #fef2f2;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #991b1b;">PART-0061</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Front Modular Spring">Front Modular Spring</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">311</td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #2b6cb0;">SL01</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #b91c1c;">84.0</td>
+                <td style="padding: 7px 10px; color: #b91c1c; font-weight: bold;">Suspected Missing GR (F · Human Review)</td>
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">Verify ERP GR posting for recent trailer unload</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #fecaca; background-color: #fef2f2;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #991b1b;">PART-0197</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Front Control Bracket">Front Control Bracket</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">311</td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #2b6cb0;">SP31</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #b91c1c;">30.0</td>
+                <td style="padding: 7px 10px; color: #b91c1c; font-weight: bold;">Insufficient Stock (SKIP)</td>
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">Zero unrestricted stock across SL01 / SL02</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #fecaca; background-color: #fef2f2;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #991b1b;">PART-0088</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Digital Precision Cable">Digital Precision Cable</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">312</td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #2b6cb0;">SL02</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #b91c1c;">40.0</td>
+                <td style="padding: 7px 10px; color: #b91c1c; font-weight: bold;">Insufficient Stock (SKIP)</td>
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">Transfer would reduce plant stock accuracy (-0.28 pt)</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #fecaca; background-color: #fef2f2;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #991b1b;">PART-0038</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Front Guide Panel">Front Guide Panel</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">311</td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #2b6cb0;">SL49</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #b91c1c;">16.0</td>
+                <td style="padding: 7px 10px; color: #b91c1c; font-weight: bold;">Insufficient Stock (SKIP)</td>
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">Quality hold stock only; planner disposition required</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #fecaca; background-color: #fef2f2;">
+                <td style="padding: 7px 10px; font-weight: bold; color: #991b1b;">PART-0105</td>
+                <td style="padding: 7px 10px; color: #475569; font-size: 11px;"><span title="Upper Precision Bracket">Upper Precision Bracket</span></td>
+                <td style="padding: 7px 10px; text-align: center; color: #4a5568;">311</td>
+                <td style="padding: 7px 10px; text-align: center; font-weight: bold; color: #2b6cb0;">SP31</td>
+                <td style="padding: 7px 10px; text-align: right; font-weight: bold; color: #b91c1c;">54.0</td>
+                <td style="padding: 7px 10px; color: #b91c1c; font-weight: bold;">Insufficient Stock (SKIP)</td>
+                <td style="padding: 7px 10px; color: #4a5568; font-size: 11px;">Physical count queued on today's 06:50 count list</td>
+            </tr>
+            
+                    </tbody>
+                </table></div>
+
+                <!-- 901/902 EXCLUDED NOTICE -->
+                <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 14px; font-size: 11px; color: #475569; margin-top: -6px; margin-bottom: 20px;">
+                    <strong>&bull; Exclusion Policy:</strong> Movement types 901 (scrap/sale) and 902 (2 item(s)) are permanently excluded from automated transfer posting by operational safety policy.
+                </div>
+
+                
+                <!-- SECTION policy guard: UNRESOLVABLE GI ERROR DELETE CANDIDATES (PHASE 1 READ-ONLY) -->
+                <div class="section-header" style="color: #7f1d1d; border-bottom: 2px solid #fca5a5;">
+                    &#128465; Delete-Draft Candidates (policy guard Phase 1 Validation — Manual Reference | Candidates: 2 / Holds: 1)
+                </div>
+                <div style="background-color: #fff1f2; border: 1px solid #fecdd3; border-radius: 6px; padding: 10px 14px; font-size: 11px; color: #881337; margin-bottom: 10px;">
+                    <strong>&bull; Snapshot Collected:</strong> <code>2026-11-16 07:23:11 EST</code> (LIVE_PORTAL_SYNC) &bull;
+                    <strong>Cleared/Excluded by 07:00 Cycle Postings:</strong> <strong>3</strong> &bull;
+                    <strong>Remaining Prev-Day (2026-11-15 or earlier) 311/312:</strong> 3<br>
+                    <span style="color:#4c0519;">* Deleting a GI error removes only the interface error record without changing ERP/WMS stock quantities (Submit remains locked to user review).</span>
+                    <br><strong style="color:#7f1d1d;">&bull; 07:23 Portal Temp-Save (policy guard 2b &bull; TEMP_SAVED_VERIFIED):</strong> Temp-saved today: <strong>1</strong> draft(s) (<strong>2</strong> row(s)) &bull; Temp Box title: <code>Request to delete WMS_GI of 2026/11/15</code> &bull; Prior temp-saved (2026-11-14): <strong>4</strong> cleared after user submit / <strong>0</strong> still pending user submit
+                </div>
+                <div class="tbl-scroll"><table>
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;">Material</th>
+                            <th style="width: 16%;">Description</th>
+                            <th style="width: 9%; text-align: center;">Mvt &bull; Route</th>
+                            <th style="width: 9%; text-align: right;">Qty</th>
+                            <th style="width: 11%; text-align: center;">Err Date / First Seen</th>
+                            <th style="width: 28%;">Conditions 1–5 Evidence</th>
+                            <th style="width: 17%;">Remaining ERP–WMS Diff</th>
+                            <th style="width: 14%;">Post-08:00 Check</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+            <tr style="border-bottom: 1px solid #fecaca; background-color: #fff5f5;">
+                <td style="padding: 7px 9px; font-weight: bold; color: #7f1d1d;">PART-0039</td>
+                <td style="padding: 7px 9px; font-size: 11px; color: #475569;"><span title="Rotary Guide Actuator">Rotary Guide Actuator</span></td>
+                <td style="padding: 7px 9px; text-align: center; color: #334155;">311<br><span style="font-size:10px;color:#475569;">SL01&rarr;SP31</span></td>
+                <td style="padding: 7px 9px; text-align: right; font-weight: bold; color: #b91c1c;">48.0</td>
+                <td style="padding: 7px 9px; text-align: center; font-size: 11px; color: #334155;">2026-11-14<br><span style="font-size:10px;color:#64748b;">11-14 14:30</span></td>
+                <td style="padding: 7px 9px; font-size: 11px; color: #1e293b;">① Age: ErrDate 2026-11-14 (first seen 11-14 14:30) | ② 01 Verdict: SKIPPED_NO_STOCK | ③ 7d GR/GAP: 0 open GR | ④ Source Stock: SL01 ERP=0 / WMS=0 | ⑤ Pump/Roundtrip: SP31 surplus 0 EA</td>
+                <td style="padding: 7px 9px; font-size: 11px; color: #475569;">Aligned (ERP 120 = WMS 120 across plant)</td>
+                <td style="padding: 7px 9px; font-size: 11px; font-weight: bold; color: #15803d;">✅ Verified Temp-Save 1:1</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #fecaca; background-color: #fff5f5;">
+                <td style="padding: 7px 9px; font-weight: bold; color: #7f1d1d;">PART-0057</td>
+                <td style="padding: 7px 9px; font-size: 11px; color: #475569;"><span title="Center Filter Switch">Center Filter Switch</span></td>
+                <td style="padding: 7px 9px; text-align: center; color: #334155;">311<br><span style="font-size:10px;color:#475569;">SL02&rarr;SP31</span></td>
+                <td style="padding: 7px 9px; text-align: right; font-weight: bold; color: #b91c1c;">72.0</td>
+                <td style="padding: 7px 9px; text-align: center; font-size: 11px; color: #334155;">2026-11-15<br><span style="font-size:10px;color:#64748b;">11-15 09:00</span></td>
+                <td style="padding: 7px 9px; font-size: 11px; color: #1e293b;">① Age: ErrDate 2026-11-15 (first seen 11-15 09:00) | ② 01 Verdict: SKIPPED_ACCURACY_GUARD | ③ 7d GR/GAP: 0 open GR | ④ Source Stock: SL02 ERP=24 / WMS=96 | ⑤ Pump/Roundtrip: No roundtrip path</td>
+                <td style="padding: 7px 9px; font-size: 11px; color: #475569;">WMS > ERP (+72 EA in SL02)</td>
+                <td style="padding: 7px 9px; font-size: 11px; font-weight: bold; color: #15803d;">✅ Verified Temp-Save 1:1</td>
+            </tr>
+            
+                    </tbody>
+                </table></div>
+                
+        <div style="margin-top: -6px; margin-bottom: 18px; border: 1px solid #fcd34d; border-radius: 6px; overflow: hidden;">
+            <div style="background-color: #fef3c7; padding: 7px 12px; font-size: 11px; font-weight: bold; color: #92400e;">
+                &#9888; Held for Human Review (1 item(s)) — Excluded from Delete Candidates Due to Uncertainty
+            </div>
+            <div class="tbl-scroll"><table style="margin-bottom: 0;">
+                <thead>
+                    <tr>
+                        <th style="width: 12%; background-color:#fffbeb;">Material</th>
+                        <th style="width: 18%; background-color:#fffbeb;">Description</th>
+                        <th style="width: 13%; text-align:center; background-color:#fffbeb;">Mvt &bull; Route</th>
+                        <th style="width: 12%; text-align:right; background-color:#fffbeb;">Qty</th>
+                        <th style="width: 12%; text-align:center; background-color:#fffbeb;">Error Date</th>
+                        <th style="width: 46%; background-color:#fffbeb;">Hold Reason &amp; Warehouse Stock</th>
+                    </tr>
+                </thead>
+                <tbody>
+            <tr style="border-bottom: 1px solid #fde68a; background-color: #fffbeb;">
+                <td style="padding: 6px 9px; font-weight: bold; color: #92400e;">PART-0179</td>
+                <td style="padding: 6px 9px; font-size: 11px; color: #475569;"><span title="Outer Mounting Module">Outer Mounting Module</span></td>
+                <td style="padding: 6px 9px; text-align: center;">311 (SL01&rarr;SP31)</td>
+                <td style="padding: 6px 9px; text-align: right; font-weight: bold; color: #b45309;">96.0</td>
+                <td style="padding: 6px 9px; text-align: center;">2026-11-15</td>
+                <td style="padding: 6px 9px; font-size: 11px; color: #78350f;">Active ERP stock report GR error on same material (SL01 ERP 0 / WMS 96 (pending GR))</td>
+            </tr>
+            </tbody>
+            </table></div>
+        </div>
+        
+                
+        <div style="margin-top: -6px; margin-bottom: 18px; border: 1px solid #93c5fd; border-radius: 6px; overflow: hidden;">
+            <div style="background-color: #dbeafe; padding: 7px 12px; font-size: 11px; font-weight: bold; color: #1e3a8a;">
+                &#128203; ERP Book Adjustment Candidate List (WMS &gt; ERP &bull; 1 material(s)) &mdash; Residual ERP&ndash;WMS Gap After GI Error Deletion
+            </div>
+            <div class="tbl-scroll"><table style="margin-bottom: 0;">
+                <thead>
+                    <tr>
+                        <th style="width: 14%; background-color:#eff6ff;">Material</th>
+                        <th style="width: 18%; background-color:#eff6ff;">Description</th>
+                        <th style="width: 6%; text-align:center; background-color:#eff6ff;">Unit</th>
+                        <th style="width: 37%; background-color:#eff6ff;">ERP / WMS by SLoc</th>
+                        <th style="width: 37%; background-color:#eff6ff;">WMS &gt; ERP Excess (Book Adjustment Needed)</th>
+                    </tr>
+                </thead>
+                <tbody>
+            <tr style="border-bottom: 1px solid #bfdbfe; background-color: #eff6ff;">
+                <td style="padding: 6px 9px; font-weight: bold; color: #1e3a8a;">PART-0057</td>
+                <td style="padding: 6px 9px; font-size: 11px; color: #475569;"><span title="Center Filter Switch">Center Filter Switch</span></td>
+                <td style="padding: 6px 9px; text-align: center; color: #1e40af;">EA</td>
+                <td style="padding: 6px 9px; font-size: 11px; color: #1e3a8a;">SL02 ERP 24 / WMS 96 | SP31 ERP 60 / WMS 60</td>
+                <td style="padding: 6px 9px; font-size: 11px; font-weight: bold; color: #1d4ed8;">SL02 WMS exceeds ERP by +72 EA (ERP-WMS gap remains after GI error deletion)</td>
+            </tr>
+            </tbody>
+            </table></div>
+        </div>
+        
+    
+
+                <!-- SECTION 3: PIPELINE RUN LOG HISTORY -->
+                <div class="section-header run-header">&#9200; 3. Prev-Day (2026-11-15) Pipeline Run Log Summary (Latest 15 Cycles)</div>
+                <div class="tbl-scroll"><table>
+                    <thead>
+                        <tr>
+                            <th style="width: 22%;">Run Time</th>
+                            <th style="width: 28%;">Batch ID</th>
+                            <th style="width: 14%; text-align: center;">GI Errors</th>
+                            <th style="width: 14%; text-align: center;">Postings</th>
+                            <th style="width: 11%; text-align: right;">Elapsed</th>
+                            <th style="width: 11%; text-align: center;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; color: #334155; font-size: 11px;">2026-11-15 23:00:08</td>
+                <td style="padding: 6px 10px; font-family: monospace; color: #64748b; font-size: 10px;">GI_20261115_2300</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #0f172a;">11</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #15803d;">1</td>
+                <td style="padding: 6px 10px; text-align: right; color: #64748b; font-size: 11px;">18.4s</td>
+                <td style="padding: 6px 10px; text-align: center; color: #15803d; font-size: 11px; font-weight: bold;">COMPLETED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; color: #334155; font-size: 11px;">2026-11-15 22:00:08</td>
+                <td style="padding: 6px 10px; font-family: monospace; color: #64748b; font-size: 10px;">GI_20261115_2200</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #0f172a;">12</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #15803d;">0</td>
+                <td style="padding: 6px 10px; text-align: right; color: #64748b; font-size: 11px;">22.7s</td>
+                <td style="padding: 6px 10px; text-align: center; color: #15803d; font-size: 11px; font-weight: bold;">COMPLETED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; color: #334155; font-size: 11px;">2026-11-15 21:00:08</td>
+                <td style="padding: 6px 10px; font-family: monospace; color: #64748b; font-size: 10px;">GI_20261115_2100</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #0f172a;">13</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #15803d;">2</td>
+                <td style="padding: 6px 10px; text-align: right; color: #64748b; font-size: 11px;">27.0s</td>
+                <td style="padding: 6px 10px; text-align: center; color: #15803d; font-size: 11px; font-weight: bold;">COMPLETED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; color: #334155; font-size: 11px;">2026-11-15 20:00:08</td>
+                <td style="padding: 6px 10px; font-family: monospace; color: #64748b; font-size: 10px;">GI_20261115_2000</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #0f172a;">14</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #15803d;">0</td>
+                <td style="padding: 6px 10px; text-align: right; color: #64748b; font-size: 11px;">31.3s</td>
+                <td style="padding: 6px 10px; text-align: center; color: #15803d; font-size: 11px; font-weight: bold;">COMPLETED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; color: #334155; font-size: 11px;">2026-11-15 19:00:08</td>
+                <td style="padding: 6px 10px; font-family: monospace; color: #64748b; font-size: 10px;">GI_20261115_1900</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #0f172a;">15</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #15803d;">1</td>
+                <td style="padding: 6px 10px; text-align: right; color: #64748b; font-size: 11px;">35.6s</td>
+                <td style="padding: 6px 10px; text-align: center; color: #15803d; font-size: 11px; font-weight: bold;">COMPLETED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; color: #334155; font-size: 11px;">2026-11-15 18:00:08</td>
+                <td style="padding: 6px 10px; font-family: monospace; color: #64748b; font-size: 10px;">GI_20261115_1800</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #0f172a;">16</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #15803d;">2</td>
+                <td style="padding: 6px 10px; text-align: right; color: #64748b; font-size: 11px;">18.4s</td>
+                <td style="padding: 6px 10px; text-align: center; color: #15803d; font-size: 11px; font-weight: bold;">COMPLETED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; color: #334155; font-size: 11px;">2026-11-15 17:00:08</td>
+                <td style="padding: 6px 10px; font-family: monospace; color: #64748b; font-size: 10px;">GI_20261115_1700</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #0f172a;">11</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #15803d;">1</td>
+                <td style="padding: 6px 10px; text-align: right; color: #64748b; font-size: 11px;">22.7s</td>
+                <td style="padding: 6px 10px; text-align: center; color: #15803d; font-size: 11px; font-weight: bold;">COMPLETED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; color: #334155; font-size: 11px;">2026-11-15 16:00:08</td>
+                <td style="padding: 6px 10px; font-family: monospace; color: #64748b; font-size: 10px;">GI_20261115_1600</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #0f172a;">12</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #15803d;">0</td>
+                <td style="padding: 6px 10px; text-align: right; color: #64748b; font-size: 11px;">27.0s</td>
+                <td style="padding: 6px 10px; text-align: center; color: #15803d; font-size: 11px; font-weight: bold;">COMPLETED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; color: #334155; font-size: 11px;">2026-11-15 15:00:08</td>
+                <td style="padding: 6px 10px; font-family: monospace; color: #64748b; font-size: 10px;">GI_20261115_1500</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #0f172a;">13</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #15803d;">1</td>
+                <td style="padding: 6px 10px; text-align: right; color: #64748b; font-size: 11px;">31.3s</td>
+                <td style="padding: 6px 10px; text-align: center; color: #15803d; font-size: 11px; font-weight: bold;">COMPLETED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; color: #334155; font-size: 11px;">2026-11-15 14:00:08</td>
+                <td style="padding: 6px 10px; font-family: monospace; color: #64748b; font-size: 10px;">GI_20261115_1400</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #0f172a;">14</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #15803d;">2</td>
+                <td style="padding: 6px 10px; text-align: right; color: #64748b; font-size: 11px;">35.6s</td>
+                <td style="padding: 6px 10px; text-align: center; color: #15803d; font-size: 11px; font-weight: bold;">COMPLETED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; color: #334155; font-size: 11px;">2026-11-15 13:00:08</td>
+                <td style="padding: 6px 10px; font-family: monospace; color: #64748b; font-size: 10px;">GI_20261115_1300</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #0f172a;">15</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #15803d;">1</td>
+                <td style="padding: 6px 10px; text-align: right; color: #64748b; font-size: 11px;">18.4s</td>
+                <td style="padding: 6px 10px; text-align: center; color: #15803d; font-size: 11px; font-weight: bold;">COMPLETED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; color: #334155; font-size: 11px;">2026-11-15 12:00:08</td>
+                <td style="padding: 6px 10px; font-family: monospace; color: #64748b; font-size: 10px;">GI_20261115_1200</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #0f172a;">16</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #15803d;">0</td>
+                <td style="padding: 6px 10px; text-align: right; color: #64748b; font-size: 11px;">22.7s</td>
+                <td style="padding: 6px 10px; text-align: center; color: #15803d; font-size: 11px; font-weight: bold;">COMPLETED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; color: #334155; font-size: 11px;">2026-11-15 11:00:08</td>
+                <td style="padding: 6px 10px; font-family: monospace; color: #64748b; font-size: 10px;">GI_20261115_1100</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #0f172a;">11</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #15803d;">2</td>
+                <td style="padding: 6px 10px; text-align: right; color: #64748b; font-size: 11px;">27.0s</td>
+                <td style="padding: 6px 10px; text-align: center; color: #15803d; font-size: 11px; font-weight: bold;">COMPLETED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; color: #334155; font-size: 11px;">2026-11-15 10:00:08</td>
+                <td style="padding: 6px 10px; font-family: monospace; color: #64748b; font-size: 10px;">GI_20261115_1000</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #0f172a;">12</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #15803d;">0</td>
+                <td style="padding: 6px 10px; text-align: right; color: #64748b; font-size: 11px;">31.3s</td>
+                <td style="padding: 6px 10px; text-align: center; color: #15803d; font-size: 11px; font-weight: bold;">COMPLETED</td>
+            </tr>
+            
+            <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 6px 10px; color: #334155; font-size: 11px;">2026-11-15 09:00:08</td>
+                <td style="padding: 6px 10px; font-family: monospace; color: #64748b; font-size: 10px;">GI_20261115_0900</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #0f172a;">13</td>
+                <td style="padding: 6px 10px; text-align: center; font-weight: bold; color: #15803d;">1</td>
+                <td style="padding: 6px 10px; text-align: right; color: #64748b; font-size: 11px;">35.6s</td>
+                <td style="padding: 6px 10px; text-align: center; color: #15803d; font-size: 11px; font-weight: bold;">COMPLETED</td>
+            </tr>
+            
+                    </tbody>
+                </table></div>
+            </div>
+            <div class="footer">
+                Inventory Team Automation &bull; Two-Facility Plant Facility North &bull; Daily Comprehensive Report (07:30 AM)
+            </div>
+        </div>
+    </body>
+    </html>
+    

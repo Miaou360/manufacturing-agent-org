@@ -1,0 +1,6298 @@
+{
+  "source": "3d-warehouse-visualizer-public/demo/data",
+  "snapshot_date": "2026-11-16",
+  "seed": 20261102,
+  "zones": [
+    "Special",
+    "Staging",
+    "Zone A",
+    "Zone B"
+  ],
+  "storage_locations": [
+    {
+      "sloc": "SL10",
+      "facility": "Facility North",
+      "count_eligible": true
+    },
+    {
+      "sloc": "SL20",
+      "facility": "Facility South",
+      "count_eligible": true
+    },
+    {
+      "sloc": "SL30",
+      "facility": "Facility North",
+      "count_eligible": true
+    },
+    {
+      "sloc": "SL90",
+      "facility": "Facility North",
+      "count_eligible": false
+    }
+  ],
+  "materials": [
+    {
+      "material_id": "PART-0001",
+      "description": "Front Guide Adapter",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-004",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0002",
+      "description": "Outer Modular Clamp",
+      "unit_pack_qty": 320,
+      "supplier_id": "SUP-015",
+      "velocity": "moderate",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0003",
+      "description": "Front Protective Clamp",
+      "unit_pack_qty": 2400,
+      "supplier_id": "SUP-001",
+      "velocity": "slow",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0004",
+      "description": "Rear Precision Bearing",
+      "unit_pack_qty": 600,
+      "supplier_id": "SUP-020",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0005",
+      "description": "Outer Modular Actuator",
+      "unit_pack_qty": 240,
+      "supplier_id": "SUP-004",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0006",
+      "description": "Optical Control Switch",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-015",
+      "velocity": "moderate",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0007",
+      "description": "Inner Signal Frame",
+      "unit_pack_qty": 240,
+      "supplier_id": "SUP-016",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0008",
+      "description": "Outer Control Frame",
+      "unit_pack_qty": 320,
+      "supplier_id": "SUP-012",
+      "velocity": "moderate",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0009",
+      "description": "Optical Drive Cable",
+      "unit_pack_qty": 1600,
+      "supplier_id": "SUP-016",
+      "velocity": "fast",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0010",
+      "description": "Front Support Socket",
+      "unit_pack_qty": 64,
+      "supplier_id": "SUP-016",
+      "velocity": "fast",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0011",
+      "description": "Rotary Modular Bearing",
+      "unit_pack_qty": 48,
+      "supplier_id": "SUP-006",
+      "velocity": "fast",
+      "delivery_days": [
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0012",
+      "description": "Thermal Drive Actuator",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-007",
+      "velocity": "slow",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0013",
+      "description": "Center Sensor Socket",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-017",
+      "velocity": "moderate",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0014",
+      "description": "Inner Precision Plate",
+      "unit_pack_qty": 2000,
+      "supplier_id": "SUP-024",
+      "velocity": "dormant",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0015",
+      "description": "Linear Mounting Spring",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-024",
+      "velocity": "dormant",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0016",
+      "description": "Compact Control Relay",
+      "unit_pack_qty": 120,
+      "supplier_id": "SUP-005",
+      "velocity": "moderate",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0017",
+      "description": "Digital Modular Frame",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-013",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0018",
+      "description": "Optical Support Cover",
+      "unit_pack_qty": 4000,
+      "supplier_id": "SUP-007",
+      "velocity": "slow",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0019",
+      "description": "Outer Mounting Cable",
+      "unit_pack_qty": 240,
+      "supplier_id": "SUP-011",
+      "velocity": "moderate",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0020",
+      "description": "Optical Modular Gasket",
+      "unit_pack_qty": 320,
+      "supplier_id": "SUP-023",
+      "velocity": "moderate",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0021",
+      "description": "Standard Precision Bearing",
+      "unit_pack_qty": 1600,
+      "supplier_id": "SUP-007",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0022",
+      "description": "Linear Modular Connector",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-002",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0023",
+      "description": "Inner Sensor Connector",
+      "unit_pack_qty": 48,
+      "supplier_id": "SUP-021",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0024",
+      "description": "Inner Mounting Cover",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-007",
+      "velocity": "slow",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0025",
+      "description": "Digital Precision Lens",
+      "unit_pack_qty": 96,
+      "supplier_id": "SUP-016",
+      "velocity": "fast",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0026",
+      "description": "Center Flexible Socket",
+      "unit_pack_qty": 320,
+      "supplier_id": "SUP-014",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0027",
+      "description": "Optical Drive Frame",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-023",
+      "velocity": "slow",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0028",
+      "description": "Front Protective Bearing",
+      "unit_pack_qty": 480,
+      "supplier_id": "SUP-017",
+      "velocity": "slow",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0029",
+      "description": "Optical Control Plate",
+      "unit_pack_qty": 96,
+      "supplier_id": "SUP-004",
+      "velocity": "moderate",
+      "delivery_days": [
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0030",
+      "description": "Linear Signal Clamp",
+      "unit_pack_qty": 4000,
+      "supplier_id": "SUP-010",
+      "velocity": "slow",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0031",
+      "description": "Outer Sensor Adapter",
+      "unit_pack_qty": 600,
+      "supplier_id": "SUP-011",
+      "velocity": "dormant",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0032",
+      "description": "Standard Guide Relay",
+      "unit_pack_qty": 2000,
+      "supplier_id": "SUP-021",
+      "velocity": "dormant",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0033",
+      "description": "Outer Protective Assembly",
+      "unit_pack_qty": 1600,
+      "supplier_id": "SUP-002",
+      "velocity": "slow",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0034",
+      "description": "Front Precision Adapter",
+      "unit_pack_qty": 480,
+      "supplier_id": "SUP-013",
+      "velocity": "slow",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0035",
+      "description": "Primary Sensor Cable",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-016",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0036",
+      "description": "Optical Flexible Socket",
+      "unit_pack_qty": 2000,
+      "supplier_id": "SUP-005",
+      "velocity": "slow",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0037",
+      "description": "Inner Filter Module",
+      "unit_pack_qty": 96,
+      "supplier_id": "SUP-016",
+      "velocity": "fast",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0038",
+      "description": "Front Guide Panel",
+      "unit_pack_qty": 48,
+      "supplier_id": "SUP-009",
+      "velocity": "fast",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0039",
+      "description": "Rotary Guide Actuator",
+      "unit_pack_qty": 96,
+      "supplier_id": "SUP-015",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0040",
+      "description": "Optical Guide Switch",
+      "unit_pack_qty": 480,
+      "supplier_id": "SUP-003",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0041",
+      "description": "Rear Flexible Spring",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-015",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0042",
+      "description": "Optical Flexible Assembly",
+      "unit_pack_qty": 320,
+      "supplier_id": "SUP-014",
+      "velocity": "moderate",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0043",
+      "description": "Rear Filter Adapter",
+      "unit_pack_qty": 48,
+      "supplier_id": "SUP-010",
+      "velocity": "fast",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0044",
+      "description": "Optical Signal Connector",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-022",
+      "velocity": "fast",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0045",
+      "description": "Outer Mounting Plate",
+      "unit_pack_qty": 4000,
+      "supplier_id": "SUP-018",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0046",
+      "description": "Standard Precision Panel",
+      "unit_pack_qty": 4000,
+      "supplier_id": "SUP-016",
+      "velocity": "slow",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0047",
+      "description": "Front Protective Cover",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-003",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0048",
+      "description": "Primary Drive Connector",
+      "unit_pack_qty": 480,
+      "supplier_id": "SUP-005",
+      "velocity": "moderate",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0049",
+      "description": "Rotary Control Switch",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-015",
+      "velocity": "slow",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0050",
+      "description": "Outer Precision Housing",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-006",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0051",
+      "description": "Optical Signal Spring",
+      "unit_pack_qty": 120,
+      "supplier_id": "SUP-011",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0052",
+      "description": "Optical Precision Relay",
+      "unit_pack_qty": 240,
+      "supplier_id": "SUP-022",
+      "velocity": "fast",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0053",
+      "description": "Outer Sensor Connector",
+      "unit_pack_qty": 320,
+      "supplier_id": "SUP-014",
+      "velocity": "fast",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0054",
+      "description": "Lower Modular Assembly",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-014",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0055",
+      "description": "Linear Precision Actuator",
+      "unit_pack_qty": 480,
+      "supplier_id": "SUP-004",
+      "velocity": "slow",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0056",
+      "description": "Primary Drive Gasket",
+      "unit_pack_qty": 1600,
+      "supplier_id": "SUP-023",
+      "velocity": "slow",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0057",
+      "description": "Center Filter Switch",
+      "unit_pack_qty": 2400,
+      "supplier_id": "SUP-017",
+      "velocity": "moderate",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0058",
+      "description": "Outer Flexible Spring",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-014",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0059",
+      "description": "Upper Sensor Assembly",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-021",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0060",
+      "description": "Primary Drive Module",
+      "unit_pack_qty": 2400,
+      "supplier_id": "SUP-013",
+      "velocity": "slow",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0061",
+      "description": "Front Modular Spring",
+      "unit_pack_qty": 600,
+      "supplier_id": "SUP-009",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0062",
+      "description": "Lower Control Actuator",
+      "unit_pack_qty": 120,
+      "supplier_id": "SUP-021",
+      "velocity": "fast",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0063",
+      "description": "Linear Modular Cable",
+      "unit_pack_qty": 2400,
+      "supplier_id": "SUP-023",
+      "velocity": "slow",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0064",
+      "description": "Compact Mounting Bearing",
+      "unit_pack_qty": 4800,
+      "supplier_id": "SUP-014",
+      "velocity": "dormant",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0065",
+      "description": "Rotary Mounting Assembly",
+      "unit_pack_qty": 3200,
+      "supplier_id": "SUP-024",
+      "velocity": "moderate",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0066",
+      "description": "Rear Precision Assembly",
+      "unit_pack_qty": 600,
+      "supplier_id": "SUP-016",
+      "velocity": "moderate",
+      "delivery_days": [
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0067",
+      "description": "Thermal Guide Cover",
+      "unit_pack_qty": 1600,
+      "supplier_id": "SUP-021",
+      "velocity": "slow",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0068",
+      "description": "Optical Sensor Lens",
+      "unit_pack_qty": 240,
+      "supplier_id": "SUP-015",
+      "velocity": "slow",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0069",
+      "description": "Thermal Sensor Connector",
+      "unit_pack_qty": 480,
+      "supplier_id": "SUP-010",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0070",
+      "description": "Rear Precision Cooler",
+      "unit_pack_qty": 240,
+      "supplier_id": "SUP-008",
+      "velocity": "moderate",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0071",
+      "description": "Inner Control Bearing",
+      "unit_pack_qty": 2000,
+      "supplier_id": "SUP-016",
+      "velocity": "dormant",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0072",
+      "description": "Center Sensor Connector",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-003",
+      "velocity": "fast",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0073",
+      "description": "Inner Support Cover",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-021",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0074",
+      "description": "Standard Support Clamp",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-012",
+      "velocity": "slow",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0075",
+      "description": "Auxiliary Filter Bearing",
+      "unit_pack_qty": 480,
+      "supplier_id": "SUP-013",
+      "velocity": "moderate",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0076",
+      "description": "Linear Guide Bracket",
+      "unit_pack_qty": 1600,
+      "supplier_id": "SUP-005",
+      "velocity": "slow",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0077",
+      "description": "Center Guide Adapter",
+      "unit_pack_qty": 480,
+      "supplier_id": "SUP-021",
+      "velocity": "moderate",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0078",
+      "description": "Inner Modular Cable",
+      "unit_pack_qty": 320,
+      "supplier_id": "SUP-019",
+      "velocity": "slow",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0079",
+      "description": "Compact Guide Spring",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-004",
+      "velocity": "fast",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0080",
+      "description": "Thermal Protective Module",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-008",
+      "velocity": "moderate",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0081",
+      "description": "Auxiliary Signal Socket",
+      "unit_pack_qty": 240,
+      "supplier_id": "SUP-005",
+      "velocity": "moderate",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0082",
+      "description": "Optical Filter Module",
+      "unit_pack_qty": 480,
+      "supplier_id": "SUP-003",
+      "velocity": "slow",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0083",
+      "description": "Primary Protective Lens",
+      "unit_pack_qty": 2000,
+      "supplier_id": "SUP-006",
+      "velocity": "slow",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0084",
+      "description": "Lower Modular Panel",
+      "unit_pack_qty": 2000,
+      "supplier_id": "SUP-004",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0085",
+      "description": "Lower Protective Housing",
+      "unit_pack_qty": 96,
+      "supplier_id": "SUP-004",
+      "velocity": "fast",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0086",
+      "description": "Front Support Lens",
+      "unit_pack_qty": 480,
+      "supplier_id": "SUP-005",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0087",
+      "description": "Rotary Support Relay",
+      "unit_pack_qty": 240,
+      "supplier_id": "SUP-006",
+      "velocity": "moderate",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0088",
+      "description": "Digital Precision Cable",
+      "unit_pack_qty": 480,
+      "supplier_id": "SUP-008",
+      "velocity": "slow",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0089",
+      "description": "Rear Mounting Switch",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-024",
+      "velocity": "fast",
+      "delivery_days": [
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0090",
+      "description": "Lower Precision Connector",
+      "unit_pack_qty": 3200,
+      "supplier_id": "SUP-002",
+      "velocity": "slow",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0091",
+      "description": "Thermal Flexible Cable",
+      "unit_pack_qty": 240,
+      "supplier_id": "SUP-010",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0092",
+      "description": "Outer Control Lens",
+      "unit_pack_qty": 480,
+      "supplier_id": "SUP-005",
+      "velocity": "fast",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0093",
+      "description": "Front Protective Bracket",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-022",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0094",
+      "description": "Outer Sensor Cable",
+      "unit_pack_qty": 96,
+      "supplier_id": "SUP-010",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0095",
+      "description": "Auxiliary Sensor Switch",
+      "unit_pack_qty": 64,
+      "supplier_id": "SUP-011",
+      "velocity": "moderate",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0096",
+      "description": "Front Flexible Frame",
+      "unit_pack_qty": 600,
+      "supplier_id": "SUP-017",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0097",
+      "description": "Primary Protective Plate",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-016",
+      "velocity": "slow",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0098",
+      "description": "Outer Signal Switch",
+      "unit_pack_qty": 64,
+      "supplier_id": "SUP-018",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0099",
+      "description": "Rotary Precision Panel",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-008",
+      "velocity": "dormant",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0100",
+      "description": "Upper Support Lens",
+      "unit_pack_qty": 2400,
+      "supplier_id": "SUP-018",
+      "velocity": "slow",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0101",
+      "description": "Outer Precision Cover",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-003",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0102",
+      "description": "Front Precision Actuator",
+      "unit_pack_qty": 320,
+      "supplier_id": "SUP-015",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0103",
+      "description": "Linear Drive Switch",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-014",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0104",
+      "description": "Upper Flexible Bearing",
+      "unit_pack_qty": 48,
+      "supplier_id": "SUP-015",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0105",
+      "description": "Upper Precision Bracket",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-001",
+      "velocity": "moderate",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0106",
+      "description": "Primary Control Adapter",
+      "unit_pack_qty": 48,
+      "supplier_id": "SUP-018",
+      "velocity": "fast",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0107",
+      "description": "Standard Flexible Plate",
+      "unit_pack_qty": 2000,
+      "supplier_id": "SUP-015",
+      "velocity": "slow",
+      "delivery_days": [
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0108",
+      "description": "Rear Signal Spring",
+      "unit_pack_qty": 480,
+      "supplier_id": "SUP-020",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0109",
+      "description": "Lower Drive Gasket",
+      "unit_pack_qty": 96,
+      "supplier_id": "SUP-007",
+      "velocity": "fast",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0110",
+      "description": "Primary Modular Adapter",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-012",
+      "velocity": "moderate",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0111",
+      "description": "Front Signal Module",
+      "unit_pack_qty": 3200,
+      "supplier_id": "SUP-018",
+      "velocity": "moderate",
+      "delivery_days": [
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0112",
+      "description": "Lower Guide Spring",
+      "unit_pack_qty": 320,
+      "supplier_id": "SUP-010",
+      "velocity": "moderate",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0113",
+      "description": "Lower Sensor Socket",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-018",
+      "velocity": "slow",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0114",
+      "description": "Digital Support Plate",
+      "unit_pack_qty": 4800,
+      "supplier_id": "SUP-013",
+      "velocity": "slow",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0115",
+      "description": "Lower Mounting Relay",
+      "unit_pack_qty": 480,
+      "supplier_id": "SUP-002",
+      "velocity": "moderate",
+      "delivery_days": [
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0116",
+      "description": "Optical Guide Plate",
+      "unit_pack_qty": 240,
+      "supplier_id": "SUP-013",
+      "velocity": "fast",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0117",
+      "description": "Front Filter Cover",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-021",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0118",
+      "description": "Digital Sensor Cable",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-019",
+      "velocity": "moderate",
+      "delivery_days": [
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0119",
+      "description": "Rotary Drive Spring",
+      "unit_pack_qty": 2000,
+      "supplier_id": "SUP-003",
+      "velocity": "moderate",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0120",
+      "description": "Linear Filter Switch",
+      "unit_pack_qty": 320,
+      "supplier_id": "SUP-018",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0121",
+      "description": "Primary Modular Clamp",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-024",
+      "velocity": "slow",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0122",
+      "description": "Auxiliary Protective Adapter",
+      "unit_pack_qty": 64,
+      "supplier_id": "SUP-004",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0123",
+      "description": "Upper Support Relay",
+      "unit_pack_qty": 240,
+      "supplier_id": "SUP-002",
+      "velocity": "fast",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0124",
+      "description": "Center Signal Bearing",
+      "unit_pack_qty": 2400,
+      "supplier_id": "SUP-024",
+      "velocity": "dormant",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0125",
+      "description": "Linear Guide Switch",
+      "unit_pack_qty": 2000,
+      "supplier_id": "SUP-017",
+      "velocity": "dormant",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0126",
+      "description": "Inner Protective Switch",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-013",
+      "velocity": "moderate",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0127",
+      "description": "Upper Drive Panel",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-009",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0128",
+      "description": "Outer Support Gasket",
+      "unit_pack_qty": 4000,
+      "supplier_id": "SUP-008",
+      "velocity": "slow",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0129",
+      "description": "Center Control Assembly",
+      "unit_pack_qty": 96,
+      "supplier_id": "SUP-001",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0130",
+      "description": "Center Mounting Plate",
+      "unit_pack_qty": 1600,
+      "supplier_id": "SUP-004",
+      "velocity": "moderate",
+      "delivery_days": [
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0131",
+      "description": "Lower Modular Spring",
+      "unit_pack_qty": 320,
+      "supplier_id": "SUP-010",
+      "velocity": "slow",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0132",
+      "description": "Front Drive Frame",
+      "unit_pack_qty": 3200,
+      "supplier_id": "SUP-013",
+      "velocity": "slow",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0133",
+      "description": "Inner Mounting Housing",
+      "unit_pack_qty": 240,
+      "supplier_id": "SUP-013",
+      "velocity": "fast",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0134",
+      "description": "Inner Control Module",
+      "unit_pack_qty": 96,
+      "supplier_id": "SUP-023",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0135",
+      "description": "Rotary Control Relay",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-010",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0136",
+      "description": "Upper Signal Cover",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-010",
+      "velocity": "fast",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0137",
+      "description": "Primary Sensor Clamp",
+      "unit_pack_qty": 64,
+      "supplier_id": "SUP-024",
+      "velocity": "moderate",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0138",
+      "description": "Rotary Sensor Gasket",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-009",
+      "velocity": "fast",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0139",
+      "description": "Center Flexible Bracket",
+      "unit_pack_qty": 64,
+      "supplier_id": "SUP-016",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0140",
+      "description": "Digital Sensor Clamp",
+      "unit_pack_qty": 48,
+      "supplier_id": "SUP-006",
+      "velocity": "fast",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0141",
+      "description": "Center Flexible Frame",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-019",
+      "velocity": "fast",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0142",
+      "description": "Front Sensor Gasket",
+      "unit_pack_qty": 96,
+      "supplier_id": "SUP-012",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0143",
+      "description": "Lower Protective Frame",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-005",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0144",
+      "description": "Linear Signal Assembly",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-006",
+      "velocity": "moderate",
+      "delivery_days": [
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0145",
+      "description": "Outer Flexible Cover",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-008",
+      "velocity": "slow",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0146",
+      "description": "Linear Flexible Actuator",
+      "unit_pack_qty": 4800,
+      "supplier_id": "SUP-016",
+      "velocity": "dormant",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0147",
+      "description": "Primary Guide Cooler",
+      "unit_pack_qty": 120,
+      "supplier_id": "SUP-023",
+      "velocity": "fast",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0148",
+      "description": "Standard Precision Switch",
+      "unit_pack_qty": 48,
+      "supplier_id": "SUP-002",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0149",
+      "description": "Lower Signal Cable",
+      "unit_pack_qty": 2000,
+      "supplier_id": "SUP-020",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0150",
+      "description": "Auxiliary Sensor Actuator",
+      "unit_pack_qty": 48,
+      "supplier_id": "SUP-015",
+      "velocity": "fast",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0151",
+      "description": "Thermal Filter Module",
+      "unit_pack_qty": 240,
+      "supplier_id": "SUP-012",
+      "velocity": "fast",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0152",
+      "description": "Inner Support Socket",
+      "unit_pack_qty": 1600,
+      "supplier_id": "SUP-008",
+      "velocity": "moderate",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0153",
+      "description": "Front Signal Assembly",
+      "unit_pack_qty": 2400,
+      "supplier_id": "SUP-021",
+      "velocity": "moderate",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0154",
+      "description": "Standard Protective Bearing",
+      "unit_pack_qty": 48,
+      "supplier_id": "SUP-005",
+      "velocity": "fast",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0155",
+      "description": "Standard Flexible Cooler",
+      "unit_pack_qty": 3200,
+      "supplier_id": "SUP-006",
+      "velocity": "slow",
+      "delivery_days": [
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0156",
+      "description": "Rotary Signal Spring",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-013",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0157",
+      "description": "Outer Modular Switch",
+      "unit_pack_qty": 480,
+      "supplier_id": "SUP-004",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0158",
+      "description": "Rear Flexible Connector",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-002",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0159",
+      "description": "Center Sensor Housing",
+      "unit_pack_qty": 1600,
+      "supplier_id": "SUP-021",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0160",
+      "description": "Outer Signal Frame",
+      "unit_pack_qty": 480,
+      "supplier_id": "SUP-012",
+      "velocity": "fast",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0161",
+      "description": "Auxiliary Signal Clamp",
+      "unit_pack_qty": 600,
+      "supplier_id": "SUP-006",
+      "velocity": "moderate",
+      "delivery_days": [
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0162",
+      "description": "Rear Mounting Assembly",
+      "unit_pack_qty": 600,
+      "supplier_id": "SUP-013",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0163",
+      "description": "Thermal Flexible Bracket",
+      "unit_pack_qty": 120,
+      "supplier_id": "SUP-014",
+      "velocity": "fast",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0164",
+      "description": "Inner Control Spring",
+      "unit_pack_qty": 480,
+      "supplier_id": "SUP-011",
+      "velocity": "moderate",
+      "delivery_days": [
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0165",
+      "description": "Rear Support Module",
+      "unit_pack_qty": 48,
+      "supplier_id": "SUP-008",
+      "velocity": "moderate",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0166",
+      "description": "Auxiliary Filter Socket",
+      "unit_pack_qty": 600,
+      "supplier_id": "SUP-006",
+      "velocity": "moderate",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0167",
+      "description": "Compact Sensor Cooler",
+      "unit_pack_qty": 96,
+      "supplier_id": "SUP-019",
+      "velocity": "fast",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0168",
+      "description": "Lower Flexible Spring",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-011",
+      "velocity": "dormant",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0169",
+      "description": "Rotary Signal Socket",
+      "unit_pack_qty": 320,
+      "supplier_id": "SUP-014",
+      "velocity": "moderate",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0170",
+      "description": "Inner Filter Cooler",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-024",
+      "velocity": "moderate",
+      "delivery_days": [
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0171",
+      "description": "Standard Protective Plate",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-019",
+      "velocity": "moderate",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0172",
+      "description": "Optical Filter Cable",
+      "unit_pack_qty": 64,
+      "supplier_id": "SUP-022",
+      "velocity": "fast",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0173",
+      "description": "Digital Control Cooler",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-019",
+      "velocity": "fast",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0174",
+      "description": "Inner Mounting Socket",
+      "unit_pack_qty": 320,
+      "supplier_id": "SUP-020",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0175",
+      "description": "Linear Precision Cover",
+      "unit_pack_qty": 120,
+      "supplier_id": "SUP-019",
+      "velocity": "fast",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0176",
+      "description": "Rotary Flexible Relay",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-017",
+      "velocity": "fast",
+      "delivery_days": [
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0177",
+      "description": "Outer Support Bearing",
+      "unit_pack_qty": 64,
+      "supplier_id": "SUP-014",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0178",
+      "description": "Compact Filter Adapter",
+      "unit_pack_qty": 240,
+      "supplier_id": "SUP-006",
+      "velocity": "moderate",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0179",
+      "description": "Outer Mounting Module",
+      "unit_pack_qty": 64,
+      "supplier_id": "SUP-010",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0180",
+      "description": "Digital Support Actuator",
+      "unit_pack_qty": 600,
+      "supplier_id": "SUP-013",
+      "velocity": "moderate",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0181",
+      "description": "Rotary Control Housing",
+      "unit_pack_qty": 2400,
+      "supplier_id": "SUP-007",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0182",
+      "description": "Optical Filter Socket",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-015",
+      "velocity": "fast",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0183",
+      "description": "Auxiliary Drive Bracket",
+      "unit_pack_qty": 480,
+      "supplier_id": "SUP-006",
+      "velocity": "moderate",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0184",
+      "description": "Inner Control Switch",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-009",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0185",
+      "description": "Inner Signal Clamp",
+      "unit_pack_qty": 600,
+      "supplier_id": "SUP-016",
+      "velocity": "slow",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0186",
+      "description": "Rear Sensor Relay",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-020",
+      "velocity": "dormant",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0187",
+      "description": "Linear Filter Assembly",
+      "unit_pack_qty": 600,
+      "supplier_id": "SUP-005",
+      "velocity": "dormant",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0188",
+      "description": "Auxiliary Guide Cooler",
+      "unit_pack_qty": 800,
+      "supplier_id": "SUP-004",
+      "velocity": "moderate",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0189",
+      "description": "Primary Flexible Cable",
+      "unit_pack_qty": 2000,
+      "supplier_id": "SUP-002",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0190",
+      "description": "Thermal Precision Actuator",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-007",
+      "velocity": "moderate",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0191",
+      "description": "Thermal Support Housing",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-017",
+      "velocity": "moderate",
+      "delivery_days": [
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0192",
+      "description": "Inner Flexible Connector",
+      "unit_pack_qty": 48,
+      "supplier_id": "SUP-012",
+      "velocity": "moderate",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0193",
+      "description": "Rear Signal Panel",
+      "unit_pack_qty": 240,
+      "supplier_id": "SUP-020",
+      "velocity": "moderate",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0194",
+      "description": "Rotary Mounting Lens",
+      "unit_pack_qty": 600,
+      "supplier_id": "SUP-009",
+      "velocity": "moderate",
+      "delivery_days": [
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0195",
+      "description": "Optical Flexible Clamp",
+      "unit_pack_qty": 320,
+      "supplier_id": "SUP-005",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0196",
+      "description": "Primary Guide Socket",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-006",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "material_id": "PART-0197",
+      "description": "Front Control Bracket",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-007",
+      "velocity": "moderate",
+      "delivery_days": [
+        2
+      ]
+    },
+    {
+      "material_id": "PART-0198",
+      "description": "Auxiliary Control Cable",
+      "unit_pack_qty": 80,
+      "supplier_id": "SUP-008",
+      "velocity": "moderate",
+      "delivery_days": [
+        3
+      ]
+    },
+    {
+      "material_id": "PART-0199",
+      "description": "Center Protective Switch",
+      "unit_pack_qty": 600,
+      "supplier_id": "SUP-012",
+      "velocity": "moderate",
+      "delivery_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "material_id": "PART-0200",
+      "description": "Outer Support Connector",
+      "unit_pack_qty": 400,
+      "supplier_id": "SUP-005",
+      "velocity": "moderate",
+      "delivery_days": [
+        1,
+        3,
+        5
+      ]
+    }
+  ],
+  "suppliers": [
+    {
+      "supplier_id": "SUP-001",
+      "part_count": 3
+    },
+    {
+      "supplier_id": "SUP-002",
+      "part_count": 8
+    },
+    {
+      "supplier_id": "SUP-003",
+      "part_count": 6
+    },
+    {
+      "supplier_id": "SUP-004",
+      "part_count": 11
+    },
+    {
+      "supplier_id": "SUP-005",
+      "part_count": 12
+    },
+    {
+      "supplier_id": "SUP-006",
+      "part_count": 12
+    },
+    {
+      "supplier_id": "SUP-007",
+      "part_count": 8
+    },
+    {
+      "supplier_id": "SUP-008",
+      "part_count": 9
+    },
+    {
+      "supplier_id": "SUP-009",
+      "part_count": 6
+    },
+    {
+      "supplier_id": "SUP-010",
+      "part_count": 10
+    },
+    {
+      "supplier_id": "SUP-011",
+      "part_count": 6
+    },
+    {
+      "supplier_id": "SUP-012",
+      "part_count": 8
+    },
+    {
+      "supplier_id": "SUP-013",
+      "part_count": 12
+    },
+    {
+      "supplier_id": "SUP-014",
+      "part_count": 10
+    },
+    {
+      "supplier_id": "SUP-015",
+      "part_count": 11
+    },
+    {
+      "supplier_id": "SUP-016",
+      "part_count": 13
+    },
+    {
+      "supplier_id": "SUP-017",
+      "part_count": 7
+    },
+    {
+      "supplier_id": "SUP-018",
+      "part_count": 7
+    },
+    {
+      "supplier_id": "SUP-019",
+      "part_count": 7
+    },
+    {
+      "supplier_id": "SUP-020",
+      "part_count": 6
+    },
+    {
+      "supplier_id": "SUP-021",
+      "part_count": 10
+    },
+    {
+      "supplier_id": "SUP-022",
+      "part_count": 4
+    },
+    {
+      "supplier_id": "SUP-023",
+      "part_count": 6
+    },
+    {
+      "supplier_id": "SUP-024",
+      "part_count": 8
+    }
+  ],
+  "bins": [
+    {
+      "bin_code": "N-QH-01",
+      "facility": "Facility North",
+      "zone_code": "Special",
+      "rack_level": 1,
+      "count_scope": "EXCLUDED"
+    },
+    {
+      "bin_code": "N-QH-02",
+      "facility": "Facility North",
+      "zone_code": "Special",
+      "rack_level": 1,
+      "count_scope": "EXCLUDED"
+    },
+    {
+      "bin_code": "N-QH-03",
+      "facility": "Facility North",
+      "zone_code": "Special",
+      "rack_level": 1,
+      "count_scope": "EXCLUDED"
+    },
+    {
+      "bin_code": "N-QH-04",
+      "facility": "Facility North",
+      "zone_code": "Special",
+      "rack_level": 1,
+      "count_scope": "EXCLUDED"
+    },
+    {
+      "bin_code": "N-QH-05",
+      "facility": "Facility North",
+      "zone_code": "Special",
+      "rack_level": 1,
+      "count_scope": "EXCLUDED"
+    },
+    {
+      "bin_code": "N-QH-06",
+      "facility": "Facility North",
+      "zone_code": "Special",
+      "rack_level": 1,
+      "count_scope": "EXCLUDED"
+    },
+    {
+      "bin_code": "N-STG-01",
+      "facility": "Facility North",
+      "zone_code": "Staging",
+      "rack_level": 1,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "N-STG-02",
+      "facility": "Facility North",
+      "zone_code": "Staging",
+      "rack_level": 1,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "N-STG-03",
+      "facility": "Facility North",
+      "zone_code": "Staging",
+      "rack_level": 1,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "N-STG-04",
+      "facility": "Facility North",
+      "zone_code": "Staging",
+      "rack_level": 1,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "N-STG-05",
+      "facility": "Facility North",
+      "zone_code": "Staging",
+      "rack_level": 1,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "N-STG-06",
+      "facility": "Facility North",
+      "zone_code": "Staging",
+      "rack_level": 1,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "N-STG-07",
+      "facility": "Facility North",
+      "zone_code": "Staging",
+      "rack_level": 1,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "N-STG-08",
+      "facility": "Facility North",
+      "zone_code": "Staging",
+      "rack_level": 1,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "N01-01",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N01-02",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N01-03",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N01-04",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N01-05",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 4,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N01-06",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N01-07",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N01-08",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N01-09",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N01-10",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N01-11",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N01-12",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 4,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N01-13",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 4,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N01-14",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 4,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N01-15",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N01-16",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 3,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N01-17",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N01-18",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N01-19",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N01-20",
+      "facility": "Facility North",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N09-01",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 4,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N09-02",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N09-03",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N09-04",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N09-05",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N09-06",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 2,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "N09-07",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N09-08",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N09-09",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N09-10",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N09-11",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N09-12",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N09-13",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N09-14",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N09-15",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 3,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N09-16",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N09-17",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 2,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "N09-18",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N09-19",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "N09-20",
+      "facility": "Facility North",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S-QH-01",
+      "facility": "Facility South",
+      "zone_code": "Special",
+      "rack_level": 1,
+      "count_scope": "EXCLUDED"
+    },
+    {
+      "bin_code": "S-QH-02",
+      "facility": "Facility South",
+      "zone_code": "Special",
+      "rack_level": 1,
+      "count_scope": "EXCLUDED"
+    },
+    {
+      "bin_code": "S-QH-03",
+      "facility": "Facility South",
+      "zone_code": "Special",
+      "rack_level": 1,
+      "count_scope": "EXCLUDED"
+    },
+    {
+      "bin_code": "S-QH-04",
+      "facility": "Facility South",
+      "zone_code": "Special",
+      "rack_level": 1,
+      "count_scope": "EXCLUDED"
+    },
+    {
+      "bin_code": "S-QH-05",
+      "facility": "Facility South",
+      "zone_code": "Special",
+      "rack_level": 1,
+      "count_scope": "EXCLUDED"
+    },
+    {
+      "bin_code": "S-QH-06",
+      "facility": "Facility South",
+      "zone_code": "Special",
+      "rack_level": 1,
+      "count_scope": "EXCLUDED"
+    },
+    {
+      "bin_code": "S-STG-01",
+      "facility": "Facility South",
+      "zone_code": "Staging",
+      "rack_level": 1,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "S-STG-02",
+      "facility": "Facility South",
+      "zone_code": "Staging",
+      "rack_level": 1,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "S-STG-03",
+      "facility": "Facility South",
+      "zone_code": "Staging",
+      "rack_level": 1,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "S-STG-04",
+      "facility": "Facility South",
+      "zone_code": "Staging",
+      "rack_level": 1,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "S-STG-05",
+      "facility": "Facility South",
+      "zone_code": "Staging",
+      "rack_level": 1,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "S-STG-06",
+      "facility": "Facility South",
+      "zone_code": "Staging",
+      "rack_level": 1,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "S-STG-07",
+      "facility": "Facility South",
+      "zone_code": "Staging",
+      "rack_level": 1,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "S-STG-08",
+      "facility": "Facility South",
+      "zone_code": "Staging",
+      "rack_level": 1,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "S01-01",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 4,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S01-02",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S01-03",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 4,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S01-04",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S01-05",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 4,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S01-06",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 4,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S01-07",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S01-08",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S01-09",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S01-10",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S01-11",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S01-12",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S01-13",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 4,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S01-14",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S01-15",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 2,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "S01-16",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S01-17",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S01-18",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S01-19",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 4,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S01-20",
+      "facility": "Facility South",
+      "zone_code": "Zone A",
+      "rack_level": 4,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S10-01",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S10-02",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 4,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S10-03",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S10-04",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 2,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "S10-05",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S10-06",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S10-07",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S10-08",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 4,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S10-09",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S10-10",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S10-11",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 4,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S10-12",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 4,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S10-13",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S10-14",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S10-15",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S10-16",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 3,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S10-17",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S10-18",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 2,
+      "count_scope": "DAILY"
+    },
+    {
+      "bin_code": "S10-19",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    },
+    {
+      "bin_code": "S10-20",
+      "facility": "Facility South",
+      "zone_code": "Zone B",
+      "rack_level": 5,
+      "count_scope": "WEEKLY"
+    }
+  ],
+  "boxes": [
+    {
+      "barcode": "PLT-01195",
+      "material_id": "PART-0107",
+      "qty": 2000,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "N-STG-01",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 1.5
+    },
+    {
+      "barcode": "PLT-01196",
+      "material_id": "PART-0188",
+      "qty": 800,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "N-STG-01",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 1.5
+    },
+    {
+      "barcode": "PLT-01197",
+      "material_id": "PART-0100",
+      "qty": 2400,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "N-STG-07",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 1.5
+    },
+    {
+      "barcode": "PLT-01198",
+      "material_id": "PART-0028",
+      "qty": 480,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "N-STG-07",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 1.5
+    },
+    {
+      "barcode": "PLT-01199",
+      "material_id": "PART-0145",
+      "qty": 800,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "N-STG-08",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 1.5
+    },
+    {
+      "barcode": "PLT-01200",
+      "material_id": "PART-0184",
+      "qty": 80,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "N-STG-08",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 1.5
+    },
+    {
+      "barcode": "PLT-01201",
+      "material_id": "PART-0170",
+      "qty": 80,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "N-STG-08",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 1.5
+    },
+    {
+      "barcode": "PLT-00851",
+      "material_id": "PART-0006",
+      "qty": 80,
+      "received_at": "2026-11-03T08:00:00",
+      "bin_code": "N01-01",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 13,
+      "turnover_days": 19.5
+    },
+    {
+      "barcode": "PLT-00883",
+      "material_id": "PART-0046",
+      "qty": 4000,
+      "received_at": "2026-07-10T08:00:00",
+      "bin_code": "N01-01",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 129,
+      "turnover_days": 146.0
+    },
+    {
+      "barcode": "PLT-00604",
+      "material_id": "PART-0083",
+      "qty": 2000,
+      "received_at": "2026-08-29T08:00:00",
+      "bin_code": "N01-01",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 79,
+      "turnover_days": 91.0
+    },
+    {
+      "barcode": "PLT-00212",
+      "material_id": "PART-0167",
+      "qty": 96,
+      "received_at": "2026-11-03T08:00:00",
+      "bin_code": "N01-01",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 13,
+      "turnover_days": 12.0
+    },
+    {
+      "barcode": "PLT-00059",
+      "material_id": "PART-0023",
+      "qty": 48,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "N01-02",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 7.0
+    },
+    {
+      "barcode": "PLT-01174",
+      "material_id": "PART-0026",
+      "qty": 320,
+      "received_at": "2026-10-20T08:00:00",
+      "bin_code": "N01-02",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 27,
+      "turnover_days": 31.9
+    },
+    {
+      "barcode": "PLT-00787",
+      "material_id": "PART-0050",
+      "qty": 80,
+      "received_at": "2026-11-13T08:00:00",
+      "bin_code": "N01-02",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 3,
+      "turnover_days": 8.6
+    },
+    {
+      "barcode": "PLT-01030",
+      "material_id": "PART-0036",
+      "qty": 2000,
+      "received_at": "2026-08-29T08:00:00",
+      "bin_code": "N01-02",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 79,
+      "turnover_days": 130.3
+    },
+    {
+      "barcode": "PLT-00043",
+      "material_id": "PART-0033",
+      "qty": 1600,
+      "received_at": "2026-08-30T08:00:00",
+      "bin_code": "N01-03",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 78,
+      "turnover_days": 90.6
+    },
+    {
+      "barcode": "PLT-00536",
+      "material_id": "PART-0026",
+      "qty": 320,
+      "received_at": "2026-10-27T08:00:00",
+      "bin_code": "N01-03",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 20,
+      "turnover_days": 31.9
+    },
+    {
+      "barcode": "PLT-01060",
+      "material_id": "PART-0051",
+      "qty": 120,
+      "received_at": "2026-11-07T08:00:00",
+      "bin_code": "N01-03",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 9,
+      "turnover_days": 5.8
+    },
+    {
+      "barcode": "PLT-01003",
+      "material_id": "PART-0033",
+      "qty": 1010,
+      "received_at": "2026-10-06T08:00:00",
+      "bin_code": "N01-03",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 41,
+      "turnover_days": 90.6
+    },
+    {
+      "barcode": "PLT-00297",
+      "material_id": "PART-0002",
+      "qty": 320,
+      "received_at": "2026-10-29T08:00:00",
+      "bin_code": "N01-04",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 18,
+      "turnover_days": 24.1
+    },
+    {
+      "barcode": "PLT-01088",
+      "material_id": "PART-0087",
+      "qty": 240,
+      "received_at": "2026-11-12T08:00:00",
+      "bin_code": "N01-04",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 4,
+      "turnover_days": 32.7
+    },
+    {
+      "barcode": "PLT-00875",
+      "material_id": "PART-0062",
+      "qty": 70,
+      "received_at": "2026-11-13T08:00:00",
+      "bin_code": "N01-05",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 3,
+      "turnover_days": 8.9
+    },
+    {
+      "barcode": "PLT-00300",
+      "material_id": "PART-0023",
+      "qty": 48,
+      "received_at": "2026-11-07T08:00:00",
+      "bin_code": "N01-05",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 9,
+      "turnover_days": 7.0
+    },
+    {
+      "barcode": "PLT-00712",
+      "material_id": "PART-0176",
+      "qty": 80,
+      "received_at": "2026-11-08T08:00:00",
+      "bin_code": "N01-05",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 8,
+      "turnover_days": 7.9
+    },
+    {
+      "barcode": "PLT-00720",
+      "material_id": "PART-0187",
+      "qty": 535,
+      "received_at": "2026-07-08T08:00:00",
+      "bin_code": "N01-05",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 131,
+      "turnover_days": 223.2
+    },
+    {
+      "barcode": "PLT-00952",
+      "material_id": "PART-0140",
+      "qty": 48,
+      "received_at": "2026-11-11T08:00:00",
+      "bin_code": "N01-06",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 5,
+      "turnover_days": 12.8
+    },
+    {
+      "barcode": "PLT-01023",
+      "material_id": "PART-0121",
+      "qty": 119,
+      "received_at": "2026-10-14T08:00:00",
+      "bin_code": "N01-06",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 33,
+      "turnover_days": 64.6
+    },
+    {
+      "barcode": "PLT-00835",
+      "material_id": "PART-0015",
+      "qty": 400,
+      "received_at": "2025-09-11T08:00:00",
+      "bin_code": "N01-06",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 431,
+      "turnover_days": 568.9
+    },
+    {
+      "barcode": "PLT-01163",
+      "material_id": "PART-0160",
+      "qty": 480,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "N01-07",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 9.0
+    },
+    {
+      "barcode": "PLT-01117",
+      "material_id": "PART-0183",
+      "qty": 480,
+      "received_at": "2026-10-16T08:00:00",
+      "bin_code": "N01-07",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 31,
+      "turnover_days": 28.5
+    },
+    {
+      "barcode": "PLT-00286",
+      "material_id": "PART-0047",
+      "qty": 80,
+      "received_at": "2026-11-13T08:00:00",
+      "bin_code": "N01-07",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 3,
+      "turnover_days": 12.1
+    },
+    {
+      "barcode": "PLT-00056",
+      "material_id": "PART-0051",
+      "qty": 50,
+      "received_at": "2026-11-15T08:00:00",
+      "bin_code": "N01-07",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 1,
+      "turnover_days": 5.8
+    },
+    {
+      "barcode": "PLT-01175",
+      "material_id": "PART-0030",
+      "qty": 4000,
+      "received_at": "2026-09-23T08:00:00",
+      "bin_code": "N01-08",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 54,
+      "turnover_days": 112.3
+    },
+    {
+      "barcode": "PLT-00198",
+      "material_id": "PART-0128",
+      "qty": 477,
+      "received_at": "2026-10-11T08:00:00",
+      "bin_code": "N01-08",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 36,
+      "turnover_days": 73.3
+    },
+    {
+      "barcode": "PLT-01066",
+      "material_id": "PART-0064",
+      "qty": 4800,
+      "received_at": "2025-10-14T08:00:00",
+      "bin_code": "N01-08",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 398,
+      "turnover_days": 581.7
+    },
+    {
+      "barcode": "PLT-01005",
+      "material_id": "PART-0018",
+      "qty": 4000,
+      "received_at": "2026-09-22T08:00:00",
+      "bin_code": "N01-08",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 55,
+      "turnover_days": 102.0
+    },
+    {
+      "barcode": "PLT-00372",
+      "material_id": "PART-0158",
+      "qty": 400,
+      "received_at": "2026-10-15T08:00:00",
+      "bin_code": "N01-09",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 32,
+      "turnover_days": 32.0
+    },
+    {
+      "barcode": "PLT-00441",
+      "material_id": "PART-0032",
+      "qty": 2000,
+      "received_at": "2026-03-02T08:00:00",
+      "bin_code": "N01-09",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 259,
+      "turnover_days": 291.2
+    },
+    {
+      "barcode": "PLT-00857",
+      "material_id": "PART-0073",
+      "qty": 80,
+      "received_at": "2026-11-05T08:00:00",
+      "bin_code": "N01-09",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 11,
+      "turnover_days": 12.2
+    },
+    {
+      "barcode": "PLT-00414",
+      "material_id": "PART-0162",
+      "qty": 600,
+      "received_at": "2026-11-04T08:00:00",
+      "bin_code": "N01-09",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 12,
+      "turnover_days": 24.0
+    },
+    {
+      "barcode": "PLT-00929",
+      "material_id": "PART-0047",
+      "qty": 80,
+      "received_at": "2026-11-15T08:00:00",
+      "bin_code": "N01-09",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 1,
+      "turnover_days": 12.1
+    },
+    {
+      "barcode": "PLT-01111",
+      "material_id": "PART-0036",
+      "qty": 157,
+      "received_at": "2026-09-22T08:00:00",
+      "bin_code": "N01-10",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 55,
+      "turnover_days": 130.3
+    },
+    {
+      "barcode": "PLT-00905",
+      "material_id": "PART-0097",
+      "qty": 800,
+      "received_at": "2026-09-27T08:00:00",
+      "bin_code": "N01-10",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 50,
+      "turnover_days": 107.1
+    },
+    {
+      "barcode": "PLT-00349",
+      "material_id": "PART-0011",
+      "qty": 48,
+      "received_at": "2026-11-12T08:00:00",
+      "bin_code": "N01-10",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 4,
+      "turnover_days": 5.5
+    },
+    {
+      "barcode": "PLT-00470",
+      "material_id": "PART-0054",
+      "qty": 400,
+      "received_at": "2026-10-24T08:00:00",
+      "bin_code": "N01-10",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 23,
+      "turnover_days": 25.2
+    },
+    {
+      "barcode": "PLT-00919",
+      "material_id": "PART-0081",
+      "qty": 240,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "N01-10",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 28.7
+    },
+    {
+      "barcode": "PLT-00740",
+      "material_id": "PART-0068",
+      "qty": 116,
+      "received_at": "2026-10-26T08:00:00",
+      "bin_code": "N01-11",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 21,
+      "turnover_days": 43.0
+    },
+    {
+      "barcode": "PLT-00382",
+      "material_id": "PART-0095",
+      "qty": 64,
+      "received_at": "2026-10-16T08:00:00",
+      "bin_code": "N01-11",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 31,
+      "turnover_days": 29.4
+    },
+    {
+      "barcode": "PLT-00253",
+      "material_id": "PART-0096",
+      "qty": 600,
+      "received_at": "2026-11-12T08:00:00",
+      "bin_code": "N01-11",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 4,
+      "turnover_days": 11.7
+    },
+    {
+      "barcode": "PLT-00483",
+      "material_id": "PART-0096",
+      "qty": 600,
+      "received_at": "2026-11-06T08:00:00",
+      "bin_code": "N01-12",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 11.7
+    },
+    {
+      "barcode": "PLT-00206",
+      "material_id": "PART-0047",
+      "qty": 80,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "N01-12",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 12.1
+    },
+    {
+      "barcode": "PLT-00074",
+      "material_id": "PART-0179",
+      "qty": 64,
+      "received_at": "2026-11-08T08:00:00",
+      "bin_code": "N01-12",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 8,
+      "turnover_days": 22.0
+    },
+    {
+      "barcode": "PLT-01089",
+      "material_id": "PART-0073",
+      "qty": 80,
+      "received_at": "2026-11-04T08:00:00",
+      "bin_code": "N01-13",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 12,
+      "turnover_days": 12.2
+    },
+    {
+      "barcode": "PLT-01057",
+      "material_id": "PART-0102",
+      "qty": 320,
+      "received_at": "2026-10-14T08:00:00",
+      "bin_code": "N01-13",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 33,
+      "turnover_days": 32.4
+    },
+    {
+      "barcode": "PLT-00168",
+      "material_id": "PART-0117",
+      "qty": 400,
+      "received_at": "2026-11-05T08:00:00",
+      "bin_code": "N01-14",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 11,
+      "turnover_days": 16.5
+    },
+    {
+      "barcode": "PLT-00809",
+      "material_id": "PART-0050",
+      "qty": 80,
+      "received_at": "2026-11-12T08:00:00",
+      "bin_code": "N01-14",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 4,
+      "turnover_days": 8.6
+    },
+    {
+      "barcode": "PLT-00561",
+      "material_id": "PART-0131",
+      "qty": 320,
+      "received_at": "2026-07-03T08:00:00",
+      "bin_code": "N01-14",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 136,
+      "turnover_days": 146.5
+    },
+    {
+      "barcode": "PLT-00867",
+      "material_id": "PART-0065",
+      "qty": 643,
+      "received_at": "2026-11-11T08:00:00",
+      "bin_code": "N01-14",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 5,
+      "turnover_days": 19.9
+    },
+    {
+      "barcode": "PLT-00548",
+      "material_id": "PART-0039",
+      "qty": 96,
+      "received_at": "2026-11-10T08:00:00",
+      "bin_code": "N01-15",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 6,
+      "turnover_days": 10.2
+    },
+    {
+      "barcode": "PLT-00963",
+      "material_id": "PART-0114",
+      "qty": 4800,
+      "received_at": "2026-07-30T08:00:00",
+      "bin_code": "N01-15",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 109,
+      "turnover_days": 125.4
+    },
+    {
+      "barcode": "PLT-00541",
+      "material_id": "PART-0122",
+      "qty": 64,
+      "received_at": "2026-11-11T08:00:00",
+      "bin_code": "N01-15",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 5,
+      "turnover_days": 12.7
+    },
+    {
+      "barcode": "PLT-00468",
+      "material_id": "PART-0047",
+      "qty": 80,
+      "received_at": "2026-11-11T08:00:00",
+      "bin_code": "N01-15",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 5,
+      "turnover_days": 12.1
+    },
+    {
+      "barcode": "PLT-00927",
+      "material_id": "PART-0057",
+      "qty": 2064,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "N01-15",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 26.1
+    },
+    {
+      "barcode": "PLT-00794",
+      "material_id": "PART-0175",
+      "qty": 120,
+      "received_at": "2026-11-10T08:00:00",
+      "bin_code": "N01-16",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 6,
+      "turnover_days": 5.6
+    },
+    {
+      "barcode": "PLT-01135",
+      "material_id": "PART-0016",
+      "qty": 120,
+      "received_at": "2026-11-04T08:00:00",
+      "bin_code": "N01-16",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 12,
+      "turnover_days": 27.5
+    },
+    {
+      "barcode": "PLT-00909",
+      "material_id": "PART-0041",
+      "qty": 800,
+      "received_at": "2026-10-29T08:00:00",
+      "bin_code": "N01-16",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 18,
+      "turnover_days": 21.8
+    },
+    {
+      "barcode": "PLT-00575",
+      "material_id": "PART-0115",
+      "qty": 480,
+      "received_at": "2026-10-25T08:00:00",
+      "bin_code": "N01-17",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 22,
+      "turnover_days": 30.3
+    },
+    {
+      "barcode": "PLT-00664",
+      "material_id": "PART-0039",
+      "qty": 96,
+      "received_at": "2026-11-10T08:00:00",
+      "bin_code": "N01-17",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 6,
+      "turnover_days": 10.2
+    },
+    {
+      "barcode": "PLT-00539",
+      "material_id": "PART-0179",
+      "qty": 64,
+      "received_at": "2026-11-01T08:00:00",
+      "bin_code": "N01-17",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 15,
+      "turnover_days": 22.0
+    },
+    {
+      "barcode": "PLT-01077",
+      "material_id": "PART-0005",
+      "qty": 240,
+      "received_at": "2026-11-04T08:00:00",
+      "bin_code": "N01-18",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 12,
+      "turnover_days": 25.1
+    },
+    {
+      "barcode": "PLT-00147",
+      "material_id": "PART-0120",
+      "qty": 320,
+      "received_at": "2026-10-23T08:00:00",
+      "bin_code": "N01-18",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 24,
+      "turnover_days": 32.3
+    },
+    {
+      "barcode": "PLT-00515",
+      "material_id": "PART-0058",
+      "qty": 400,
+      "received_at": "2026-11-04T08:00:00",
+      "bin_code": "N01-18",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 12,
+      "turnover_days": 20.8
+    },
+    {
+      "barcode": "PLT-00973",
+      "material_id": "PART-0070",
+      "qty": 240,
+      "received_at": "2026-10-28T08:00:00",
+      "bin_code": "N01-19",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 19,
+      "turnover_days": 26.3
+    },
+    {
+      "barcode": "PLT-00152",
+      "material_id": "PART-0185",
+      "qty": 600,
+      "received_at": "2026-09-24T08:00:00",
+      "bin_code": "N01-19",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 53,
+      "turnover_days": 86.4
+    },
+    {
+      "barcode": "PLT-00998",
+      "material_id": "PART-0063",
+      "qty": 2400,
+      "received_at": "2026-08-19T08:00:00",
+      "bin_code": "N01-19",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 89,
+      "turnover_days": 149.5
+    },
+    {
+      "barcode": "PLT-01049",
+      "material_id": "PART-0075",
+      "qty": 480,
+      "received_at": "2026-10-14T08:00:00",
+      "bin_code": "N01-19",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 33,
+      "turnover_days": 31.4
+    },
+    {
+      "barcode": "PLT-00398",
+      "material_id": "PART-0020",
+      "qty": 320,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "N01-20",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 18.4
+    },
+    {
+      "barcode": "PLT-00746",
+      "material_id": "PART-0078",
+      "qty": 320,
+      "received_at": "2026-10-03T08:00:00",
+      "bin_code": "N01-20",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 44,
+      "turnover_days": 67.3
+    },
+    {
+      "barcode": "PLT-00124",
+      "material_id": "PART-0063",
+      "qty": 93,
+      "received_at": "2026-09-11T08:00:00",
+      "bin_code": "N01-20",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 66,
+      "turnover_days": 149.5
+    },
+    {
+      "barcode": "PLT-00988",
+      "material_id": "PART-0150",
+      "qty": 48,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "N09-01",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 7.4
+    },
+    {
+      "barcode": "PLT-00284",
+      "material_id": "PART-0136",
+      "qty": 80,
+      "received_at": "2026-11-10T08:00:00",
+      "bin_code": "N09-01",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 6,
+      "turnover_days": 5.7
+    },
+    {
+      "barcode": "PLT-01061",
+      "material_id": "PART-0093",
+      "qty": 40,
+      "received_at": "2026-11-14T08:00:00",
+      "bin_code": "N09-01",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 2,
+      "turnover_days": 10.6
+    },
+    {
+      "barcode": "PLT-01130",
+      "material_id": "PART-0165",
+      "qty": 48,
+      "received_at": "2026-11-06T08:00:00",
+      "bin_code": "N09-01",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 30.4
+    },
+    {
+      "barcode": "PLT-00806",
+      "material_id": "PART-0168",
+      "qty": 800,
+      "received_at": "2025-11-22T08:00:00",
+      "bin_code": "N09-02",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 359,
+      "turnover_days": 369.0
+    },
+    {
+      "barcode": "PLT-00433",
+      "material_id": "PART-0072",
+      "qty": 400,
+      "received_at": "2026-11-11T08:00:00",
+      "bin_code": "N09-02",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 5,
+      "turnover_days": 8.1
+    },
+    {
+      "barcode": "PLT-00448",
+      "material_id": "PART-0046",
+      "qty": 4000,
+      "received_at": "2026-06-24T08:00:00",
+      "bin_code": "N09-02",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 145,
+      "turnover_days": 146.0
+    },
+    {
+      "barcode": "PLT-00570",
+      "material_id": "PART-0047",
+      "qty": 80,
+      "received_at": "2026-11-08T08:00:00",
+      "bin_code": "N09-02",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 8,
+      "turnover_days": 12.1
+    },
+    {
+      "barcode": "PLT-01099",
+      "material_id": "PART-0028",
+      "qty": 480,
+      "received_at": "2026-09-28T08:00:00",
+      "bin_code": "N09-02",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 49,
+      "turnover_days": 83.2
+    },
+    {
+      "barcode": "PLT-00120",
+      "material_id": "PART-0179",
+      "qty": 64,
+      "received_at": "2026-10-27T08:00:00",
+      "bin_code": "N09-03",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 20,
+      "turnover_days": 22.0
+    },
+    {
+      "barcode": "PLT-00050",
+      "material_id": "PART-0112",
+      "qty": 320,
+      "received_at": "2026-10-30T08:00:00",
+      "bin_code": "N09-03",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 17,
+      "turnover_days": 21.1
+    },
+    {
+      "barcode": "PLT-00068",
+      "material_id": "PART-0147",
+      "qty": 120,
+      "received_at": "2026-11-14T08:00:00",
+      "bin_code": "N09-03",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 2,
+      "turnover_days": 7.8
+    },
+    {
+      "barcode": "PLT-00524",
+      "material_id": "PART-0015",
+      "qty": 400,
+      "received_at": "2025-12-11T08:00:00",
+      "bin_code": "N09-04",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 340,
+      "turnover_days": 568.9
+    },
+    {
+      "barcode": "PLT-01116",
+      "material_id": "PART-0042",
+      "qty": 320,
+      "received_at": "2026-11-02T08:00:00",
+      "bin_code": "N09-04",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 14,
+      "turnover_days": 25.1
+    },
+    {
+      "barcode": "PLT-01121",
+      "material_id": "PART-0081",
+      "qty": 240,
+      "received_at": "2026-11-04T08:00:00",
+      "bin_code": "N09-04",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 12,
+      "turnover_days": 28.7
+    },
+    {
+      "barcode": "PLT-00030",
+      "material_id": "PART-0157",
+      "qty": 480,
+      "received_at": "2026-11-06T08:00:00",
+      "bin_code": "N09-05",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 12.2
+    },
+    {
+      "barcode": "PLT-00475",
+      "material_id": "PART-0185",
+      "qty": 600,
+      "received_at": "2026-09-21T08:00:00",
+      "bin_code": "N09-05",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 56,
+      "turnover_days": 86.4
+    },
+    {
+      "barcode": "PLT-00792",
+      "material_id": "PART-0051",
+      "qty": 120,
+      "received_at": "2026-11-14T08:00:00",
+      "bin_code": "N09-06",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 2,
+      "turnover_days": 5.8
+    },
+    {
+      "barcode": "PLT-00036",
+      "material_id": "PART-0139",
+      "qty": 64,
+      "received_at": "2026-10-20T08:00:00",
+      "bin_code": "N09-07",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 27,
+      "turnover_days": 32.3
+    },
+    {
+      "barcode": "PLT-01063",
+      "material_id": "PART-0007",
+      "qty": 240,
+      "received_at": "2026-11-10T08:00:00",
+      "bin_code": "N09-07",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 6,
+      "turnover_days": 5.9
+    },
+    {
+      "barcode": "PLT-00820",
+      "material_id": "PART-0188",
+      "qty": 800,
+      "received_at": "2026-10-24T08:00:00",
+      "bin_code": "N09-08",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 23,
+      "turnover_days": 31.2
+    },
+    {
+      "barcode": "PLT-01044",
+      "material_id": "PART-0084",
+      "qty": 2000,
+      "received_at": "2026-10-22T08:00:00",
+      "bin_code": "N09-08",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 25,
+      "turnover_days": 30.2
+    },
+    {
+      "barcode": "PLT-01115",
+      "material_id": "PART-0181",
+      "qty": 2400,
+      "received_at": "2026-11-04T08:00:00",
+      "bin_code": "N09-08",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 12,
+      "turnover_days": 30.7
+    },
+    {
+      "barcode": "PLT-01125",
+      "material_id": "PART-0174",
+      "qty": 320,
+      "received_at": "2026-11-13T08:00:00",
+      "bin_code": "N09-08",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 3,
+      "turnover_days": 8.2
+    },
+    {
+      "barcode": "PLT-00265",
+      "material_id": "PART-0053",
+      "qty": 320,
+      "received_at": "2026-11-08T08:00:00",
+      "bin_code": "N09-09",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 8,
+      "turnover_days": 12.0
+    },
+    {
+      "barcode": "PLT-01016",
+      "material_id": "PART-0186",
+      "qty": 800,
+      "received_at": "2026-07-08T08:00:00",
+      "bin_code": "N09-09",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 131,
+      "turnover_days": 211.7
+    },
+    {
+      "barcode": "PLT-00322",
+      "material_id": "PART-0016",
+      "qty": 120,
+      "received_at": "2026-11-01T08:00:00",
+      "bin_code": "N09-10",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 15,
+      "turnover_days": 27.5
+    },
+    {
+      "barcode": "PLT-00881",
+      "material_id": "PART-0006",
+      "qty": 80,
+      "received_at": "2026-10-29T08:00:00",
+      "bin_code": "N09-10",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 18,
+      "turnover_days": 19.5
+    },
+    {
+      "barcode": "PLT-00159",
+      "material_id": "PART-0150",
+      "qty": 48,
+      "received_at": "2026-11-12T08:00:00",
+      "bin_code": "N09-10",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 4,
+      "turnover_days": 7.4
+    },
+    {
+      "barcode": "PLT-00620",
+      "material_id": "PART-0107",
+      "qty": 2000,
+      "received_at": "2026-08-15T08:00:00",
+      "bin_code": "N09-10",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 93,
+      "turnover_days": 96.2
+    },
+    {
+      "barcode": "PLT-00250",
+      "material_id": "PART-0132",
+      "qty": 3200,
+      "received_at": "2026-08-20T08:00:00",
+      "bin_code": "N09-10",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 88,
+      "turnover_days": 93.2
+    },
+    {
+      "barcode": "PLT-00545",
+      "material_id": "PART-0054",
+      "qty": 400,
+      "received_at": "2026-10-20T08:00:00",
+      "bin_code": "N09-11",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 27,
+      "turnover_days": 25.2
+    },
+    {
+      "barcode": "PLT-00589",
+      "material_id": "PART-0004",
+      "qty": 600,
+      "received_at": "2026-10-22T08:00:00",
+      "bin_code": "N09-11",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 25,
+      "turnover_days": 27.5
+    },
+    {
+      "barcode": "PLT-00332",
+      "material_id": "PART-0124",
+      "qty": 2400,
+      "received_at": "2025-08-15T08:00:00",
+      "bin_code": "N09-11",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 458,
+      "turnover_days": 500.7
+    },
+    {
+      "barcode": "PLT-00677",
+      "material_id": "PART-0063",
+      "qty": 2400,
+      "received_at": "2026-07-24T08:00:00",
+      "bin_code": "N09-11",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 115,
+      "turnover_days": 149.5
+    },
+    {
+      "barcode": "PLT-00924",
+      "material_id": "PART-0047",
+      "qty": 80,
+      "received_at": "2026-11-04T08:00:00",
+      "bin_code": "N09-12",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 12,
+      "turnover_days": 12.1
+    },
+    {
+      "barcode": "PLT-00815",
+      "material_id": "PART-0176",
+      "qty": 80,
+      "received_at": "2026-11-12T08:00:00",
+      "bin_code": "N09-12",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 4,
+      "turnover_days": 7.9
+    },
+    {
+      "barcode": "PLT-00499",
+      "material_id": "PART-0003",
+      "qty": 1399,
+      "received_at": "2026-10-19T08:00:00",
+      "bin_code": "N09-12",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 28,
+      "turnover_days": 55.1
+    },
+    {
+      "barcode": "PLT-00111",
+      "material_id": "PART-0071",
+      "qty": 2000,
+      "received_at": "2026-04-03T08:00:00",
+      "bin_code": "N09-13",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 227,
+      "turnover_days": 383.9
+    },
+    {
+      "barcode": "PLT-00104",
+      "material_id": "PART-0168",
+      "qty": 555,
+      "received_at": "2026-04-14T08:00:00",
+      "bin_code": "N09-13",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 216,
+      "turnover_days": 369.0
+    },
+    {
+      "barcode": "PLT-00914",
+      "material_id": "PART-0001",
+      "qty": 567,
+      "received_at": "2026-11-10T08:00:00",
+      "bin_code": "N09-13",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 6,
+      "turnover_days": 16.7
+    },
+    {
+      "barcode": "PLT-00173",
+      "material_id": "PART-0147",
+      "qty": 120,
+      "received_at": "2026-11-10T08:00:00",
+      "bin_code": "N09-13",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 6,
+      "turnover_days": 7.8
+    },
+    {
+      "barcode": "PLT-00126",
+      "material_id": "PART-0092",
+      "qty": 480,
+      "received_at": "2026-11-11T08:00:00",
+      "bin_code": "N09-14",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 5,
+      "turnover_days": 7.2
+    },
+    {
+      "barcode": "PLT-00606",
+      "material_id": "PART-0134",
+      "qty": 96,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "N09-14",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 21.7
+    },
+    {
+      "barcode": "PLT-00446",
+      "material_id": "PART-0135",
+      "qty": 400,
+      "received_at": "2026-11-08T08:00:00",
+      "bin_code": "N09-15",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 8,
+      "turnover_days": 7.4
+    },
+    {
+      "barcode": "PLT-00389",
+      "material_id": "PART-0005",
+      "qty": 240,
+      "received_at": "2026-10-30T08:00:00",
+      "bin_code": "N09-16",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 17,
+      "turnover_days": 25.1
+    },
+    {
+      "barcode": "PLT-00351",
+      "material_id": "PART-0122",
+      "qty": 64,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "N09-16",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 12.7
+    },
+    {
+      "barcode": "PLT-00022",
+      "material_id": "PART-0151",
+      "qty": 240,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "N09-16",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 12.8
+    },
+    {
+      "barcode": "PLT-00457",
+      "material_id": "PART-0062",
+      "qty": 120,
+      "received_at": "2026-11-11T08:00:00",
+      "bin_code": "N09-17",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 5,
+      "turnover_days": 8.9
+    },
+    {
+      "barcode": "PLT-00316",
+      "material_id": "PART-0027",
+      "qty": 400,
+      "received_at": "2026-10-07T08:00:00",
+      "bin_code": "N09-18",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 40,
+      "turnover_days": 47.1
+    },
+    {
+      "barcode": "PLT-00688",
+      "material_id": "PART-0071",
+      "qty": 2000,
+      "received_at": "2026-03-14T08:00:00",
+      "bin_code": "N09-18",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 247,
+      "turnover_days": 383.9
+    },
+    {
+      "barcode": "PLT-01148",
+      "material_id": "PART-0109",
+      "qty": 42,
+      "received_at": "2026-11-12T08:00:00",
+      "bin_code": "N09-18",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 4,
+      "turnover_days": 11.4
+    },
+    {
+      "barcode": "PLT-00856",
+      "material_id": "PART-0087",
+      "qty": 240,
+      "received_at": "2026-10-17T08:00:00",
+      "bin_code": "N09-19",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 30,
+      "turnover_days": 32.7
+    },
+    {
+      "barcode": "PLT-00567",
+      "material_id": "PART-0128",
+      "qty": 4000,
+      "received_at": "2026-09-24T08:00:00",
+      "bin_code": "N09-19",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 53,
+      "turnover_days": 73.3
+    },
+    {
+      "barcode": "PLT-00040",
+      "material_id": "PART-0082",
+      "qty": 480,
+      "received_at": "2026-09-04T08:00:00",
+      "bin_code": "N09-20",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 73,
+      "turnover_days": 124.8
+    },
+    {
+      "barcode": "PLT-00727",
+      "material_id": "PART-0179",
+      "qty": 64,
+      "received_at": "2026-10-24T08:00:00",
+      "bin_code": "N09-20",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 23,
+      "turnover_days": 22.0
+    },
+    {
+      "barcode": "PLT-00977",
+      "material_id": "PART-0037",
+      "qty": 96,
+      "received_at": "2026-11-11T08:00:00",
+      "bin_code": "N09-20",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 5,
+      "turnover_days": 11.4
+    },
+    {
+      "barcode": "PLT-00584",
+      "material_id": "PART-0139",
+      "qty": 64,
+      "received_at": "2026-11-01T08:00:00",
+      "bin_code": "N09-20",
+      "sloc": "SL10",
+      "status": "IN_STORAGE",
+      "age_days": 15,
+      "turnover_days": 32.3
+    },
+    {
+      "barcode": "PLT-02607",
+      "material_id": "PART-0155",
+      "qty": 3200,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "S-STG-01",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 1.5
+    },
+    {
+      "barcode": "PLT-02608",
+      "material_id": "PART-0104",
+      "qty": 48,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "S-STG-01",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 1.5
+    },
+    {
+      "barcode": "PLT-02609",
+      "material_id": "PART-0143",
+      "qty": 400,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "S-STG-02",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 1.5
+    },
+    {
+      "barcode": "PLT-02610",
+      "material_id": "PART-0049",
+      "qty": 400,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "S-STG-03",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 1.5
+    },
+    {
+      "barcode": "PLT-02611",
+      "material_id": "PART-0170",
+      "qty": 80,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "S-STG-03",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 1.5
+    },
+    {
+      "barcode": "PLT-02612",
+      "material_id": "PART-0175",
+      "qty": 120,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "S-STG-03",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 1.5
+    },
+    {
+      "barcode": "PLT-02613",
+      "material_id": "PART-0136",
+      "qty": 80,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "S-STG-05",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 1.5
+    },
+    {
+      "barcode": "PLT-02614",
+      "material_id": "PART-0040",
+      "qty": 480,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "S-STG-05",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 1.5
+    },
+    {
+      "barcode": "PLT-02615",
+      "material_id": "PART-0130",
+      "qty": 1600,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "S-STG-05",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 1.5
+    },
+    {
+      "barcode": "PLT-02616",
+      "material_id": "PART-0016",
+      "qty": 120,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "S-STG-08",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 1.5
+    },
+    {
+      "barcode": "PLT-02617",
+      "material_id": "PART-0182",
+      "qty": 400,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "S-STG-08",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 1.5
+    },
+    {
+      "barcode": "PLT-02316",
+      "material_id": "PART-0136",
+      "qty": 80,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "S01-01",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 5.7
+    },
+    {
+      "barcode": "PLT-01463",
+      "material_id": "PART-0064",
+      "qty": 4800,
+      "received_at": "2025-11-19T08:00:00",
+      "bin_code": "S01-01",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 362,
+      "turnover_days": 581.7
+    },
+    {
+      "barcode": "PLT-01588",
+      "material_id": "PART-0139",
+      "qty": 64,
+      "received_at": "2026-10-17T08:00:00",
+      "bin_code": "S01-01",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 30,
+      "turnover_days": 32.3
+    },
+    {
+      "barcode": "PLT-02298",
+      "material_id": "PART-0089",
+      "qty": 400,
+      "received_at": "2026-11-10T08:00:00",
+      "bin_code": "S01-01",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 6,
+      "turnover_days": 11.8
+    },
+    {
+      "barcode": "PLT-01726",
+      "material_id": "PART-0140",
+      "qty": 48,
+      "received_at": "2026-11-08T08:00:00",
+      "bin_code": "S01-02",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 8,
+      "turnover_days": 12.8
+    },
+    {
+      "barcode": "PLT-02226",
+      "material_id": "PART-0049",
+      "qty": 400,
+      "received_at": "2026-09-28T08:00:00",
+      "bin_code": "S01-02",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 49,
+      "turnover_days": 100.5
+    },
+    {
+      "barcode": "PLT-01680",
+      "material_id": "PART-0015",
+      "qty": 400,
+      "received_at": "2025-10-13T08:00:00",
+      "bin_code": "S01-02",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 399,
+      "turnover_days": 568.9
+    },
+    {
+      "barcode": "PLT-01674",
+      "material_id": "PART-0142",
+      "qty": 96,
+      "received_at": "2026-11-10T08:00:00",
+      "bin_code": "S01-02",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 6,
+      "turnover_days": 7.3
+    },
+    {
+      "barcode": "PLT-01914",
+      "material_id": "PART-0031",
+      "qty": 600,
+      "received_at": "2026-07-05T08:00:00",
+      "bin_code": "S01-03",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 134,
+      "turnover_days": 217.1
+    },
+    {
+      "barcode": "PLT-01884",
+      "material_id": "PART-0015",
+      "qty": 400,
+      "received_at": "2025-05-30T08:00:00",
+      "bin_code": "S01-03",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 535,
+      "turnover_days": 568.9
+    },
+    {
+      "barcode": "PLT-01832",
+      "material_id": "PART-0059",
+      "qty": 80,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "S01-03",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 11.1
+    },
+    {
+      "barcode": "PLT-02517",
+      "material_id": "PART-0146",
+      "qty": 4800,
+      "received_at": "2026-06-30T08:00:00",
+      "bin_code": "S01-03",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 139,
+      "turnover_days": 225.6
+    },
+    {
+      "barcode": "PLT-02105",
+      "material_id": "PART-0098",
+      "qty": 64,
+      "received_at": "2026-11-02T08:00:00",
+      "bin_code": "S01-04",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 14,
+      "turnover_days": 13.3
+    },
+    {
+      "barcode": "PLT-01246",
+      "material_id": "PART-0172",
+      "qty": 64,
+      "received_at": "2026-11-08T08:00:00",
+      "bin_code": "S01-04",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 8,
+      "turnover_days": 8.9
+    },
+    {
+      "barcode": "PLT-01464",
+      "material_id": "PART-0034",
+      "qty": 480,
+      "received_at": "2026-10-17T08:00:00",
+      "bin_code": "S01-04",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 30,
+      "turnover_days": 50.0
+    },
+    {
+      "barcode": "PLT-01889",
+      "material_id": "PART-0031",
+      "qty": 600,
+      "received_at": "2026-05-08T08:00:00",
+      "bin_code": "S01-05",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 192,
+      "turnover_days": 217.1
+    },
+    {
+      "barcode": "PLT-01313",
+      "material_id": "PART-0125",
+      "qty": 2000,
+      "received_at": "2025-08-11T08:00:00",
+      "bin_code": "S01-05",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 462,
+      "turnover_days": 504.7
+    },
+    {
+      "barcode": "PLT-02310",
+      "material_id": "PART-0076",
+      "qty": 1600,
+      "received_at": "2026-08-22T08:00:00",
+      "bin_code": "S01-05",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 86,
+      "turnover_days": 102.4
+    },
+    {
+      "barcode": "PLT-01570",
+      "material_id": "PART-0180",
+      "qty": 600,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "S01-06",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 31.9
+    },
+    {
+      "barcode": "PLT-01943",
+      "material_id": "PART-0034",
+      "qty": 480,
+      "received_at": "2026-09-28T08:00:00",
+      "bin_code": "S01-06",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 49,
+      "turnover_days": 50.0
+    },
+    {
+      "barcode": "PLT-01816",
+      "material_id": "PART-0163",
+      "qty": 107,
+      "received_at": "2026-11-14T08:00:00",
+      "bin_code": "S01-06",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 2,
+      "turnover_days": 5.6
+    },
+    {
+      "barcode": "PLT-01904",
+      "material_id": "PART-0075",
+      "qty": 480,
+      "received_at": "2026-10-18T08:00:00",
+      "bin_code": "S01-07",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 29,
+      "turnover_days": 31.4
+    },
+    {
+      "barcode": "PLT-01525",
+      "material_id": "PART-0125",
+      "qty": 2000,
+      "received_at": "2025-08-17T08:00:00",
+      "bin_code": "S01-07",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 456,
+      "turnover_days": 504.7
+    },
+    {
+      "barcode": "PLT-01713",
+      "material_id": "PART-0123",
+      "qty": 116,
+      "received_at": "2026-11-14T08:00:00",
+      "bin_code": "S01-07",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 2,
+      "turnover_days": 6.3
+    },
+    {
+      "barcode": "PLT-01699",
+      "material_id": "PART-0064",
+      "qty": 4800,
+      "received_at": "2025-08-29T08:00:00",
+      "bin_code": "S01-07",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 444,
+      "turnover_days": 581.7
+    },
+    {
+      "barcode": "PLT-02006",
+      "material_id": "PART-0030",
+      "qty": 4000,
+      "received_at": "2026-07-28T08:00:00",
+      "bin_code": "S01-08",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 111,
+      "turnover_days": 112.3
+    },
+    {
+      "barcode": "PLT-02046",
+      "material_id": "PART-0083",
+      "qty": 2000,
+      "received_at": "2026-08-17T08:00:00",
+      "bin_code": "S01-08",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 91,
+      "turnover_days": 91.0
+    },
+    {
+      "barcode": "PLT-01638",
+      "material_id": "PART-0045",
+      "qty": 4000,
+      "received_at": "2026-10-30T08:00:00",
+      "bin_code": "S01-08",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 17,
+      "turnover_days": 29.2
+    },
+    {
+      "barcode": "PLT-02590",
+      "material_id": "PART-0116",
+      "qty": 240,
+      "received_at": "2026-11-13T08:00:00",
+      "bin_code": "S01-09",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 3,
+      "turnover_days": 5.8
+    },
+    {
+      "barcode": "PLT-01556",
+      "material_id": "PART-0100",
+      "qty": 76,
+      "received_at": "2026-10-22T08:00:00",
+      "bin_code": "S01-09",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 25,
+      "turnover_days": 50.0
+    },
+    {
+      "barcode": "PLT-02398",
+      "material_id": "PART-0184",
+      "qty": 80,
+      "received_at": "2026-11-08T08:00:00",
+      "bin_code": "S01-09",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 8,
+      "turnover_days": 26.5
+    },
+    {
+      "barcode": "PLT-01753",
+      "material_id": "PART-0187",
+      "qty": 600,
+      "received_at": "2026-05-27T08:00:00",
+      "bin_code": "S01-09",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 173,
+      "turnover_days": 223.2
+    },
+    {
+      "barcode": "PLT-02045",
+      "material_id": "PART-0059",
+      "qty": 3,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "S01-10",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 11.1
+    },
+    {
+      "barcode": "PLT-02120",
+      "material_id": "PART-0066",
+      "qty": 600,
+      "received_at": "2026-10-18T08:00:00",
+      "bin_code": "S01-10",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 29,
+      "turnover_days": 26.2
+    },
+    {
+      "barcode": "PLT-01518",
+      "material_id": "PART-0063",
+      "qty": 2400,
+      "received_at": "2026-07-21T08:00:00",
+      "bin_code": "S01-10",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 118,
+      "turnover_days": 149.5
+    },
+    {
+      "barcode": "PLT-01329",
+      "material_id": "PART-0050",
+      "qty": 39,
+      "received_at": "2026-11-16T08:00:00",
+      "bin_code": "S01-11",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 8.6
+    },
+    {
+      "barcode": "PLT-01805",
+      "material_id": "PART-0062",
+      "qty": 120,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "S01-11",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 8.9
+    },
+    {
+      "barcode": "PLT-01275",
+      "material_id": "PART-0093",
+      "qty": 80,
+      "received_at": "2026-11-02T08:00:00",
+      "bin_code": "S01-12",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 14,
+      "turnover_days": 10.6
+    },
+    {
+      "barcode": "PLT-01835",
+      "material_id": "PART-0106",
+      "qty": 48,
+      "received_at": "2026-11-07T08:00:00",
+      "bin_code": "S01-12",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 9,
+      "turnover_days": 11.6
+    },
+    {
+      "barcode": "PLT-01830",
+      "material_id": "PART-0147",
+      "qty": 120,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "S01-12",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 7.8
+    },
+    {
+      "barcode": "PLT-01387",
+      "material_id": "PART-0032",
+      "qty": 2000,
+      "received_at": "2026-04-08T08:00:00",
+      "bin_code": "S01-12",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 222,
+      "turnover_days": 291.2
+    },
+    {
+      "barcode": "PLT-02456",
+      "material_id": "PART-0145",
+      "qty": 800,
+      "received_at": "2026-08-07T08:00:00",
+      "bin_code": "S01-12",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 101,
+      "turnover_days": 111.0
+    },
+    {
+      "barcode": "PLT-02560",
+      "material_id": "PART-0144",
+      "qty": 800,
+      "received_at": "2026-11-08T08:00:00",
+      "bin_code": "S01-13",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 8,
+      "turnover_days": 24.3
+    },
+    {
+      "barcode": "PLT-02464",
+      "material_id": "PART-0083",
+      "qty": 2000,
+      "received_at": "2026-09-10T08:00:00",
+      "bin_code": "S01-13",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 67,
+      "turnover_days": 91.0
+    },
+    {
+      "barcode": "PLT-01911",
+      "material_id": "PART-0060",
+      "qty": 2400,
+      "received_at": "2026-09-22T08:00:00",
+      "bin_code": "S01-13",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 55,
+      "turnover_days": 121.2
+    },
+    {
+      "barcode": "PLT-02302",
+      "material_id": "PART-0042",
+      "qty": 320,
+      "received_at": "2026-10-29T08:00:00",
+      "bin_code": "S01-14",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 18,
+      "turnover_days": 25.1
+    },
+    {
+      "barcode": "PLT-02012",
+      "material_id": "PART-0138",
+      "qty": 35,
+      "received_at": "2026-11-13T08:00:00",
+      "bin_code": "S01-14",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 3,
+      "turnover_days": 9.3
+    },
+    {
+      "barcode": "PLT-01223",
+      "material_id": "PART-0186",
+      "qty": 800,
+      "received_at": "2026-05-05T08:00:00",
+      "bin_code": "S01-14",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 195,
+      "turnover_days": 211.7
+    },
+    {
+      "barcode": "PLT-01977",
+      "material_id": "PART-0020",
+      "qty": 320,
+      "received_at": "2026-10-31T08:00:00",
+      "bin_code": "S01-14",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 16,
+      "turnover_days": 18.4
+    },
+    {
+      "barcode": "PLT-01976",
+      "material_id": "PART-0042",
+      "qty": 320,
+      "received_at": "2026-11-10T08:00:00",
+      "bin_code": "S01-15",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 6,
+      "turnover_days": 25.1
+    },
+    {
+      "barcode": "PLT-01266",
+      "material_id": "PART-0010",
+      "qty": 64,
+      "received_at": "2026-11-07T08:00:00",
+      "bin_code": "S01-16",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 9,
+      "turnover_days": 10.3
+    },
+    {
+      "barcode": "PLT-02516",
+      "material_id": "PART-0073",
+      "qty": 80,
+      "received_at": "2026-11-07T08:00:00",
+      "bin_code": "S01-16",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 9,
+      "turnover_days": 12.2
+    },
+    {
+      "barcode": "PLT-01933",
+      "material_id": "PART-0167",
+      "qty": 96,
+      "received_at": "2026-11-04T08:00:00",
+      "bin_code": "S01-16",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 12,
+      "turnover_days": 12.0
+    },
+    {
+      "barcode": "PLT-01949",
+      "material_id": "PART-0044",
+      "qty": 400,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "S01-16",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 10.4
+    },
+    {
+      "barcode": "PLT-02377",
+      "material_id": "PART-0027",
+      "qty": 400,
+      "received_at": "2026-10-04T08:00:00",
+      "bin_code": "S01-16",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 43,
+      "turnover_days": 47.1
+    },
+    {
+      "barcode": "PLT-02000",
+      "material_id": "PART-0048",
+      "qty": 480,
+      "received_at": "2026-10-31T08:00:00",
+      "bin_code": "S01-17",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 16,
+      "turnover_days": 28.8
+    },
+    {
+      "barcode": "PLT-01346",
+      "material_id": "PART-0071",
+      "qty": 2000,
+      "received_at": "2026-02-11T08:00:00",
+      "bin_code": "S01-17",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 278,
+      "turnover_days": 383.9
+    },
+    {
+      "barcode": "PLT-01303",
+      "material_id": "PART-0184",
+      "qty": 80,
+      "received_at": "2026-10-26T08:00:00",
+      "bin_code": "S01-17",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 21,
+      "turnover_days": 26.5
+    },
+    {
+      "barcode": "PLT-01656",
+      "material_id": "PART-0093",
+      "qty": 80,
+      "received_at": "2026-11-08T08:00:00",
+      "bin_code": "S01-17",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 8,
+      "turnover_days": 10.6
+    },
+    {
+      "barcode": "PLT-01286",
+      "material_id": "PART-0015",
+      "qty": 400,
+      "received_at": "2025-04-30T08:00:00",
+      "bin_code": "S01-18",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 565,
+      "turnover_days": 568.9
+    },
+    {
+      "barcode": "PLT-01254",
+      "material_id": "PART-0104",
+      "qty": 48,
+      "received_at": "2026-11-10T08:00:00",
+      "bin_code": "S01-18",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 6,
+      "turnover_days": 12.2
+    },
+    {
+      "barcode": "PLT-01625",
+      "material_id": "PART-0016",
+      "qty": 120,
+      "received_at": "2026-10-23T08:00:00",
+      "bin_code": "S01-18",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 24,
+      "turnover_days": 27.5
+    },
+    {
+      "barcode": "PLT-02019",
+      "material_id": "PART-0029",
+      "qty": 40,
+      "received_at": "2026-11-12T08:00:00",
+      "bin_code": "S01-18",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 4,
+      "turnover_days": 17.0
+    },
+    {
+      "barcode": "PLT-01290",
+      "material_id": "PART-0064",
+      "qty": 4800,
+      "received_at": "2025-05-05T08:00:00",
+      "bin_code": "S01-18",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 560,
+      "turnover_days": 581.7
+    },
+    {
+      "barcode": "PLT-01202",
+      "material_id": "PART-0097",
+      "qty": 800,
+      "received_at": "2026-08-26T08:00:00",
+      "bin_code": "S01-19",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 82,
+      "turnover_days": 107.1
+    },
+    {
+      "barcode": "PLT-01650",
+      "material_id": "PART-0114",
+      "qty": 4800,
+      "received_at": "2026-09-11T08:00:00",
+      "bin_code": "S01-19",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 66,
+      "turnover_days": 125.4
+    },
+    {
+      "barcode": "PLT-02218",
+      "material_id": "PART-0095",
+      "qty": 64,
+      "received_at": "2026-11-05T08:00:00",
+      "bin_code": "S01-19",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 11,
+      "turnover_days": 29.4
+    },
+    {
+      "barcode": "PLT-02419",
+      "material_id": "PART-0010",
+      "qty": 64,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "S01-20",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 10.3
+    },
+    {
+      "barcode": "PLT-01923",
+      "material_id": "PART-0064",
+      "qty": 4800,
+      "received_at": "2025-11-15T08:00:00",
+      "bin_code": "S01-20",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 366,
+      "turnover_days": 581.7
+    },
+    {
+      "barcode": "PLT-01462",
+      "material_id": "PART-0003",
+      "qty": 2400,
+      "received_at": "2026-10-11T08:00:00",
+      "bin_code": "S01-20",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 36,
+      "turnover_days": 55.1
+    },
+    {
+      "barcode": "PLT-01322",
+      "material_id": "PART-0160",
+      "qty": 480,
+      "received_at": "2026-11-07T08:00:00",
+      "bin_code": "S10-01",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 9,
+      "turnover_days": 9.0
+    },
+    {
+      "barcode": "PLT-02016",
+      "material_id": "PART-0111",
+      "qty": 3200,
+      "received_at": "2026-10-27T08:00:00",
+      "bin_code": "S10-01",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 20,
+      "turnover_days": 20.2
+    },
+    {
+      "barcode": "PLT-01309",
+      "material_id": "PART-0049",
+      "qty": 400,
+      "received_at": "2026-09-13T08:00:00",
+      "bin_code": "S10-01",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 64,
+      "turnover_days": 100.5
+    },
+    {
+      "barcode": "PLT-02285",
+      "material_id": "PART-0147",
+      "qty": 120,
+      "received_at": "2026-11-12T08:00:00",
+      "bin_code": "S10-01",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 4,
+      "turnover_days": 7.8
+    },
+    {
+      "barcode": "PLT-02188",
+      "material_id": "PART-0053",
+      "qty": 320,
+      "received_at": "2026-11-03T08:00:00",
+      "bin_code": "S10-01",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 13,
+      "turnover_days": 12.0
+    },
+    {
+      "barcode": "PLT-01838",
+      "material_id": "PART-0115",
+      "qty": 480,
+      "received_at": "2026-10-20T08:00:00",
+      "bin_code": "S10-02",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 27,
+      "turnover_days": 30.3
+    },
+    {
+      "barcode": "PLT-01610",
+      "material_id": "PART-0188",
+      "qty": 800,
+      "received_at": "2026-11-08T08:00:00",
+      "bin_code": "S10-02",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 8,
+      "turnover_days": 31.2
+    },
+    {
+      "barcode": "PLT-01756",
+      "material_id": "PART-0029",
+      "qty": 96,
+      "received_at": "2026-11-04T08:00:00",
+      "bin_code": "S10-02",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 12,
+      "turnover_days": 17.0
+    },
+    {
+      "barcode": "PLT-01219",
+      "material_id": "PART-0049",
+      "qty": 400,
+      "received_at": "2026-08-28T08:00:00",
+      "bin_code": "S10-03",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 80,
+      "turnover_days": 100.5
+    },
+    {
+      "barcode": "PLT-01722",
+      "material_id": "PART-0155",
+      "qty": 3200,
+      "received_at": "2026-10-12T08:00:00",
+      "bin_code": "S10-03",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 35,
+      "turnover_days": 48.0
+    },
+    {
+      "barcode": "PLT-01319",
+      "material_id": "PART-0110",
+      "qty": 80,
+      "received_at": "2026-10-14T08:00:00",
+      "bin_code": "S10-03",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 33,
+      "turnover_days": 30.4
+    },
+    {
+      "barcode": "PLT-01315",
+      "material_id": "PART-0038",
+      "qty": 48,
+      "received_at": "2026-11-13T08:00:00",
+      "bin_code": "S10-03",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 3,
+      "turnover_days": 5.3
+    },
+    {
+      "barcode": "PLT-01443",
+      "material_id": "PART-0047",
+      "qty": 80,
+      "received_at": "2026-11-04T08:00:00",
+      "bin_code": "S10-04",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 12,
+      "turnover_days": 12.1
+    },
+    {
+      "barcode": "PLT-01757",
+      "material_id": "PART-0091",
+      "qty": 240,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "S10-04",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 32.8
+    },
+    {
+      "barcode": "PLT-02407",
+      "material_id": "PART-0094",
+      "qty": 96,
+      "received_at": "2026-11-12T08:00:00",
+      "bin_code": "S10-05",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 4,
+      "turnover_days": 8.2
+    },
+    {
+      "barcode": "PLT-01664",
+      "material_id": "PART-0064",
+      "qty": 4800,
+      "received_at": "2025-04-28T08:00:00",
+      "bin_code": "S10-05",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 567,
+      "turnover_days": 581.7
+    },
+    {
+      "barcode": "PLT-02048",
+      "material_id": "PART-0034",
+      "qty": 94,
+      "received_at": "2026-10-20T08:00:00",
+      "bin_code": "S10-05",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 27,
+      "turnover_days": 50.0
+    },
+    {
+      "barcode": "PLT-02379",
+      "material_id": "PART-0024",
+      "qty": 400,
+      "received_at": "2026-08-31T08:00:00",
+      "bin_code": "S10-06",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 77,
+      "turnover_days": 101.2
+    },
+    {
+      "barcode": "PLT-02209",
+      "material_id": "PART-0135",
+      "qty": 400,
+      "received_at": "2026-11-06T08:00:00",
+      "bin_code": "S10-06",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 7.4
+    },
+    {
+      "barcode": "PLT-01576",
+      "material_id": "PART-0064",
+      "qty": 4800,
+      "received_at": "2025-04-16T08:00:00",
+      "bin_code": "S10-06",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 579,
+      "turnover_days": 581.7
+    },
+    {
+      "barcode": "PLT-01668",
+      "material_id": "PART-0042",
+      "qty": 320,
+      "received_at": "2026-11-02T08:00:00",
+      "bin_code": "S10-06",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 14,
+      "turnover_days": 25.1
+    },
+    {
+      "barcode": "PLT-01823",
+      "material_id": "PART-0164",
+      "qty": 480,
+      "received_at": "2026-10-27T08:00:00",
+      "bin_code": "S10-06",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 20,
+      "turnover_days": 22.6
+    },
+    {
+      "barcode": "PLT-02374",
+      "material_id": "PART-0047",
+      "qty": 80,
+      "received_at": "2026-11-06T08:00:00",
+      "bin_code": "S10-07",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 12.1
+    },
+    {
+      "barcode": "PLT-01368",
+      "material_id": "PART-0169",
+      "qty": 320,
+      "received_at": "2026-10-27T08:00:00",
+      "bin_code": "S10-07",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 20,
+      "turnover_days": 19.8
+    },
+    {
+      "barcode": "PLT-02081",
+      "material_id": "PART-0086",
+      "qty": 254,
+      "received_at": "2026-11-11T08:00:00",
+      "bin_code": "S10-07",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 5,
+      "turnover_days": 19.7
+    },
+    {
+      "barcode": "PLT-02600",
+      "material_id": "PART-0102",
+      "qty": 320,
+      "received_at": "2026-10-31T08:00:00",
+      "bin_code": "S10-08",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 16,
+      "turnover_days": 32.4
+    },
+    {
+      "barcode": "PLT-01821",
+      "material_id": "PART-0180",
+      "qty": 600,
+      "received_at": "2026-10-29T08:00:00",
+      "bin_code": "S10-08",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 18,
+      "turnover_days": 31.9
+    },
+    {
+      "barcode": "PLT-01416",
+      "material_id": "PART-0073",
+      "qty": 80,
+      "received_at": "2026-11-06T08:00:00",
+      "bin_code": "S10-08",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 12.2
+    },
+    {
+      "barcode": "PLT-02439",
+      "material_id": "PART-0039",
+      "qty": 96,
+      "received_at": "2026-11-13T08:00:00",
+      "bin_code": "S10-08",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 3,
+      "turnover_days": 10.2
+    },
+    {
+      "barcode": "PLT-01361",
+      "material_id": "PART-0047",
+      "qty": 80,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "S10-09",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 12.1
+    },
+    {
+      "barcode": "PLT-01341",
+      "material_id": "PART-0177",
+      "qty": 64,
+      "received_at": "2026-11-10T08:00:00",
+      "bin_code": "S10-09",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 6,
+      "turnover_days": 21.7
+    },
+    {
+      "barcode": "PLT-02255",
+      "material_id": "PART-0167",
+      "qty": 96,
+      "received_at": "2026-11-13T08:00:00",
+      "bin_code": "S10-09",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 3,
+      "turnover_days": 12.0
+    },
+    {
+      "barcode": "PLT-01475",
+      "material_id": "PART-0156",
+      "qty": 800,
+      "received_at": "2026-10-29T08:00:00",
+      "bin_code": "S10-09",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 18,
+      "turnover_days": 19.9
+    },
+    {
+      "barcode": "PLT-02022",
+      "material_id": "PART-0163",
+      "qty": 120,
+      "received_at": "2026-11-10T08:00:00",
+      "bin_code": "S10-10",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 6,
+      "turnover_days": 5.6
+    },
+    {
+      "barcode": "PLT-01438",
+      "material_id": "PART-0070",
+      "qty": 240,
+      "received_at": "2026-10-30T08:00:00",
+      "bin_code": "S10-10",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 17,
+      "turnover_days": 26.3
+    },
+    {
+      "barcode": "PLT-02423",
+      "material_id": "PART-0013",
+      "qty": 400,
+      "received_at": "2026-11-07T08:00:00",
+      "bin_code": "S10-10",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 9,
+      "turnover_days": 20.6
+    },
+    {
+      "barcode": "PLT-02283",
+      "material_id": "PART-0005",
+      "qty": 240,
+      "received_at": "2026-10-27T08:00:00",
+      "bin_code": "S10-10",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 20,
+      "turnover_days": 25.1
+    },
+    {
+      "barcode": "PLT-01203",
+      "material_id": "PART-0097",
+      "qty": 800,
+      "received_at": "2026-08-14T08:00:00",
+      "bin_code": "S10-11",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 94,
+      "turnover_days": 107.1
+    },
+    {
+      "barcode": "PLT-02444",
+      "material_id": "PART-0166",
+      "qty": 600,
+      "received_at": "2026-10-25T08:00:00",
+      "bin_code": "S10-11",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 22,
+      "turnover_days": 29.6
+    },
+    {
+      "barcode": "PLT-01577",
+      "material_id": "PART-0158",
+      "qty": 400,
+      "received_at": "2026-11-05T08:00:00",
+      "bin_code": "S10-11",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 11,
+      "turnover_days": 32.0
+    },
+    {
+      "barcode": "PLT-02519",
+      "material_id": "PART-0147",
+      "qty": 120,
+      "received_at": "2026-11-10T08:00:00",
+      "bin_code": "S10-12",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 6,
+      "turnover_days": 7.8
+    },
+    {
+      "barcode": "PLT-02181",
+      "material_id": "PART-0128",
+      "qty": 4000,
+      "received_at": "2026-09-29T08:00:00",
+      "bin_code": "S10-12",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 48,
+      "turnover_days": 73.3
+    },
+    {
+      "barcode": "PLT-01234",
+      "material_id": "PART-0060",
+      "qty": 2400,
+      "received_at": "2026-08-18T08:00:00",
+      "bin_code": "S10-12",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 90,
+      "turnover_days": 121.2
+    },
+    {
+      "barcode": "PLT-01285",
+      "material_id": "PART-0168",
+      "qty": 800,
+      "received_at": "2026-03-29T08:00:00",
+      "bin_code": "S10-12",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 232,
+      "turnover_days": 369.0
+    },
+    {
+      "barcode": "PLT-02206",
+      "material_id": "PART-0054",
+      "qty": 400,
+      "received_at": "2026-10-28T08:00:00",
+      "bin_code": "S10-13",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 19,
+      "turnover_days": 25.2
+    },
+    {
+      "barcode": "PLT-02413",
+      "material_id": "PART-0010",
+      "qty": 64,
+      "received_at": "2026-11-10T08:00:00",
+      "bin_code": "S10-13",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 6,
+      "turnover_days": 10.3
+    },
+    {
+      "barcode": "PLT-01862",
+      "material_id": "PART-0151",
+      "qty": 240,
+      "received_at": "2026-11-05T08:00:00",
+      "bin_code": "S10-13",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 11,
+      "turnover_days": 12.8
+    },
+    {
+      "barcode": "PLT-01866",
+      "material_id": "PART-0166",
+      "qty": 600,
+      "received_at": "2026-10-15T08:00:00",
+      "bin_code": "S10-14",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 32,
+      "turnover_days": 29.6
+    },
+    {
+      "barcode": "PLT-02417",
+      "material_id": "PART-0047",
+      "qty": 80,
+      "received_at": "2026-11-05T08:00:00",
+      "bin_code": "S10-14",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 11,
+      "turnover_days": 12.1
+    },
+    {
+      "barcode": "PLT-02365",
+      "material_id": "PART-0115",
+      "qty": 480,
+      "received_at": "2026-10-27T08:00:00",
+      "bin_code": "S10-14",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 20,
+      "turnover_days": 30.3
+    },
+    {
+      "barcode": "PLT-02504",
+      "material_id": "PART-0030",
+      "qty": 3670,
+      "received_at": "2026-09-28T08:00:00",
+      "bin_code": "S10-14",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 49,
+      "turnover_days": 112.3
+    },
+    {
+      "barcode": "PLT-01944",
+      "material_id": "PART-0186",
+      "qty": 800,
+      "received_at": "2026-06-29T08:00:00",
+      "bin_code": "S10-14",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 140,
+      "turnover_days": 211.7
+    },
+    {
+      "barcode": "PLT-02214",
+      "material_id": "PART-0107",
+      "qty": 2000,
+      "received_at": "2026-09-03T08:00:00",
+      "bin_code": "S10-15",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 74,
+      "turnover_days": 96.2
+    },
+    {
+      "barcode": "PLT-02190",
+      "material_id": "PART-0017",
+      "qty": 800,
+      "received_at": "2026-11-08T08:00:00",
+      "bin_code": "S10-15",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 8,
+      "turnover_days": 19.1
+    },
+    {
+      "barcode": "PLT-01390",
+      "material_id": "PART-0057",
+      "qty": 2400,
+      "received_at": "2026-10-20T08:00:00",
+      "bin_code": "S10-15",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 27,
+      "turnover_days": 26.1
+    },
+    {
+      "barcode": "PLT-02345",
+      "material_id": "PART-0072",
+      "qty": 400,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "S10-15",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 8.1
+    },
+    {
+      "barcode": "PLT-01468",
+      "material_id": "PART-0116",
+      "qty": 240,
+      "received_at": "2026-11-09T08:00:00",
+      "bin_code": "S10-16",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 7,
+      "turnover_days": 5.8
+    },
+    {
+      "barcode": "PLT-01391",
+      "material_id": "PART-0183",
+      "qty": 480,
+      "received_at": "2026-10-20T08:00:00",
+      "bin_code": "S10-16",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 27,
+      "turnover_days": 28.5
+    },
+    {
+      "barcode": "PLT-02003",
+      "material_id": "PART-0123",
+      "qty": 240,
+      "received_at": "2026-11-10T08:00:00",
+      "bin_code": "S10-16",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 6,
+      "turnover_days": 6.3
+    },
+    {
+      "barcode": "PLT-01672",
+      "material_id": "PART-0152",
+      "qty": 1600,
+      "received_at": "2026-10-22T08:00:00",
+      "bin_code": "S10-17",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 25,
+      "turnover_days": 28.2
+    },
+    {
+      "barcode": "PLT-01618",
+      "material_id": "PART-0018",
+      "qty": 4000,
+      "received_at": "2026-09-05T08:00:00",
+      "bin_code": "S10-17",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 72,
+      "turnover_days": 102.0
+    },
+    {
+      "barcode": "PLT-02313",
+      "material_id": "PART-0149",
+      "qty": 2000,
+      "received_at": "2026-10-27T08:00:00",
+      "bin_code": "S10-17",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 20,
+      "turnover_days": 19.9
+    },
+    {
+      "barcode": "PLT-02233",
+      "material_id": "PART-0134",
+      "qty": 19,
+      "received_at": "2026-11-14T08:00:00",
+      "bin_code": "S10-17",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 2,
+      "turnover_days": 21.7
+    },
+    {
+      "barcode": "PLT-02430",
+      "material_id": "PART-0107",
+      "qty": 2000,
+      "received_at": "2026-08-20T08:00:00",
+      "bin_code": "S10-18",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 88,
+      "turnover_days": 96.2
+    },
+    {
+      "barcode": "PLT-02274",
+      "material_id": "PART-0051",
+      "qty": 120,
+      "received_at": "2026-11-11T08:00:00",
+      "bin_code": "S10-18",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 5,
+      "turnover_days": 5.8
+    },
+    {
+      "barcode": "PLT-02273",
+      "material_id": "PART-0122",
+      "qty": 64,
+      "received_at": "2026-11-14T08:00:00",
+      "bin_code": "S10-19",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 2,
+      "turnover_days": 12.7
+    },
+    {
+      "barcode": "PLT-01861",
+      "material_id": "PART-0110",
+      "qty": 80,
+      "received_at": "2026-11-10T08:00:00",
+      "bin_code": "S10-19",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 6,
+      "turnover_days": 30.4
+    },
+    {
+      "barcode": "PLT-01921",
+      "material_id": "PART-0144",
+      "qty": 800,
+      "received_at": "2026-10-25T08:00:00",
+      "bin_code": "S10-19",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 22,
+      "turnover_days": 24.3
+    },
+    {
+      "barcode": "PLT-01261",
+      "material_id": "PART-0015",
+      "qty": 400,
+      "received_at": "2025-07-09T08:00:00",
+      "bin_code": "S10-19",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 495,
+      "turnover_days": 568.9
+    },
+    {
+      "barcode": "PLT-01281",
+      "material_id": "PART-0188",
+      "qty": 800,
+      "received_at": "2026-11-06T08:00:00",
+      "bin_code": "S10-19",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 10,
+      "turnover_days": 31.2
+    },
+    {
+      "barcode": "PLT-02076",
+      "material_id": "PART-0133",
+      "qty": 73,
+      "received_at": "2026-11-13T08:00:00",
+      "bin_code": "S10-20",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 3,
+      "turnover_days": 8.6
+    },
+    {
+      "barcode": "PLT-01720",
+      "material_id": "PART-0029",
+      "qty": 96,
+      "received_at": "2026-11-08T08:00:00",
+      "bin_code": "S10-20",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 8,
+      "turnover_days": 17.0
+    },
+    {
+      "barcode": "PLT-01557",
+      "material_id": "PART-0083",
+      "qty": 2000,
+      "received_at": "2026-08-30T08:00:00",
+      "bin_code": "S10-20",
+      "sloc": "SL20",
+      "status": "IN_STORAGE",
+      "age_days": 78,
+      "turnover_days": 91.0
+    }
+  ]
+}
