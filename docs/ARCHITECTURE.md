@@ -60,9 +60,9 @@ It is defined in YAML and validated by `ontology/registry.py`. `registry.materia
 | --- | --- |
 | `turnover_profile` | Dwell days per box. Trimmed mean, median and mover class per material. Median dwell per zone. |
 | `count_selection` | Today's count tasks in three lanes. **Risk** is ranked by risk score and carries a reason. **Random baseline** is what makes the hit rate measurable. **High rack** is the weekly reach-truck count. |
-| `truck_leveling` | Assigns order lines to truck runs. Orders are pulled forward only, never pushed later. Changes happen only when a truck is over its cap or over the overload threshold. |
+| `truck_leveling` | Assigns order lines to truck runs across three supplier modes: fixed-slot leveling (pull forward only when overloaded), dynamic dispatch (daily portal total fixed, same-day departure times flexible, adding minimum extra boxes only on projected stockout), and daily-pallet-pickup summaries (for dedicated-pickup partners such as Plant 2 / Supplier B). |
 | `mismatch_cause` | One of five cause classes per count result: line scan miss, empty bin, bin-to-bin miss, part missing, wrong part. |
-| `receipt_matching` | Assigns each receipt to the truck run whose window contains it. |
+| `receipt_matching` | Matches each receipt to the prior day's dispatch plan with a receipt-completeness guard (`G6`) that blocks supplier mail on partial downloads, plus an owner-only review gate before live supplier release. |
 
 ## Layer 4 — Actions
 
@@ -81,10 +81,12 @@ It is defined in YAML and validated by `ontology/registry.py`. `registry.materia
 
 ## Agents
 
-The ten production agents are defined in [`agents/schedule.yaml`](../agents/schedule.yaml): seven inventory jobs and three logistics jobs, coordinated by HQ. Five of them run in the simulation. Two shared rules sit with HQ:
+The ten production agents are defined in [`agents/schedule.yaml`](../agents/schedule.yaml): seven inventory jobs and three logistics jobs, coordinated by HQ. Five of them run in the simulation. Four shared operational controls sit with HQ:
 
 - **Morning freeze, 06:20–07:35.** No code changes and no heavy batch jobs while the morning outputs are produced.
-- **Single-writer ERP lock.** Only one agent may hold the ERP session at a time.
+- **Dedicated ERP automation sessions and single-writer lock.** Automation opens dedicated read and write ERP sessions tracked by window handle so human sessions remain untouched, with automatic fallback only if the session cap is reached and a single-writer mutex serializing ERP writes.
+- **Holiday quiet mode.** Driven by a plant calendar: on closure days, scheduled jobs keep collecting ledgers, routine emails are held locally in a quiet-day archive, and failure alerts still go straight to the owner.
+- **Post-reboot and on-demand HQ health check.** Verifies scheduler parity, daemon liveness, ERP/portal/mail connectivity, stale locks, free disk space, and nightly ledger backup freshness.
 
 One simulated day runs in schedule order. Each step takes its time from `schedule.yaml`:
 

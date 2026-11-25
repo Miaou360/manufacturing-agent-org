@@ -21,14 +21,17 @@ Every action declares its guards in [`ontology/actions.yaml`](../ontology/action
 | | `minimal_change` | Changing a supplier's orders when no truck is overloaded. Overloaded means over the trailer cap, or over 1.7 times the day's average truck load. |
 | | `trailer_cap` | Planning more carts than a trailer holds. |
 | | `output_verified` | Sending a plan that disagrees with the portal export: totals per material and day, negative quantities, unknown truck slots, repeated lines. The plan still goes out, the failing lines are flagged for a manual portal check, and the owner is alerted. |
-| Send delivery status | `owner_approved_recipients` | Mail reaching suppliers before the owner approves supplier delivery. |
+| Send delivery status | `owner_approved_recipients` | Mail reaching suppliers before the owner approves supplier delivery, enforced with a staged review gate on new templates or partners. |
+| | `receipt_completeness_guard` | Sending false-shortage supplier notices when the warehouse receipt export is partial (`G6` completeness check holds the mail and alerts the owner). |
 | Change count scope | `reviewed_change` | Scope changes that a second agent has not reviewed and the owner has not approved. |
 | Raise system alert | `owner_only` | Failure and stale-data alerts reaching operational mailboxes. |
 
 ## Runtime rules
 
 - **Morning freeze, 06:20–07:35.** No code changes and no heavy batch work while the morning outputs are produced.
-- **Single writer to the ERP.** A mutex lets only one agent hold the ERP session at a time. A person's own ERP sessions are never touched.
+- **Dedicated ERP automation sessions with single-writer mutex.** Automation opens isolated read and write ERP sessions tracked by window handle so a person's own ERP sessions are never touched, with automatic fallback only when the ERP session cap is reached. A mutex serializes ERP writes.
+- **Holiday quiet mode.** On plant closure days defined in the plant calendar, scheduled jobs still run to preserve ledger continuity, routine operational and supplier emails are held locally, and failure alerts continue to reach the owner.
+- **Post-reboot and on-demand health check.** HQ verifies scheduler registration parity, continuous daemon liveness, ERP/portal/mail reachability, stale lock absence, free disk space, and nightly backup age before trusting unattended runs.
 - **Read-only across ledgers.** A job opens another job's ledger only with `?mode=ro`.
 - **Append-only ledgers with provenance.** Nothing is overwritten. Every load records its source file hash and time.
 - **Stale data is visible.** The morning summary marks any output built on old data, even when the output was sent.

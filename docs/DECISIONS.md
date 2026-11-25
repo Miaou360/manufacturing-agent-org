@@ -81,3 +81,35 @@ Short records of the choices that shape this system. Each entry gives the decisi
 **Why.** The agents that run the plant also change their own code. The review is where silent regressions get caught.
 
 **Cost.** A small fix can wait a few hours for its review.
+
+## 11. Holiday quiet mode: keep collecting, hold routine mail
+
+**Decision.** On plant closure days defined in the plant calendar, scheduled jobs still run and update ledgers, routine emails are held locally instead of sent, and failure alerts still go to the owner.
+
+**Why.** Stopping collection breaks multi-day snapshots and post-holiday comparisons, while sending empty routine emails during a holiday creates noise for suppliers and staff.
+
+**Cost.** Held messages accumulate locally and must be verified before returning to normal operations.
+
+## 12. Dedicated ERP automation sessions with automatic fallback
+
+**Decision.** Automation acquires dedicated read and write ERP sessions tracked by window handle instead of sharing the operator's default session, falling back only when the ERP session cap leaves no free slot.
+
+**Why.** Operators work interactively in the ERP during business hours. Sharing one session risks disrupting live screens or colliding with manual transactions.
+
+**Cost.** Session lifecycle tracking, stale-handle cleanup, and per-role locks add complexity to the ERP adapter.
+
+## 13. Supplier dispatch modes and guarded shipment-status mail
+
+**Decision.** Supplier dispatch supports fixed-slot leveling, dynamic dispatch (holding the daily portal total fixed, shifting same-day times freely, and adding minimum extra boxes only on projected stockout), and daily-pallet-pickup summaries (for partners such as Plant 2 / Supplier B). Morning shipment-status mail uses a staged review gate and a receipt-completeness guard (`G6`) before emailing external suppliers.
+
+**Why.** Different supplier contracts need different dispatch rules, and a single incomplete warehouse export would otherwise send false shortage notices to every partner.
+
+**Cost.** Each supplier mode and completeness baseline needs its own test coverage and explicit onboarding approval.
+
+## 14. Post-reboot and on-demand HQ health check
+
+**Decision.** HQ runs a read-only system health check on startup after a reboot and on demand: scheduler parity, daemon freshness, ERP/portal/mail connectivity, stale locks, disk space, and nightly backup age.
+
+**Why.** After an unexpected reboot or configuration change, checking every dependency in one pass surfaces broken prerequisites before the next scheduled slot fires.
+
+**Cost.** Health probes must remain strictly read-only so checking the system never alters live sessions or sends mail.

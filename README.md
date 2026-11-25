@@ -46,10 +46,10 @@ Ten agents in two departments, coordinated by HQ. Names match the [operations fl
 | **Inventory 04** · System Reconciliation | 06:45 | Stock accuracy, value at risk, register of chronic mismatches | Which differences between the ERP and the warehouse system are real, and which are only timing? |
 | **Inventory 05** · Release Lag | 04:15 | Release-lag report, every box ranked by signal | Which boxes were released to production but still sit in a rack bin after two working days: never moved, or moved without a scan? |
 | **Inventory 06** · Data Collector | 02:15 · 05:45 · 14:00 | Raw operations ledger: movements, pulling plan, bills of material | None directly. Every other agent reads it. |
-| **Logistics 00** · Truck Dispatch | 06:40 · 13:40 Mon–Sat | Truck plan emailed to each supplier; internal monitoring workbook | What goes on each fixed truck, so that no trailer is overloaded and no line runs short? |
-| **Logistics 02** · Receipt Check | 05:00 | Delivery status for yesterday's trucks | Which materials arrived short or over against yesterday's truck plan? |
+| **Logistics 00** · Truck Dispatch | 06:40 · 13:40 Mon–Sat | Truck plan emailed to each supplier (fixed-slot, dynamic dispatch, or daily-pallet-pickup mode); internal monitoring workbook | What goes on each truck or daily pallet pickup, so no trailer is overloaded and no line runs short? |
+| **Logistics 02** · Receipt Check | 07:30 | Supplier shipment-status mail and internal delivery summary for yesterday's receipts | Which materials arrived short or over against yesterday's plan, gated by a receipt-completeness check and review gate? |
 | **Logistics 03** · GR Reconciliation | 07:45 Mon–Sat | Receipt reconciliation, only the lines that need a check | Which receipts did the ERP never book, and which ERP receipts have no scan behind them? |
-| **HQ** · Task Manager | 03:10 · 07:35 | Ledger backups; morning operations summary; owner-only system alerts | Did every job run, and is anything broken before the shift starts? |
+| **HQ** · Task Manager | 03:10 · 07:35 · On-demand / Post-reboot | Ledger backups; morning operations summary; system health check; owner-only system alerts | Did every job run, are ERP/portal/mail/locks healthy after reboot, and is anything broken before the shift starts? |
 
 ## Run one day
 
@@ -88,8 +88,9 @@ It writes its outputs to `out/`:
 
   Anything else is explained and handed to a person.
 - **Facts only.** A blank count means *not counted*, never zero. No quantity is inferred.
-- **Owner-only alerts.** Failures, stale data and held actions go to the owner, never to operational recipients.
-- **Change control.** Every change goes on a branch, is reviewed by a second agent and approved by a person, then merged. Nothing changes during the morning window, 06:20–07:35. Only one agent at a time may hold the ERP session.
+- **Owner-only alerts and holiday quiet mode.** Failures, stale data and held actions go to the owner, never to operational recipients. On scheduled plant closure days, jobs still run and update ledgers, routine emails are held locally, and failure alerts still fire.
+- **Dedicated ERP automation sessions.** Automation opens dedicated read and write ERP sessions rather than touching human operator windows, with automatic fallback if the ERP session cap is reached.
+- **Change control.** Every change goes on a branch, is reviewed by a second agent and approved by a person, then merged. Nothing changes during the morning window, 06:20–07:35. Only one agent at a time may hold the ERP write lock.
 
 Details: [docs/SAFETY.md](docs/SAFETY.md) · design decisions: [docs/DECISIONS.md](docs/DECISIONS.md)
 
