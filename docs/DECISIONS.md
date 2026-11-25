@@ -113,3 +113,14 @@ Short records of the choices that shape this system. Each entry gives the decisi
 **Why.** After an unexpected reboot or configuration change, checking every dependency in one pass surfaces broken prerequisites before the next scheduled slot fires.
 
 **Cost.** Health probes must remain strictly read-only so checking the system never alters live sessions or sends mail.
+
+## 15. Shipment-status plan of record = last truck plan actually sent
+
+**Decision.** Daily shipment-status reconciliation measures supplier receipts against the **last truck plan actually emailed** for that work date — including any extra boxes added to prevent a projected stockout — rather than re-deriving a separate plan from raw portal files.
+- **Unreadable-attachment fail-safe:** If a real sent record exists for the work date but its attachment is missing or unreadable, external supplier email is blocked and the notice is diverted to an internal owner only (`SENT_BUT_UNREADABLE`). Fallback to raw portal computation is used only when no truck plan was sent at all.
+- **Newly enabled supplier cold-start rule:** When a newly enabled supplier runs on fallback portal data and has no prior delivery-check history of its own, it keeps the full portal-issued add-on quantity instead of capping against other suppliers' prior-day history.
+- **Per-job dated quiet-day exceptions:** A job may declare explicit one-time allowed calendar dates (e.g., sending the morning status for the last working day on the first day of a closure) without relaxing holiday quiet mode for other jobs or dates.
+
+**Why.** Suppliers ship to the exact plan they received. Comparing against a recomputed portal baseline creates false over-delivery or short-delivery flags whenever dispatch added stockout-prevention boxes or refreshed the plan.
+
+**Cost.** The receipt checker depends on clean, exact-path send logs and attachment archives (no wildcard directory guessing), with explicit fail-safe routing if an archive is damaged.
