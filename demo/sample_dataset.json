@@ -1,0 +1,42 @@
+{
+  "run_date": "2026-11-24",
+  "captured_at": "2026-11-24T08:00:00",
+  "plant": "DEMO-PLANT-01",
+  "description": "Tiny anonymized offline dataset demonstrating ontology-guarded interface-error clearing and stock-transfer safety gates.",
+  "storage_locations": [
+    {"sloc": "SL01", "facility": "North", "count_eligible": true},
+    {"sloc": "SL02", "facility": "North", "count_eligible": true},
+    {"sloc": "SL10", "facility": "North", "count_eligible": true},
+    {"sloc": "SP31", "facility": "Line-A", "count_eligible": false}
+  ],
+  "materials": [
+    {"material_id": "MAT-DEMO-001", "description": "Bracket Assembly LH", "unit_pack_qty": 20},
+    {"material_id": "MAT-DEMO-002", "description": "Connector Harness 4-Pin", "unit_pack_qty": 50},
+    {"material_id": "MAT-DEMO-003", "description": "Optical Lens Housing", "unit_pack_qty": 10},
+    {"material_id": "MAT-DEMO-004", "description": "Fastener Clip M6", "unit_pack_qty": 100}
+  ],
+  "stock_positions_t_minus_30m": [
+    {"material_id": "MAT-DEMO-001", "sloc": "SL01", "snapshot_date": "2026-11-24", "erp_qty": 120, "wms_qty": 80, "diff_qty": 40, "consecutive_days_different": 2},
+    {"material_id": "MAT-DEMO-001", "sloc": "SP31", "snapshot_date": "2026-11-24", "erp_qty": 10, "wms_qty": 50, "diff_qty": -40, "consecutive_days_different": 2},
+    {"material_id": "MAT-DEMO-002", "sloc": "SL01", "snapshot_date": "2026-11-24", "erp_qty": 200, "wms_qty": 150, "diff_qty": 50, "consecutive_days_different": 1},
+    {"material_id": "MAT-DEMO-002", "sloc": "SP31", "snapshot_date": "2026-11-24", "erp_qty": 0, "wms_qty": 50, "diff_qty": -50, "consecutive_days_different": 1},
+    {"material_id": "MAT-DEMO-003", "sloc": "SL02", "snapshot_date": "2026-11-24", "erp_qty": 40, "wms_qty": 40, "diff_qty": 0, "consecutive_days_different": 0},
+    {"material_id": "MAT-DEMO-003", "sloc": "SP31", "snapshot_date": "2026-11-24", "erp_qty": 0, "wms_qty": 30, "diff_qty": -30, "consecutive_days_different": 1}
+  ],
+  "stock_positions_now": [
+    {"material_id": "MAT-DEMO-001", "sloc": "SL01", "snapshot_date": "2026-11-24", "erp_qty": 120, "wms_qty": 80, "diff_qty": 40, "consecutive_days_different": 2},
+    {"material_id": "MAT-DEMO-001", "sloc": "SP31", "snapshot_date": "2026-11-24", "erp_qty": 10, "wms_qty": 50, "diff_qty": -40, "consecutive_days_different": 2},
+    {"material_id": "MAT-DEMO-002", "sloc": "SL01", "snapshot_date": "2026-11-24", "erp_qty": 200, "wms_qty": 150, "diff_qty": 50, "consecutive_days_different": 1},
+    {"material_id": "MAT-DEMO-002", "sloc": "SP31", "snapshot_date": "2026-11-24", "erp_qty": 0, "wms_qty": 50, "diff_qty": -50, "consecutive_days_different": 1},
+    {"material_id": "MAT-DEMO-003", "sloc": "SL02", "snapshot_date": "2026-11-24", "erp_qty": 40, "wms_qty": 40, "diff_qty": 0, "consecutive_days_different": 0},
+    {"material_id": "MAT-DEMO-003", "sloc": "SP31", "snapshot_date": "2026-11-24", "erp_qty": 0, "wms_qty": 30, "diff_qty": -30, "consecutive_days_different": 1}
+  ],
+  "goods_receipts": [
+    {"barcode": "BC-DEMO-2001", "material_id": "MAT-DEMO-002", "qty": 50, "received_at": "2026-11-24T07:50:00", "erp_posted": false, "truck_run_id": "TRK-DEMO-01"}
+  ],
+  "interface_errors": [
+    {"error_id": "ERR-DEMO-01", "snapshot_id": "SNAP-DEMO", "material_id": "MAT-DEMO-001", "movement_type": "311", "sloc": "SL01", "qty": 40, "receipt_linked": false, "status": "OPEN"},
+    {"error_id": "ERR-DEMO-02", "snapshot_id": "SNAP-DEMO", "material_id": "MAT-DEMO-002", "movement_type": "311", "sloc": "SL01", "qty": 50, "receipt_linked": true, "status": "OPEN"},
+    {"error_id": "ERR-DEMO-03", "snapshot_id": "SNAP-DEMO", "material_id": "MAT-DEMO-004", "movement_type": "561", "sloc": "SL10", "qty": 100, "receipt_linked": false, "status": "OPEN"}
+  ]
+}

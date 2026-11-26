@@ -103,7 +103,15 @@ The afternoon truck run, the backlog jobs, GR reconciliation, release lag and th
 
 ## Why it is built this way
 
-See [DECISIONS.md](DECISIONS.md). In short:
+See [DECISIONS.md](DECISIONS.md) for full ADRs, [SAFETY.md](SAFETY.md) for the guard catalogue, and [RUNBOOK_TEMPLATE.md](RUNBOOK_TEMPLATE.md) for the one-page-per-agent operator runbook template. In short:
 - **Separate ledgers** keep one job's failure from corrupting another job's data.
 - **An explicit ontology** keeps rules about the plant (which storage locations are counted, which movements are protected) on the objects, instead of scattered across jobs.
 - **Actions with guards and a log** make every automated change explainable after the fact.
+
+## Change-control governance (Brain / Executor / Handoff)
+
+Production code evolves under the same guard-and-audit discipline as plant actions:
+
+1. **Executor agent** develops strictly inside an isolated git worktree (`wt/*`), runs unit tests, dry-run replays against the most recent morning snapshot, and privacy/secret checks (`tools/privacy_guard.py`).
+2. **Reviewer agent ("Brain")** inspects the diff and verbatim test/replay outputs via an append-only, file-based handoff mailbox (immutable turn history).
+3. **Human owner** approves every operational merge; merges are forbidden during the `06:20–07:35` morning freeze and require post-merge verification.

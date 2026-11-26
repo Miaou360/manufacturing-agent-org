@@ -12,7 +12,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TEXT_EXTENSIONS = frozenset({".html", ".js", ".css", ".md", ".py", ".yaml", ".json", ".sql", ".txt"})
 SKIP_DIRS = frozenset({".git", "__pycache__", ".pytest_cache", "out", ".venv", "venv"})
-ALLOW_FILES = frozenset({"tests/test_no_private_traces.py"})
+ALLOW_FILES = frozenset({"tests/test_no_private_traces.py", "tools/privacy_guard.py"})
 
 RE_WIN_USER_PATH = re.compile(r"C:(?:\\|/)Users(?:\\|/)", re.IGNORECASE)
 RE_EMAIL = re.compile(r"\b[A-Za-z0-9._%+-]+@([A-Za-z0-9.-]+\.[A-Za-z]{2,})\b")

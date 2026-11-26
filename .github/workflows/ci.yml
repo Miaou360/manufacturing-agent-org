@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run privacy and GitGuard scan
+        run: python tools/privacy_guard.py
+
+      - name: Run full test suite (ontology, guards, logic, privacy, simulation)
+        run: python -m pytest -q
+
+      - name: Run offline single-job demo end-to-end
+        run: python -m demo --out-dir /tmp/demo_ci_out
